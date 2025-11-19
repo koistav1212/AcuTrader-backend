@@ -6,7 +6,7 @@ import {
   search,
   quote,
   weeklyMostTraded,
-  trending,
+ //trending,
   intraday,
 cryptoDetails,
 cryptoList,
@@ -77,18 +77,18 @@ router.get("/quote/:symbol", auth(false), quote);
  */
 router.get("/weekly-most-traded", auth(false), weeklyMostTraded);
 
-/**
- * @openapi
- * /api/market/trending:
- *   get:
- *     tags:
- *       - Market
- *     summary: Get top trending stocks worldwide
- *     responses:
- *       200:
- *         description: Trending stocks with metadata
- */
-router.get("/trending", auth(false), trending);
+// /**
+//  * @openapi
+//  * /api/market/trending:
+//  *   get:
+//  *     tags:
+//  *       - Market
+//  *     summary: Get top trending stocks worldwide
+//  *     responses:
+//  *       200:
+//  *         description: Trending stocks with metadata
+//  */
+// router.get("/trending", auth(false), trending);
 
 /**
  * @openapi

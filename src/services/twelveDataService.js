@@ -85,24 +85,132 @@ export async function getQuote(symbol) {
 /* ------------------------------------------------------
    3. WEEKLY MOST TRADED — time_series 1day
 ------------------------------------------------------ */
-export async function getWeeklyMostTraded(symbol) {
-  return await call(
-    "time_series",
-    {
-      symbol,
-      interval: "1day",
-      outputsize: 30,
-    },
-    `weekly_${symbol}`
-  );
+
+
+/**************************************
+ * 1) Get Trending Symbols (Yahoo)
+ **************************************/
+async function getTrendingSymbols() {
+  try {
+    const url = "https://query1.finance.yahoo.com/v1/finance/trending/US";
+    const res = await axios.get(url);
+
+    const quotes = res.data.finance.result[0].quotes;
+
+    return quotes.slice(0, 20).map(q => q.symbol); // top 7 trending
+  } catch (err) {
+    console.error("Yahoo Trending Error:", err.message);
+    return [];
+  }
 }
 
-/* ------------------------------------------------------
-   4. TRENDING STOCKS — /trending + /quote(batch)
------------------------------------------------------- */
-export async function getTrendingStocks() {
-  const trending = await call("trending", {}, "trending_list");
-  return trending;
+/**************************************
+ * 2) Get Company Name (Yahoo)
+ **************************************/
+async function getCompanyName(symbol) {
+  try {
+    // Try normal Yahoo quote API (stocks, ETFs)
+    const url1 = `https://query1.finance.yahoo.com/v1/finance/quote?symbols=${symbol}`;
+    const res1 = await axios.get(url1);
+
+    const data1 = res1.data?.quoteResponse?.result?.[0];
+
+    if (data1) {
+      return (
+        data1.longName ||
+        data1.shortName ||
+        data1.displayName ||
+        symbol
+      );
+    }
+  } catch (err) {
+    // ignore and try crypto fallback
+  }
+
+  try {
+    // CRYPTO fallback (special Yahoo endpoint)
+    const url2 = `https://query2.finance.yahoo.com/v10/finance/quoteSummary/${symbol}?modules=price`;
+    const res2 = await axios.get(url2);
+
+    const price = res2.data?.quoteSummary?.result?.[0]?.price;
+
+    if (price) {
+      return (
+        price.longName ||
+        price.shortName ||
+        price.fromCurrency ||
+        symbol
+      );
+    }
+  } catch (err) {
+    // ignore final fallback
+  }
+
+  // FINAL fallback (never returns undefined)
+  return symbol;
+}
+
+/**************************************
+ * 3) Get 7-Day OHLCV (Yahoo)
+ **************************************/
+async function getHistorical(symbol) {
+  try {
+    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1d&range=7d`;
+
+    const res = await axios.get(url);
+    const chart = res.data.chart.result[0];
+
+    return {
+      symbol,
+      closes: chart.indicators.quote[0].close,
+      volumes: chart.indicators.quote[0].volume,
+      timestamps: chart.timestamp,
+    };
+
+  } catch (err) {
+    console.error(`Historical Error (${symbol}):`, err.message);
+    return null;
+  }
+}
+
+/**************************************
+ * 4) FINAL: Weekly Most Traded
+ **************************************/
+export async function getWeeklyMostTraded() {
+  const symbols = await getTrendingSymbols();
+  if (symbols.length === 0) return [];
+
+  const results = [];
+
+  for (const s of symbols) {
+    const h = await getHistorical(s);
+    if (!h) continue;
+
+    const closes = h.closes || [];
+    const volumes = h.volumes || [];
+
+    if (closes.length < 2) continue;
+
+    const last = closes[closes.length - 1];
+    const prev = closes[0];
+
+    // get proper company name
+    const name = await getCompanyName(s);
+
+    const weeklyVolume = volumes.reduce((a, b) => a + (b || 0), 0);
+
+    results.push({
+      symbol: s,
+      name, // FIXED NAME
+      weekly_volume: weeklyVolume,
+      last_price: Number(last),
+      percent_change: (((last - prev) / prev) * 100).toFixed(2),
+      color: last >= prev ? "green" : "red",
+      sparkline: closes.map(c => Number(c)),
+    });
+  }
+
+  return results.sort((a, b) => b.weekly_volume - a.weekly_volume);
 }
 
 /* ------------------------------------------------------

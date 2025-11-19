@@ -2,7 +2,7 @@ import {
   searchSymbol,
   getQuote,
   getWeeklyMostTraded,
-  getTrendingStocks,
+// getTrendingStocks,
   getIntraday,
   getCryptoList,
   getCryptoDetails,
@@ -21,17 +21,17 @@ export const quote = async (req, res, next) => {
   } catch (e) { next(e); }
 };
 
-export const weeklyMostTraded = async (req, res, next) => {
+export const weeklyMostTraded = async (_, res, next) => {
   try {
-    res.json(await getWeeklyMostTraded(req.query.symbol || "AAPL"));
+    res.json(await getWeeklyMostTraded());
   } catch (e) { next(e); }
 };
 
-export const trending = async (_, res, next) => {
-  try {
-    res.json(await getTrendingStocks());
-  } catch (e) { next(e); }
-};
+// export const trending = async (_, res, next) => {
+//   try {
+//     res.json(await getTrendingStocks());
+//   } catch (e) { next(e); }
+// };
 
 export const intraday = async (req, res, next) => {
   try {
