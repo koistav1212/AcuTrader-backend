@@ -45,7 +45,7 @@ const swaggerOptions = {
         description: "Local Dev Server",
       },
       {
-        url: "https://YOUR_DEPLOYED_BACKEND_URL",
+        url: "https://acutrader-backend.onrender.com",
         description: "Production Server",
       },
     ],

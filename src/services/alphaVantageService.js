@@ -1,54 +1,94 @@
-import fetch from "node-fetch";
+import axios from "axios";
+import https from "https";
 import { config } from "../config/env.js";
 
 const BASE_URL = "https://www.alphavantage.co/query";
 
-async function callAlpha(params) {
-  const url = new URL(BASE_URL);
-  Object.entries({
-    ...params,
-    apikey: config.alphaKey
-  }).forEach(([k, v]) => url.searchParams.append(k, v));
+// Force IPv4 on Render (fixes empty response issue)
+const agent = new https.Agent({ family: 4 });
 
-  const resp = await fetch(url);
-  if (!resp.ok) throw new Error("Alpha Vantage error");
-  return resp.json();
+// Alpha Vantage wrapper with all fixes
+async function callAlpha(params) {
+  try {
+    const url = new URL(BASE_URL);
+    Object.entries({
+      ...params,
+      apikey: config.alphaKey
+    }).forEach(([k, v]) => url.searchParams.append(k, v));
+
+    const response = await axios.get(url.toString(), {
+      httpsAgent: agent,
+      headers: {
+        "User-Agent": "AcuTrader-Backend",
+        "Accept": "application/json",
+      },
+      timeout: 6000,
+    });
+
+    const data = response.data;
+
+    // If rate-limited or empty → log it
+    if (data?.Note) {
+      console.log("⚠ Alpha Vantage Throttle:", data.Note);
+      return {};
+    }
+
+    return data || {};
+  } catch (err) {
+    console.error("❌ Alpha Vantage Error:", err.message);
+    return {};
+  }
 }
 
-// SEARCH SYMBOL
+//
+// ----------------------------------------------
+// SEARCH STOCK SYMBOL
+// ----------------------------------------------
 export async function searchSymbol(keyword) {
+  if (!keyword) return [];
+
   const data = await callAlpha({
     function: "SYMBOL_SEARCH",
-    keywords: keyword
+    keywords: encodeURIComponent(keyword)
   });
+
   return data?.bestMatches || [];
 }
 
-// INTRADAY / PRICE
+//
+// ----------------------------------------------
+// GET REAL-TIME QUOTE
+// ----------------------------------------------
 export async function getQuote(symbol) {
+  if (!symbol) return {};
+
   const data = await callAlpha({
     function: "GLOBAL_QUOTE",
     symbol
   });
+
   return data["Global Quote"] || {};
 }
 
-// WEEKLY MOST TRADED (by volume)
-export async function getWeeklyMostTraded(symbol, slice = "week") {
-  // Use TIME_SERIES_DAILY or WEEKLY and aggregate by week.
+//
+// ----------------------------------------------
+// WEEKLY MOST TRADED (TOP 10 VOLUME DAYS)
+// ----------------------------------------------
+export async function getWeeklyMostTraded(symbol) {
+  if (!symbol) return [];
+
   const data = await callAlpha({
     function: "TIME_SERIES_DAILY",
     symbol,
     outputsize: "compact"
   });
 
-  // Simplify: return highest volume in last 7/30 days
   const series = data["Time Series (Daily)"] || {};
-  const entries = Object.entries(series).map(([date, info]) => ({
+  const entries = Object.entries(series).map(([date, values]) => ({
     date,
-    volume: Number(info["5. volume"] || 0)
+    volume: Number(values["5. volume"] || 0),
   }));
 
   entries.sort((a, b) => b.volume - a.volume);
-  return entries.slice(0, 10); // top 10 days by volume
+  return entries.slice(0, 10);
 }
