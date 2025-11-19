@@ -3,7 +3,7 @@ import { searchSymbol, getQuote, getWeeklyMostTraded } from "../services/alphaVa
 export async function search(req, res, next) {
   try {
     const q = req.query.q || req.query.query;   // <-- FIX HERE
-    console.log(req)
+
     if (!q) return res.status(400).json({ message: "q query required" });
 
     const results = await searchSymbol(q);
