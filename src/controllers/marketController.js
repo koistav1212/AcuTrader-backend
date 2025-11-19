@@ -1,33 +1,59 @@
-import { searchSymbol, getQuote, getWeeklyMostTraded } from "../services/twelveDataService.js";
+import {
+  searchSymbol,
+  getQuote,
+  getWeeklyMostTraded,
+  getTrendingStocks,
+  getIntraday,
+  getCryptoList,
+  getCryptoDetails,
+  getMutualFund
+} from "../services/twelveDataService.js";
 
-export async function search(req, res, next) {
+export const search = async (req, res, next) => {
   try {
-    const q = req.query.q || req.query.query;
-    if (!q) return res.status(400).json({ message: "q query required" });
+    res.json(await searchSymbol(req.query.q));
+  } catch (e) { next(e); }
+};
 
-    const result = await searchSymbol(q);
-    res.json(result);
-  } catch (err) {
-    next(err);
-  }
-}
-
-export async function quote(req, res, next) {
+export const quote = async (req, res, next) => {
   try {
-    const symbol = req.params.symbol;
-    const result = await getQuote(symbol);
-    res.json(result);
-  } catch (err) {
-    next(err);
-  }
-}
+    res.json(await getQuote(req.params.symbol));
+  } catch (e) { next(e); }
+};
 
-export async function weeklyMostTraded(req, res, next) {
+export const weeklyMostTraded = async (req, res, next) => {
   try {
-    const symbol = req.query.symbol || "AAPL";
-    const data = await getWeeklyMostTraded(symbol);
-    res.json(data);
-  } catch (err) {
-    next(err);
-  }
-}
+    res.json(await getWeeklyMostTraded(req.query.symbol || "AAPL"));
+  } catch (e) { next(e); }
+};
+
+export const trending = async (_, res, next) => {
+  try {
+    res.json(await getTrendingStocks());
+  } catch (e) { next(e); }
+};
+
+export const intraday = async (req, res, next) => {
+  try {
+    res.json(await getIntraday(req.query.symbol, req.query.interval || "1min"));
+  } catch (e) { next(e); }
+};
+
+/* ---------------- NEW ---------------- */
+export const cryptoList = async (_, res, next) => {
+  try {
+    res.json(await getCryptoList());
+  } catch (e) { next(e); }
+};
+
+export const cryptoDetails = async (req, res, next) => {
+  try {
+    res.json(await getCryptoDetails(req.params.symbol));
+  } catch (e) { next(e); }
+};
+
+export const mutualFund = async (req, res, next) => {
+  try {
+    res.json(await getMutualFund(req.params.symbol));
+  } catch (e) { next(e); }
+};
