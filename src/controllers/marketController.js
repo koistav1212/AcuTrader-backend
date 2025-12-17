@@ -2,7 +2,8 @@ import {
   searchSymbol,
   getQuote,
   getStockPriceChange,
-  getStockRecommendations
+  getStockRecommendations,
+  getTrendingStocks
 } from "../services/twelveDataService.js";
 
 export const search = async (req, res, next) => {
@@ -26,5 +27,12 @@ export const priceChange = async (req, res, next) => {
 export const recommendations = async (req, res, next) => {
   try {
     res.json(await getStockRecommendations(req.params.symbol));
+  } catch (e) { next(e); }
+};
+
+export const trending = async (req, res, next) => {
+  try {
+    // Pass request body as filters to the service
+    res.json(await getTrendingStocks(req.body));
   } catch (e) { next(e); }
 };

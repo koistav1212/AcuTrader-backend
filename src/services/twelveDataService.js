@@ -240,3 +240,63 @@ export function getStockRecommendations(symbol) {
         });
     });
 }
+
+/* ------------------------------------------------------
+   5. TOP TRENDING STOCKS (Dynamic Screener)
+------------------------------------------------------ */
+export async function getTrendingStocks() {
+  try {
+    const res = await axios.get("https://www.alphavantage.co/query", {
+      params: {
+        function: "TOP_GAINERS_LOSERS",
+        apikey: process.env.ALPHA_VANTAGE_KEY
+      }
+    });
+
+    const data = res.data;
+    if (!data) return [];
+
+    // Combine Most Actively Traded + Top Gainers
+    const trendingRaw = [
+      ...(data.most_actively_traded || []),
+      ...(data.top_gainers || [])
+    ].slice(0, 50);
+
+    // UI-ready, lean, consistent structure
+    return trendingRaw.map(item => ({
+      symbol: item.ticker,
+
+      // ❌ No company name (as requested)
+      instrument_name: item.ticker,
+
+      exchange: "US",
+      currency: "USD",
+      datetime: new Date().toISOString(),
+
+      // Price data
+      current_price: Number(item.price),
+      change: Number(item.change_amount),
+      percent_change: Number(
+        item.change_percentage?.replace("%", "") || 0
+      ),
+      is_up: Number(item.change_amount) >= 0,
+
+      volume: Number(item.volume),
+
+      // Not available in Alpha Vantage FREE
+      sector: null,
+      industry: null,
+      market_cap: null,
+      beta: null,
+      description: "",
+
+      // Optional generic logo fallback
+      image: `https://financialmodelingprep.com/image-stock/${item.ticker}.png`
+    }));
+
+  } catch (err) {
+    console.error("🔥 Error in getTrendingStocks:", err.message);
+    return [];
+  }
+}
+

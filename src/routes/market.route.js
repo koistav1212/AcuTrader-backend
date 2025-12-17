@@ -6,7 +6,8 @@ import {
   search,
   quote,
   priceChange,
-  recommendations
+  recommendations,
+  trending
 } from "../controllers/marketController.js";
 
 const router = Router();
@@ -94,5 +95,31 @@ router.get("/price-change/:symbol", auth(false), priceChange);
  *         description: Analyst recommendation trends
  */
 router.get("/recommendations/:symbol", auth(false), recommendations);
+
+/**
+ * @openapi
+ * /api/market/trending:
+ *   post:
+ *     tags:
+ *       - Market
+ *     summary: Get top stocks based on dynamic filters (Screener)
+ *     requestBody:
+ *       required: false
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               marketCapMoreThan:
+ *                 type: number
+ *               sector:
+ *                 type: string
+ *               limit:
+ *                 type: number
+ *     responses:
+ *       200:
+ *         description: List of filtered stocks
+ */
+router.post("/trending", auth(false), trending);
 
 export default router;
