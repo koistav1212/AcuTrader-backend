@@ -1,325 +1,242 @@
 // src/services/twelveDataService.js
 import axios from "axios";
-import https from "https";
-import { config } from "../config/env.js";
+import finnhub from "finnhub";
 
-const BASE_URL = "https://api.twelvedata.com";
-const agent = new https.Agent({ family: 4 });
+// ---------------------------------------------------------
+// CONFIGURATION
+// ---------------------------------------------------------
 
-/* ------------------------------------------------------
-   GLOBAL CACHE (1 minute)
------------------------------------------------------- */
-const CACHE = {};
-const TTL = 60 * 1000;
+// FMP (Financial Modeling Prep) Config
+const FMP_API_KEY = "7bwKOSRMhSLiJkbyPq6mAdFHWOUp5As0";
+const FMP_BASE_URL = "https://financialmodelingprep.com/stable";
 
-function setCache(key, data) {
-  CACHE[key] = { data, expiry: Date.now() + TTL };
-}
-function getCache(key) {
-  const c = CACHE[key];
-  return c && Date.now() < c.expiry ? c.data : null;
-}
-
-/* ------------------------------------------------------
-   Helper - Build URL
------------------------------------------------------- */
-function buildURL(endpoint, query = {}) {
-  const url = new URL(`${BASE_URL}/${endpoint}`);
-  Object.entries(query).forEach(([k, v]) => {
-    if (v != null) url.searchParams.append(k, v);
-  });
-  url.searchParams.append("apikey", config.twelveKey);
-  return url.toString();
+// Finnhub Config
+// User requested simpler init: new finnhub.DefaultApi("API_KEY")
+// We need to ensure finnhub.DefaultApi exists on the imported object.
+// If typical CJS-in-ESM, it might be on finnhub.default or finnhub itself.
+// We'll try to handle both or assume standard import behavior.
+// If finnhub is the module.exports object:
+let finnhubClient;
+try {
+   finnhubClient = new finnhub.DefaultApi("d518lt9r01qjia5c21p0d518lt9r01qjia5c21pg");
+} catch (e) {
+   // Fallback if 'finnhub' default export has DefaultApi under .default (common in some bundlers/node versions)
+   if (finnhub.default && finnhub.default.DefaultApi) {
+       finnhubClient = new finnhub.default.DefaultApi("d518lt9r01qjia5c21p0d518lt9r01qjia5c21pg");
+   } else {
+       console.error("Failed to initialize Finnhub client. Finnhub export:", finnhub);
+       throw e;
+   }
 }
 
-/* ------------------------------------------------------
-   Core Caller
------------------------------------------------------- */
-async function call(endpoint, query = {}, cacheKey) {
-  const cached = getCache(cacheKey);
-  if (cached) return cached;
+// ---------------------------------------------------------
+// HELPER FUNCTIONS
+// ---------------------------------------------------------
 
+// Helper for FMP requests
+async function callFMP(endpoint, params = {}) {
   try {
-    const url = buildURL(endpoint, query);
-    const res = await axios.get(url, {
-      httpsAgent: agent,
-      timeout: 6000,
-    });
+    const url = `${FMP_BASE_URL}${endpoint}`;
+    // Append API key to params
+    const queryParams = { ...params, apikey: FMP_API_KEY };
+    
+    // Construct Query String
+    const qs = Object.keys(queryParams)
+      .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(queryParams[key])}`)
+      .join('&');
 
-    if (res.data?.status === "error") {
-      console.error(`❌ TwelveData Error:`, res.data.message);
-      return null;
-    }
-
-    setCache(cacheKey, res.data);
+    const requestUrl = `${url}?${qs}`;
+    
+    const res = await axios.get(requestUrl);
     return res.data;
-
   } catch (err) {
-    console.error(`🔥 API Error (${endpoint}):`, err.message);
+    console.error(`🔥 FMP API Error (${endpoint}):`, err.message);
     return null;
   }
 }
 
+// ---------------------------------------------------------
+// EXPORTED SERVICES (STOCK ONLY)
+// ---------------------------------------------------------
+
 /* ------------------------------------------------------
-   1. SYMBOL SEARCH — returns documented TwelveData format
+   1. SYMBOL SEARCH (Stocks Only)
+------------------------------------------------------ */
+/* ------------------------------------------------------
+   SYMBOL SEARCH (Stocks + Real-time Quote + Full Profile)
 ------------------------------------------------------ */
 export async function searchSymbol(keyword) {
-  return await call(
-    "symbol_search",
-    { symbol: keyword.trim() },
-    `search_${keyword}`
-  );
+  try {
+    // 1. Primary Lookup: SEC Profile (User requested replacement)
+    // Treating 'keyword' as a potential symbol (e.g. "AAPL")
+    const symbolParam = keyword.toUpperCase(); 
+    const secProfiles = await callFMP("/sec-profile", { symbol: symbolParam });
+    
+    if (!secProfiles || !Array.isArray(secProfiles) || secProfiles.length === 0) {
+      return {};
+    }
+
+    // Limit to top results
+    const topResults = secProfiles.slice(0, 10);
+    const symbols = topResults.map(r => r.symbol).join(",");
+
+    // 2. Fetch Quotes (Price, Change, is_up)
+    const quotes = await callFMP("/quote", { symbol: symbols });
+    const quoteMap = {};
+    if (Array.isArray(quotes)) {
+      quotes.forEach(q => quoteMap[q.symbol] = q);
+    }
+
+    // 3. Fetch Full Profiles (Logo, Description, Web)
+    const profiles = await callFMP("/profile", { symbol: symbols });
+    const profileMap = {};
+    if (Array.isArray(profiles)) {
+      profiles.forEach(p => profileMap[p.symbol] = p);
+    }
+
+    const groupedResults = { Stocks: [] };
+
+    // 4. Merge
+    topResults.forEach(sec => {
+      const sym = sec.symbol;
+      const quote = quoteMap[sym] || {};
+      const profile = profileMap[sym] || {};
+
+      const price = quote.price || profile.price || 0;
+      const change = quote.changes || profile.changes || 0;
+      const changePercent = quote.changesPercentage || 
+                           ((price && change) ? ((change / (price - change)) * 100) : 0);
+
+      groupedResults.Stocks.push({
+        symbol: sym,
+        instrument_name: sec.companyName || profile.companyName || sym,
+        exchange: sec.exchangeShortName || quote.exchange || "NASDAQ", 
+        mic_code: sec.exchangeShortName || "XNAS", 
+        country: sec.country || profile.country || "US",
+        currency: profile.currency || quote.currency || "USD",
+        type: "Stocks",
+
+        // Real-time
+        price: Number(price.toFixed(2)),
+        change: Number(change.toFixed(2)),
+        change_percent: Number(changePercent.toFixed(2)),
+        is_up: change >= 0,
+
+        // Details
+        market_cap: quote.marketCap || profile.mktCap,
+        volume: quote.volume || profile.volAvg,
+        avg_volume: quote.avgVolume || profile.volAvg,
+        range: quote.dayLow && quote.dayHigh ? `${quote.dayLow}-${quote.dayHigh}` : null,
+        year_range: quote.yearLow && quote.yearHigh ? `${quote.yearLow}-${quote.yearHigh}` : null,
+        
+        sector: sec.sector || profile.sector,
+        industry: sec.industry || profile.industry,
+        description: profile.description || "No description available.",
+        ceo: sec.ceo || profile.ceo,
+        website: profile.website,
+        employees: sec.fullTimeEmployees || profile.fullTimeEmployees,
+
+        // Logo
+        image: profile.image || `https://financialmodelingprep.com/image-stock/${sym}.png`
+      });
+    });
+
+    return groupedResults;
+
+  } catch (err) {
+    console.error(`Error in searchSymbol('${keyword}'):`, err.message);
+    return {};
+  }
 }
 
+
 /* ------------------------------------------------------
-   2. REALTIME QUOTE — exact quote format
+   2. REALTIME QUOTE 
 ------------------------------------------------------ */
 export async function getQuote(symbol) {
-  return await call(
-    "quote",
-    { symbol },
-    `quote_${symbol}`
-  );
-}
-
-/* ------------------------------------------------------
-   3. WEEKLY MOST TRADED — time_series 1day
------------------------------------------------------- */
-
-
-/**************************************
- * 1) Get Trending Symbols (Yahoo)
- **************************************/
-async function getTrendingSymbols() {
   try {
-    const url = "https://query1.finance.yahoo.com/v1/finance/trending/US";
-    const res = await axios.get(url);
+    const quotes = await callFMP("/quote", { symbol });
+    const quote = quotes && quotes.length > 0 ? quotes[0] : null;
 
-    const quotes = res.data.finance.result[0].quotes;
+    if (!quote) return null;
 
-    return quotes.slice(0, 20).map(q => q.symbol); // top 7 trending
-  } catch (err) {
-    console.error("Yahoo Trending Error:", err.message);
-    return [];
-  }
-}
+    // Optional: Fetch profile for description/logo
+    let description = "";
+    let logo = "";
+    let sector = "";
+    
+    try {
+        const profiles = await callFMP("/profile", { symbol });
+        if (profiles && profiles.length > 0) {
+            description = profiles[0].description;
+            logo = profiles[0].image;
+            sector = profiles[0].sector;
+        }
+    } catch(e) { /* ignore */ }
 
-/**************************************
- * 2) Get Company Name (Yahoo)
- **************************************/
-async function getCompanyName(symbol) {
-  try {
-    // Try normal Yahoo quote API (stocks, ETFs)
-    const url1 = `https://query1.finance.yahoo.com/v1/finance/quote?symbols=${symbol}`;
-    const res1 = await axios.get(url1);
-
-    const data1 = res1.data?.quoteResponse?.result?.[0];
-
-    if (data1) {
-      return (
-        data1.longName ||
-        data1.shortName ||
-        data1.displayName ||
-        symbol
-      );
-    }
-  } catch (err) {
-    // ignore and try crypto fallback
-  }
-
-  try {
-    // CRYPTO fallback (special Yahoo endpoint)
-    const url2 = `https://query2.finance.yahoo.com/v10/finance/quoteSummary/${symbol}?modules=price`;
-    const res2 = await axios.get(url2);
-
-    const price = res2.data?.quoteSummary?.result?.[0]?.price;
-
-    if (price) {
-      return (
-        price.longName ||
-        price.shortName ||
-        price.fromCurrency ||
-        symbol
-      );
-    }
-  } catch (err) {
-    // ignore final fallback
-  }
-
-  // FINAL fallback (never returns undefined)
-  return symbol;
-}
-
-/**************************************
- * 3) Get 7-Day OHLCV (Yahoo)
- **************************************/
-async function getHistorical(symbol) {
-  try {
-    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1d&range=7d`;
-
-    const res = await axios.get(url);
-    const chart = res.data.chart.result[0];
 
     return {
-      symbol,
-      closes: chart.indicators.quote[0].close,
-      volumes: chart.indicators.quote[0].volume,
-      timestamps: chart.timestamp,
+        symbol: quote.symbol,
+        name: quote.name,
+        exchange: quote.exchange,
+        currency: "USD",
+        datetime: new Date(quote.timestamp * 1000).toISOString(), 
+        open: quote.open,
+        high: quote.dayHigh,
+        low: quote.dayLow,
+        close: quote.price,
+        volume: quote.volume,
+        current_price: quote.price,
+        change: quote.change,
+        percent_change: quote.changePercentage ? quote.changePercentage.toFixed(2) : "0.00",
+        market_cap: quote.marketCap,
+        logo: logo, 
+        description: description,
+        sector: sector,
+        price_avg_50: quote.priceAvg50,
+        price_avg_200: quote.priceAvg200,
+        year_high: quote.yearHigh,
+        year_low: quote.yearLow
     };
-
   } catch (err) {
-    console.error(`Historical Error (${symbol}):`, err.message);
+    console.error(`Error in getQuote('${symbol}'):`, err.message);
     return null;
   }
 }
 
-/**************************************
- * 4) FINAL: Weekly Most Traded
- **************************************/
-export async function getWeeklyMostTraded() {
-  const symbols = await getTrendingSymbols();
-  if (symbols.length === 0) return [];
+/* ------------------------------------------------------
+   3. STOCK PRICE CHANGE
+------------------------------------------------------ */
+export async function getStockPriceChange(symbol) {
+    try {
+        const changes = await callFMP("/stock-price-change", { symbol });
+        if (changes && changes.length > 0) {
+            return changes[0];
+        }
+        return null;
+    } catch(err) {
+        console.error(`Error in getStockPriceChange('${symbol}'):`, err.message);
+        return null;
+    }
+}
 
-  const results = [];
-
-  for (const s of symbols) {
-    const h = await getHistorical(s);
-    if (!h) continue;
-
-    const closes = h.closes || [];
-    const volumes = h.volumes || [];
-
-    if (closes.length < 2) continue;
-
-    const last = closes[closes.length - 1];
-    const prev = closes[0];
-
-    // get proper company name
-    const name = await getCompanyName(s);
-
-    const weeklyVolume = volumes.reduce((a, b) => a + (b || 0), 0);
-
-    results.push({
-      symbol: s,
-      name, // FIXED NAME
-      weekly_volume: weeklyVolume,
-      last_price: Number(last),
-      percent_change: (((last - prev) / prev) * 100).toFixed(2),
-      color: last >= prev ? "green" : "red",
-      sparkline: closes.map(c => Number(c)),
+/* ------------------------------------------------------
+   4. STOCK RECOMMENDATIONS (Finnhub)
+------------------------------------------------------ */
+export function getStockRecommendations(symbol) {
+    return new Promise((resolve, reject) => {
+        if (!finnhubClient) {
+            console.error("Finnhub client not initialized.");
+            resolve([]);
+            return;
+        }
+        finnhubClient.recommendationTrends(symbol, (error, data, response) => {
+            if (error) {
+                console.error(`Error in getStockRecommendations('${symbol}'):`, error);
+                resolve([]); // Resolve empty array on error to prevent crash
+            } else {
+                resolve(data);
+            }
+        });
     });
-  }
-
-  return results.sort((a, b) => b.weekly_volume - a.weekly_volume);
 }
-
-/* ------------------------------------------------------
-   5. INTRADAY (FULL CANDLE DATA)
------------------------------------------------------- */
-export async function getIntraday(symbol, interval = "1min") {
-  return await call(
-    "time_series",
-    {
-      symbol,
-      interval,
-      outputsize: 100,
-    },
-    `intraday_${symbol}_${interval}`
-  );
-}
-
-/* ------------------------------------------------------
-   6. ETF LIST — exact ETF data
------------------------------------------------------- */
-export async function getETFList() {
-  return await call("etf", {}, "etf_list");
-}
-
-/* ------------------------------------------------------
-   7. ETF WORLD — fully documented format
------------------------------------------------------- */
-export async function getETFDetails(symbol) {
-  return await call(
-    "etfs/world",
-    { symbol },
-    `etf_world_${symbol}`
-  );
-}
-
-/* ------------------------------------------------------
-   8. MUTUAL FUNDS — documented format
------------------------------------------------------- */
-/* ------------------------------------------------------
-   MUTUAL FUND DETAILS (working free tier endpoint)
------------------------------------------------------- */
-export async function getMutualFund(symbol) {
-  return await call(
-    "mutual_funds",
-    { symbol },
-    `mf_${symbol}`
-  );
-}
-
-/* ------------------------------------------------------
-   CRYPTO LIST (top crypto assets)
------------------------------------------------------- */
-/* ------------------------------------------------------
-   CRYPTO LIST WITH PRICE, CHANGE %, VOLUME, SPARKLINE
------------------------------------------------------- */
-export async function getCryptoList() {
-  // 1) Fetch crypto list – 1 token
-  const list = await call("cryptocurrencies", {}, "crypto_list_cheap");
-  const items = list?.data?.slice(0, 5) || []; // ONLY TOP 5
-
-  if (items.length === 0) return [];
-
-  // Extract symbols (BTC/USD)
-  const symbols = items.map(c => c.symbol).join(",");
-
-  // 2) Bulk quote for all 5 cryptos – 1 token
-  const quotes = await call(
-    "quote",
-    { symbol: symbols },
-    "crypto_quotes_cheap"
-  );
-
-  // Output formatted similar to stocks
-  return Object.values(quotes || {}).map(q => ({
-    symbol: q.symbol,
-    name: q.name || q.currency_base,
-    price: Number(q.close || 0),
-    change_percent: Number(q.percent_change || 0),
-    volume: Number(q.volume || 0),
-    color: Number(q.percent_change || 0) >= 0 ? "green" : "red"
-  }));
-}
-
-
-
-/* ------------------------------------------------------
-   CRYPTO DETAILS (price, metadata, OHLC)
------------------------------------------------------- */
-export async function getCryptoDetails(symbol) {
-  const [quote, series] = await Promise.all([
-    call("price", { symbol }, `crypto_price_${symbol}`),
-    call(
-      "time_series",
-      { symbol, interval: "1h", outputsize: 50 },
-      `crypto_series_${symbol}`
-    )
-  ]);
-
-  return {
-    symbol,
-    price: Number(quote?.price || 0),
-    candles: (series?.values || []).map(v => ({
-      datetime: v.datetime,
-      open: Number(v.open),
-      high: Number(v.high),
-      low: Number(v.low),
-      close: Number(v.close),
-      volume: Number(v.volume || 0)
-    }))
-  };
-}
-

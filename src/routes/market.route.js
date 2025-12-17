@@ -5,12 +5,8 @@ import { auth } from "../middleware/auth.js";
 import {
   search,
   quote,
-  weeklyMostTraded,
- //trending,
-  intraday,
-cryptoDetails,
-cryptoList,
- // mutualFund
+  priceChange,
+  recommendations
 } from "../controllers/marketController.js";
 
 const router = Router();
@@ -59,112 +55,44 @@ router.get("/quote/:symbol", auth(false), quote);
 
 /**
  * @openapi
- * /api/market/weekly-most-traded:
+ * /api/market/price-change/{symbol}:
  *   get:
  *     tags:
  *       - Market
- *     summary: Get highest traded volume days (past 30 days)
+ *     summary: Get stock price change (1D, 5D, 1M, 3M, 6M, ytd, 1Y, 5Y, Max)
  *     parameters:
  *       - name: symbol
- *         in: query
+ *         in: path
  *         description: Stock symbol
+ *         required: true
  *         schema:
  *           type: string
  *           example: AAPL
  *     responses:
  *       200:
- *         description: Top 10 days with the highest volumes
+ *         description: Stock price change data
  */
-router.get("/weekly-most-traded", auth(false), weeklyMostTraded);
-
-// /**
-//  * @openapi
-//  * /api/market/trending:
-//  *   get:
-//  *     tags:
-//  *       - Market
-//  *     summary: Get top trending stocks worldwide
-//  *     responses:
-//  *       200:
-//  *         description: Trending stocks with metadata
-//  */
-// router.get("/trending", auth(false), trending);
+router.get("/price-change/:symbol", auth(false), priceChange);
 
 /**
  * @openapi
- * /api/market/intraday:
+ * /api/market/recommendations/{symbol}:
  *   get:
  *     tags:
  *       - Market
- *     summary: Get intraday OHLC candles for a stock
+ *     summary: Get stock recommendation trends (Strong Buy, Buy, Hold, Sell, etc.)
  *     parameters:
  *       - name: symbol
- *         in: query
+ *         in: path
  *         description: Stock symbol
+ *         required: true
  *         schema:
  *           type: string
  *           example: AAPL
- *       - name: interval
- *         in: query
- *         description: Candle interval
- *         schema:
- *           type: string
- *           example: 1min
  *     responses:
  *       200:
- *         description: Intraday candle data
+ *         description: Analyst recommendation trends
  */
-router.get("/intraday", auth(false), intraday);
-
-/**
- * @openapi
- * /api/market/crypto:
- *   get:
- *     tags: [Market]
- *     summary: Get crypto list
- *     responses:
- *       200:
- *         description: Crypto asset list
- */
-router.get("/crypto", auth(false), cryptoList);
-
-/**
- * @openapi
- * /api/market/crypto/{symbol}:
- *   get:
- *     tags: [Market]
- *     summary: Get crypto details with candles
- *     parameters:
- *       - name: symbol
- *         in: path
- *         required: true
- *         schema:
- *           type: string
- *           example: BTC/USD
- *     responses:
- *       200:
- *         description: Crypto price + OHLC data
- */
-router.get("/crypto/:symbol", auth(false), cryptoDetails);
-
-/**
- * @openapi
- * /api/market/mutual/{symbol}:
- *   get:
- *     tags: [Market]
- *     summary: Get mutual fund details
- *     parameters:
- *       - name: symbol
- *         in: path
- *         required: true
- *         schema:
- *           type: string
- *           example: 1535462D
- *     responses:
- *       200:
- *         description: Mutual fund data including NAV & returns
- */
- // router.get("/mutual/:symbol", auth(false), mutualFund);
-
+router.get("/recommendations/:symbol", auth(false), recommendations);
 
 export default router;

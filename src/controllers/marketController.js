@@ -1,12 +1,8 @@
 import {
   searchSymbol,
   getQuote,
-  getWeeklyMostTraded,
-// getTrendingStocks,
-  getIntraday,
-  getCryptoList,
-  getCryptoDetails,
-  getMutualFund
+  getStockPriceChange,
+  getStockRecommendations
 } from "../services/twelveDataService.js";
 
 export const search = async (req, res, next) => {
@@ -21,39 +17,14 @@ export const quote = async (req, res, next) => {
   } catch (e) { next(e); }
 };
 
-export const weeklyMostTraded = async (_, res, next) => {
+export const priceChange = async (req, res, next) => {
   try {
-    res.json(await getWeeklyMostTraded());
+    res.json(await getStockPriceChange(req.params.symbol));
   } catch (e) { next(e); }
 };
 
-// export const trending = async (_, res, next) => {
-//   try {
-//     res.json(await getTrendingStocks());
-//   } catch (e) { next(e); }
-// };
-
-export const intraday = async (req, res, next) => {
+export const recommendations = async (req, res, next) => {
   try {
-    res.json(await getIntraday(req.query.symbol, req.query.interval || "1min"));
-  } catch (e) { next(e); }
-};
-
-/* ---------------- NEW ---------------- */
-export const cryptoList = async (_, res, next) => {
-  try {
-    res.json(await getCryptoList());
-  } catch (e) { next(e); }
-};
-
-export const cryptoDetails = async (req, res, next) => {
-  try {
-    res.json(await getCryptoDetails(req.params.symbol));
-  } catch (e) { next(e); }
-};
-
-export const mutualFund = async (req, res, next) => {
-  try {
-    res.json(await getMutualFund(req.params.symbol));
+    res.json(await getStockRecommendations(req.params.symbol));
   } catch (e) { next(e); }
 };
