@@ -1,6 +1,23 @@
 // src/services/twelveDataService.js
 import axios from "axios";
+import yahooFinance from "yahoo-finance2";
+
+const yf = new yahooFinance({ suppressNotices: ['yahooSurvey'] });
 import finnhub from "finnhub";
+
+// list of symbols you want
+const SYMBOLS = [
+   "INTC", "MSFT", "CSCO", "KHC", "VRTX", "MNST", "CTAS", "ADSK", "GILD", "GOOGL",
+  "ADBE", "QCOM", "WBD", "AMAT", "CDNS", "MCHP", "ISRG", "PAYX", "AAPL", "FAST",
+  "PCAR", "AMZN", "ROST", "COST", "LRCX", "AMGN", "EA",
+  "BIIB", "NVDA",  "AXON", "CMCSA",  "ADI", "XEL", "CSX", "EXC",
+  "MU",   "HON", "AMD", "BKR", "PEP", "ADP", "KDP",
+  "NFLX", "BKNG", "ORLY",   "NXPI", "TSLA", "TTWO", "CHTR", "CSGP",
+  "DXCM", "FTNT", "IDXX", "MELI", "MSTR", "ON", "TMUS", "META", "WDAY", "MDLZ",
+  "LULU", "REGN", , "ASML", "CPRT",  "SNPS", "FANG", "PANW",
+   "GOOG", "SHOP", "PYPL", "TEAM", "ZS",  "DDOG",
+  "PLTR", "ABNB", "DASH", "APP",   "ARM", "LIN", "TRI"
+];
 
 // ---------------------------------------------------------
 // CONFIGURATION
@@ -153,50 +170,52 @@ export async function searchSymbol(keyword) {
 /* ------------------------------------------------------
    2. REALTIME QUOTE 
 ------------------------------------------------------ */
+
 export async function getQuote(symbol) {
   try {
-    const quotes = await callFMP("/quote", { symbol });
-    const quote = quotes && quotes.length > 0 ? quotes[0] : null;
-
+    // 1. Fetch Price & Basic Data
+    const quote = await yf.quote(symbol);
     if (!quote) return null;
 
-    // Optional: Fetch profile for description/logo
+    // 2. Fetch Profile Data (Description, Sector)
     let description = "";
-    let logo = "";
     let sector = "";
-    
     try {
-        const profiles = await callFMP("/profile", { symbol });
-        if (profiles && profiles.length > 0) {
-            description = profiles[0].description;
-            logo = profiles[0].image;
-            sector = profiles[0].sector;
+        const summary = await yf.quoteSummary(symbol, { modules: ["assetProfile"] });
+        if (summary && summary.assetProfile) {
+            description = summary.assetProfile.longBusinessSummary || "";
+            sector = summary.assetProfile.sector || "";
         }
-    } catch(e) { /* ignore */ }
+    } catch (e) {
+        console.warn(`getQuote: Failed to fetch profile for ${symbol}:`, e.message);
+    }
 
+    // 3. Construct Logo URL (Yahoo doesn't provide it, use previous source or placeholder)
+    const logo = `https://financialmodelingprep.com/image-stock/${symbol}.png`;
 
     return {
         symbol: quote.symbol,
-        name: quote.name,
-        exchange: quote.exchange,
-        currency: "USD",
-        datetime: new Date(quote.timestamp * 1000).toISOString(), 
-        open: quote.open,
-        high: quote.dayHigh,
-        low: quote.dayLow,
-        close: quote.price,
-        volume: quote.volume,
-        current_price: quote.price,
-        change: quote.change,
-        percent_change: quote.changePercentage ? quote.changePercentage.toFixed(2) : "0.00",
-        market_cap: quote.marketCap,
-        logo: logo, 
+        name: quote.longName || quote.shortName || quote.displayName || quote.symbol,
+        exchange: quote.fullExchangeName || quote.exchange || "US",
+        currency: quote.currency || "USD",
+        // Yahoo returns Date object for regularMarketTime
+        datetime: quote.regularMarketTime ? new Date(quote.regularMarketTime).toISOString() : new Date().toISOString(),
+        open: quote.regularMarketOpen || 0,
+        high: quote.regularMarketDayHigh || 0,
+        low: quote.regularMarketDayLow || 0,
+        close: quote.regularMarketPrice || 0,
+        volume: quote.regularMarketVolume || 0,
+        current_price: quote.regularMarketPrice || 0,
+        change: quote.regularMarketChange || 0,
+        percent_change: quote.regularMarketChangePercent ? quote.regularMarketChangePercent.toFixed(2) : "0.00",
+        market_cap: quote.marketCap || 0,
+        logo: logo,
         description: description,
         sector: sector,
-        price_avg_50: quote.priceAvg50,
-        price_avg_200: quote.priceAvg200,
-        year_high: quote.yearHigh,
-        year_low: quote.yearLow
+        price_avg_50: quote.fiftyDayAverage || 0,
+        price_avg_200: quote.twoHundredDayAverage || 0,
+        year_high: quote.fiftyTwoWeekHigh || 0,
+        year_low: quote.fiftyTwoWeekLow || 0
     };
   } catch (err) {
     console.error(`Error in getQuote('${symbol}'):`, err.message);
@@ -243,59 +262,57 @@ export function getStockRecommendations(symbol) {
 
 /* ------------------------------------------------------
    5. TOP TRENDING STOCKS (Dynamic Screener)
------------------------------------------------------- */
+-
+----------------------------------------------------- */
+
 export async function getTrendingStocks() {
   try {
-    const res = await axios.get("https://www.alphavantage.co/query", {
-      params: {
-        function: "TOP_GAINERS_LOSERS",
-        apikey: process.env.ALPHA_VANTAGE_KEY
-      }
-    });
+    // ⏱ safety timeout helper
+    const timeout = (ms) =>
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Yahoo timeout")), ms)
+      );
 
-    const data = res.data;
-    if (!data) return [];
+    // Fetch per symbol with individual timeout to ensure we get partial results if some hang
+    // Using `yf` instance instead of default export from user snippet
+    const quotePromises = SYMBOLS.map(symbol =>
+      Promise.race([
+        yf.quote(symbol),
+        timeout(12000) // 12s per symbol max
+      ])
+      .then(quote => quote)
+      .catch(err => {
+        // Log locally but return null so Promise.all doesn't fail globally
+        console.warn(`Quote failed for ${symbol}:`, err.message);
+        return null;
+      })
+    );
 
-    // Combine Most Actively Traded + Top Gainers
-    const trendingRaw = [
-      ...(data.most_actively_traded || []),
-      ...(data.top_gainers || [])
-    ].slice(0, 50);
+    const quotes = await Promise.all(quotePromises);
 
-    // UI-ready, lean, consistent structure
-    return trendingRaw.map(item => ({
-      symbol: item.ticker,
+    const results = quotes
+      .filter(Boolean)
+      .map(q => ({
+        ...q,
+        symbol: q.symbol,
+        name: q.longName || q.shortName || q.displayName || q.symbol,
+        current_price: q.regularMarketPrice ?? 0,
+        change: q.regularMarketChange ?? 0,
+        percent_change: q.regularMarketChangePercent ?? 0,
+        volume: q.regularMarketVolume ?? 0,
+        market_cap: q.marketCap ?? 0,
+        exchange: q.fullExchangeName || q.exchange || "US",
+        // Valid for Date object (no *1000 multiplier needed as verified)
+        datetime: q.regularMarketTime
+          ? new Date(q.regularMarketTime).toISOString()
+          : new Date().toISOString(),
+        is_up: (q.regularMarketChange ?? 0) >= 0
+      }));
 
-      // ❌ No company name (as requested)
-      instrument_name: item.ticker,
-
-      exchange: "US",
-      currency: "USD",
-      datetime: new Date().toISOString(),
-
-      // Price data
-      current_price: Number(item.price),
-      change: Number(item.change_amount),
-      percent_change: Number(
-        item.change_percentage?.replace("%", "") || 0
-      ),
-      is_up: Number(item.change_amount) >= 0,
-
-      volume: Number(item.volume),
-
-      // Not available in Alpha Vantage FREE
-      sector: null,
-      industry: null,
-      market_cap: null,
-      beta: null,
-      description: "",
-
-      // Optional generic logo fallback
-      image: `https://financialmodelingprep.com/image-stock/${item.ticker}.png`
-    }));
+    return results;
 
   } catch (err) {
-    console.error("🔥 Error in getTrendingStocks:", err.message);
+    console.error("getTrendingStocks fatal error:", err);
     return [];
   }
 }

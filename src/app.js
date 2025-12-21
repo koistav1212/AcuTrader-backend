@@ -11,6 +11,8 @@ import userRoutes from "./routes/user.route.js";
 import marketRoutes from "./routes/market.route.js";
 
 import { errorHandler } from "./middleware/errorHandler.js";
+import dns from "dns";
+dns.setDefaultResultOrder("ipv4first");
 
 const app = express();
 

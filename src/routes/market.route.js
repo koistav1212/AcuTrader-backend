@@ -99,27 +99,15 @@ router.get("/recommendations/:symbol", auth(false), recommendations);
 /**
  * @openapi
  * /api/market/trending:
- *   post:
+ *   get:
  *     tags:
  *       - Market
  *     summary: Get top stocks based on dynamic filters (Screener)
- *     requestBody:
- *       required: false
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               marketCapMoreThan:
- *                 type: number
- *               sector:
- *                 type: string
- *               limit:
- *                 type: number
+
  *     responses:
  *       200:
  *         description: List of filtered stocks
  */
-router.post("/trending", auth(false), trending);
+router.get("/trending", auth(false), trending);
 
 export default router;

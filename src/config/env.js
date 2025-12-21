@@ -7,5 +7,6 @@ export const config = {
   jwtSecret: process.env.JWT_SECRET,
   alphaKey: process.env.ALPHA_VANTAGE_KEY,
 
-  twelveKey: process.env.TWELVEDATA_KEY
+  twelveKey: process.env.TWELVEDATA_KEY,
+  mongoUri: process.env.MONGO_URI
 };

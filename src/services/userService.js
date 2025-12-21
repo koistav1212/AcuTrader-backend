@@ -1,39 +1,38 @@
 import bcrypt from "bcryptjs";
-import { prisma } from "../config/db.js";
+import User from "../models/user.model.js";
 
 const SALT_ROUNDS = 10;
 
-export async function createUser({ email, password, fullName }) {
-  const existing = await prisma.user.findUnique({ where: { email } });
+export async function createUser({ email, password, firstName, lastName }) {
+  const existing = await User.findOne({ email });
   if (existing) throw new Error("Email already registered");
 
   const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
-  const user = await prisma.user.create({
-    data: { email, passwordHash, fullName }
+  // Although the schema has 'password', the original code used 'passwordHash'.
+  // However, the schema I defined has 'password'. I will stick to 'password' field in schema
+  // which stores the hash.
+  
+  const user = await User.create({
+    email,
+    password: passwordHash,
+    firstName,
+    lastName
   });
 
   return user;
 }
 
 export async function authenticateUser({ email, password }) {
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user) throw new Error("Invalid credentials");
+  const user = await User.findOne({ email });
+  if (!user) throw new Error("User not found");
 
-  const ok = await bcrypt.compare(password, user.passwordHash);
+  const ok = await bcrypt.compare(password, user.password);
   if (!ok) throw new Error("Invalid credentials");
 
   return user;
 }
 
 export async function getUserProfile(userId) {
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: {
-      id: true,
-      email: true,
-      fullName: true,
-      createdAt: true
-    }
-  });
+  const user = await User.findById(userId).select("-password");
   return user;
 }
