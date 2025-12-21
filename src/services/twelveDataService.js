@@ -7,16 +7,16 @@ import finnhub from "finnhub";
 
 // list of symbols you want
 const SYMBOLS = [
-   "INTC", "MSFT", "CSCO", "KHC", "VRTX", "MNST", "CTAS", "ADSK", "GILD", "GOOGL",
+  "INTC", "MSFT", "CSCO", "KHC", "VRTX", "MNST", "CTAS", "ADSK", "GILD", "GOOGL",
   "ADBE", "QCOM", "WBD", "AMAT", "CDNS", "MCHP", "ISRG", "PAYX", "AAPL", "FAST",
-  "PCAR", "AMZN", "ROST", "COST", "LRCX", "AMGN", "EA",
-  "BIIB", "NVDA",  "AXON", "CMCSA",  "ADI", "XEL", "CSX", "EXC",
-  "MU",   "HON", "AMD", "BKR", "PEP", "ADP", "KDP",
-  "NFLX", "BKNG", "ORLY",   "NXPI", "TSLA", "TTWO", "CHTR", "CSGP",
+  "PCAR", "AMZN", "ROST", "COST", "LRCX", "INTU", "CTSH", "KLAC", "AMGN", "EA",
+  "BIIB", "NVDA", "SBUX", "AXON", "CMCSA", "MRVL", "ADI", "XEL", "CSX", "EXC",
+  "MU", "MAR",  "HON", "AMD", "BKR", "PEP", "ADP", "KDP",
+  "NFLX", "BKNG", "ORLY", "ROP",  "NXPI", "TSLA", "TTWO", "CHTR", "CSGP",
   "DXCM", "FTNT", "IDXX", "MELI", "MSTR", "ON", "TMUS", "META", "WDAY", "MDLZ",
-  "LULU", "REGN", , "ASML", "CPRT",  "SNPS", "FANG", "PANW",
-   "GOOG", "SHOP", "PYPL", "TEAM", "ZS",  "DDOG",
-  "PLTR", "ABNB", "DASH", "APP",   "ARM", "LIN", "TRI"
+  "LULU", "REGN", "AZN", "ASML", "CPRT",  "SNPS", "VRSK", "FANG", "PANW",
+  "CDW", "GOOG", "SHOP", "PYPL", "TEAM", "ZS",  "DDOG",
+  "PLTR", "ABNB", "DASH", "APP", "GFS",  "ARM", "LIN", "TRI"
 ];
 
 // ---------------------------------------------------------
