@@ -4,6 +4,13 @@ import yahooFinance from "yahoo-finance2";
 
 const yf = new yahooFinance({ suppressNotices: ['yahooSurvey'] });
 import finnhub from "finnhub";
+import { 
+  calculateSMA, 
+  calculateEMA, 
+  calculateRSI, 
+  calculateMACD, 
+  calculateBollingerBands 
+} from "../utils/indicators.js";
 
 // list of symbols you want
 const SYMBOLS = [
@@ -317,3 +324,121 @@ export async function getTrendingStocks() {
   }
 }
 
+
+/* ------------------------------------------------------
+   6. HISTORICAL DATA WITH INDICATORS
+------------------------------------------------------ */
+export async function getHistoricalData(symbol) {
+  try {
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setFullYear(endDate.getFullYear() - 1); // 1 Year ago
+
+    const period1 = Math.floor(startDate.getTime() / 1000);
+    const period2 = Math.floor(endDate.getTime() / 1000);
+
+    // Fetch data for multiple intervals in parallel
+    // Yahoo intervals: 1d, 1wk, 1mo
+    const intervals = ["1d", "1wk", "1mo"];
+    
+    // We can't use detailed options with simple chart queries in yahoo-finance2 easily without using historical
+    // yf.historical(symbol, queryOptions)
+    // queryOptions: { period1, period2, interval }
+
+    const results = {};
+
+    for (const interval of intervals) {
+      try {
+        const queryOptions = {
+            period1: period1, // Date or string or number
+            period2: period2,
+            interval: interval 
+        };
+        
+        // Use chart() instead of historical() as historical is deprecated/removed
+        const result = await yf.chart(symbol, queryOptions);
+        const data = result ? result.quotes : [];
+        
+        // Data is array of objects: { date, open, high, low, close, adjClose, volume }
+        // We need to sort by date ascending (usually returned ascending, but good to be sure for indicators)
+        
+        if (!data || data.length === 0) {
+            results[interval] = [];
+            continue;
+        }
+        
+        // Extract close prices for indicators
+        // Filter out any entries where close is null/undefined (sometimes happens in chart data)
+        const validData = data.filter(d => d.close !== null && d.close !== undefined);
+        const closePrices = validData.map(d => d.close);
+
+        // Calculate Indicators
+        // 1. SMA (20, 50, 200)
+        const sma20 = calculateSMA(closePrices, 20);
+        const sma50 = calculateSMA(closePrices, 50);
+        const sma200 = calculateSMA(closePrices, 200);
+
+        // 2. EMA (12, 26) - often used for MACD but good to have standalone
+        const ema12 = calculateEMA(closePrices, 12);
+        const ema26 = calculateEMA(closePrices, 26);
+
+        // 3. RSI (14)
+        const rsi14 = calculateRSI(closePrices, 14);
+
+        // 4. MACD (12, 26, 9)
+        const macd = calculateMACD(closePrices, 12, 26, 9);
+
+        // 5. Bollinger Bands (20, 2)
+        const bb = calculateBollingerBands(closePrices, 20, 2);
+
+        // Merge back into data objects
+        const enrichedData = validData.map((candle, i) => ({
+            date: candle.date.toISOString().split('T')[0], // YYYY-MM-DD
+            open: candle.open,
+            high: candle.high,
+            low: candle.low,
+            close: candle.close,
+            volume: candle.volume,
+            
+            // Indicators
+            indicators: {
+                sma: {
+                    period20: sma20[i],
+                    period50: sma50[i],
+                    period200: sma200[i]
+                },
+                ema: {
+                    period12: ema12[i],
+                    period26: ema26[i]
+                },
+                rsi: {
+                    period14: rsi14[i]
+                },
+                macd: {
+                    macdLine: macd.macd[i],
+                    signalLine: macd.signal[i],
+                    histogram: macd.histogram[i]
+                },
+                bollinger: {
+                    upper: bb.upper[i],
+                    middle: bb.middle[i],
+                    lower: bb.lower[i]
+                }
+            }
+        }));
+
+        results[interval] = enrichedData;
+
+      } catch(err) {
+          console.error(`Error fetching historical for ${symbol} interval ${interval}:`, err.message);
+          results[interval] = [];
+      }
+    }
+
+    return results;
+
+  } catch (err) {
+    console.error(`Error in getHistoricalData('${symbol}'):`, err.message);
+    return null;
+  }
+}

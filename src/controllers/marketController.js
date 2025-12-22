@@ -3,7 +3,8 @@ import {
   getQuote,
   getStockPriceChange,
   getStockRecommendations,
-  getTrendingStocks
+  getTrendingStocks,
+  getHistoricalData
 } from "../services/twelveDataService.js";
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -62,6 +63,18 @@ export const trending = async (req, res, next) => {
 
     if (!result || result.length === 0) {
         const error = new Error("No trending stocks found with provided filters");
+        error.status = 404;
+        throw error;
+    }
+    res.json(result);
+  } catch (e) { next(e); }
+};
+
+export const historical = async (req, res, next) => {
+  try {
+    const result = await getHistoricalData(req.params.symbol);
+    if (!result || Object.keys(result).length === 0) {
+        const error = new Error(`Historical data not found for symbol ${req.params.symbol}`);
         error.status = 404;
         throw error;
     }

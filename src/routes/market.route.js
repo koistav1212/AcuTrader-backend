@@ -7,7 +7,8 @@ import {
   quote,
   priceChange,
   recommendations,
-  trending
+  trending,
+  historical
 } from "../controllers/marketController.js";
 
 const router = Router();
@@ -109,5 +110,26 @@ router.get("/recommendations/:symbol", auth(false), recommendations);
  *         description: List of filtered stocks
  */
 router.get("/trending", auth(false), trending);
+
+/**
+ * @openapi
+ * /api/market/historical/{symbol}:
+ *   get:
+ *     tags:
+ *       - Market
+ *     summary: Get 1 year of historical data with technical indicators (Daily, Weekly, Monthly)
+ *     parameters:
+ *       - name: symbol
+ *         in: path
+ *         description: Stock symbol
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: AAPL
+ *     responses:
+ *       200:
+ *         description: Historical data with indicators
+ */
+router.get("/historical/:symbol", auth(false), historical);
 
 export default router;
