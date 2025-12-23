@@ -411,7 +411,7 @@ export async function getHistoricalData(symbol) {
   try {
     const endDate = new Date();
     const startDate = new Date();
-    startDate.setFullYear(endDate.getFullYear() - 1); // 1 Year ago
+    startDate.setMonth(endDate.getMonth() - 6); // 6 Months ago
 
     const period1 = Math.floor(startDate.getTime() / 1000);
     const period2 = Math.floor(endDate.getTime() / 1000);
