@@ -8,7 +8,9 @@ import {
   priceChange,
   recommendations,
   trending,
-  historical
+  historical,
+  topGainers,
+  topLosers
 } from "../controllers/marketController.js";
 
 const router = Router();
@@ -104,7 +106,6 @@ router.get("/recommendations/:symbol", auth(false), recommendations);
  *     tags:
  *       - Market
  *     summary: Get top stocks based on dynamic filters (Screener)
-
  *     responses:
  *       200:
  *         description: List of filtered stocks
@@ -131,5 +132,31 @@ router.get("/trending", auth(false), trending);
  *         description: Historical data with indicators
  */
 router.get("/historical/:symbol", auth(false), historical);
+
+/**
+ * @openapi
+ * /api/market/top-gainers:
+ *   get:
+ *     tags:
+ *       - Market
+ *     summary: Get top 10 gainers with 1-month sparkline chart
+ *     responses:
+ *       200:
+ *         description: List of top 10 gaining stocks
+ */
+router.get("/top-gainers", auth(false), topGainers);
+
+/**
+ * @openapi
+ * /api/market/top-losers:
+ *   get:
+ *     tags:
+ *       - Market
+ *     summary: Get top 10 losers with 1-month sparkline chart
+ *     responses:
+ *       200:
+ *         description: List of top 10 losing stocks
+ */
+router.get("/top-losers", auth(false), topLosers);
 
 export default router;

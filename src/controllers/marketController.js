@@ -4,7 +4,9 @@ import {
   getStockPriceChange,
   getStockRecommendations,
   getTrendingStocks,
-  getHistoricalData
+  getHistoricalData,
+  getTopGainers,
+  getTopLosers
 } from "../services/twelveDataService.js";
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -75,6 +77,30 @@ export const historical = async (req, res, next) => {
     const result = await getHistoricalData(req.params.symbol);
     if (!result || Object.keys(result).length === 0) {
         const error = new Error(`Historical data not found for symbol ${req.params.symbol}`);
+        error.status = 404;
+        throw error;
+    }
+    res.json(result);
+  } catch (e) { next(e); }
+};
+
+export const topGainers = async (req, res, next) => {
+  try {
+    const result = await getTopGainers();
+    if (!result || result.length === 0) {
+        const error = new Error("No top gainers found");
+        error.status = 404;
+        throw error;
+    }
+    res.json(result);
+  } catch (e) { next(e); }
+};
+
+export const topLosers = async (req, res, next) => {
+  try {
+    const result = await getTopLosers();
+     if (!result || result.length === 0) {
+        const error = new Error("No top losers found");
         error.status = 404;
         throw error;
     }
