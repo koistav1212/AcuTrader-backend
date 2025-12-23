@@ -2,7 +2,28 @@
 import axios from "axios";
 import yahooFinance from "yahoo-finance2";
 
-const yf = new yahooFinance({ suppressNotices: ['yahooSurvey'] });
+// Robust Yahoo Finance Initialization
+// Handle both CommonJS/ESM interop differences
+let yf;
+try {
+  // Check if yahooFinance is a class/constructor
+  if (typeof yahooFinance === 'function' && yahooFinance.prototype) {
+      yf = new yahooFinance({ suppressNotices: ['yahooSurvey'] });
+  } else if (yahooFinance && typeof yahooFinance === 'object') {
+     // It's likely an instance or a namespace with default export
+     yf = yahooFinance; // Assume it's the ready-to-use instance
+     if (yf.suppressNotices) {
+         yf.suppressNotices(['yahooSurvey']);
+     }
+  } else {
+     throw new Error("Unknown Yahoo Finance export type: " + typeof yahooFinance);
+  }
+} catch (err) {
+  console.error("Failed to initialize Yahoo Finance client:", err.message);
+  // Fallback to default export if available, or just throw
+  yf = yahooFinance; 
+}
+
 import finnhub from "finnhub";
 import { 
   calculateSMA, 
@@ -32,21 +53,24 @@ const SYMBOLS = [
 // ---------------------------------------------------------
 
 // Finnhub Config
-// User requested simpler init: new finnhub.DefaultApi("API_KEY")
-// We need to ensure finnhub.DefaultApi exists on the imported object.
-// If typical CJS-in-ESM, it might be on finnhub.default or finnhub itself.
-// We'll try to handle both or assume standard import behavior.
-// If finnhub is the module.exports object:
-let finnhubClient;
+// Robust initialization to prevent server startup crashes
+let finnhubClient = null; // Default to null
+
 try {
-   finnhubClient = new finnhub.DefaultApi("d518lt9r01qjia5c21p0d518lt9r01qjia5c21pg");
+   const api_key = finnhub.ApiClient.instance.authentications['api_key'];
+   api_key.apiKey = "d518lt9r01qjia5c21p0d518lt9r01qjia5c21pg";
+   finnhubClient = new finnhub.DefaultApi();
 } catch (e) {
-   // Fallback if 'finnhub' default export has DefaultApi under .default (common in some bundlers/node versions)
-   if (finnhub.default && finnhub.default.DefaultApi) {
-       finnhubClient = new finnhub.default.DefaultApi("d518lt9r01qjia5c21p0d518lt9r01qjia5c21pg");
-   } else {
-       console.error("Failed to initialize Finnhub client. Finnhub export:", finnhub);
-       throw e;
+   // Fallback: Try with new DefaultApi directly if signature differs
+   try {
+        if (finnhub.DefaultApi) {
+             finnhubClient = new finnhub.DefaultApi({
+                 apiKey: "d518lt9r01qjia5c21p0d518lt9r01qjia5c21pg"
+             });
+        }
+   } catch (err2) {
+       console.error("Failed to initialize Finnhub client:", e.message);
+       // Do not throw, just log. Routes using it will handle null client.
    }
 }
 
@@ -402,93 +426,94 @@ export async function getHistoricalData(symbol) {
 
     const results = {};
 
-    for (const interval of intervals) {
-      try {
-        const queryOptions = {
-            period1: period1, // Date or string or number
-            period2: period2,
-            interval: interval 
-        };
-        
-        // Use chart() instead of historical() as historical is deprecated/removed
-        const result = await yf.chart(symbol, queryOptions);
-        const data = result ? result.quotes : [];
-        
-        // Data is array of objects: { date, open, high, low, close, adjClose, volume }
-        // We need to sort by date ascending (usually returned ascending, but good to be sure for indicators)
-        
-        if (!data || data.length === 0) {
-            results[interval] = [];
-            continue;
-        }
-        
-        // Extract close prices for indicators
-        // Filter out any entries where close is null/undefined (sometimes happens in chart data)
-        const validData = data.filter(d => d.close !== null && d.close !== undefined);
-        const closePrices = validData.map(d => d.close);
-
-        // Calculate Indicators
-        // 1. SMA (20, 50, 200)
-        const sma20 = calculateSMA(closePrices, 20);
-        const sma50 = calculateSMA(closePrices, 50);
-        const sma200 = calculateSMA(closePrices, 200);
-
-        // 2. EMA (12, 26) - often used for MACD but good to have standalone
-        const ema12 = calculateEMA(closePrices, 12);
-        const ema26 = calculateEMA(closePrices, 26);
-
-        // 3. RSI (14)
-        const rsi14 = calculateRSI(closePrices, 14);
-
-        // 4. MACD (12, 26, 9)
-        const macd = calculateMACD(closePrices, 12, 26, 9);
-
-        // 5. Bollinger Bands (20, 2)
-        const bb = calculateBollingerBands(closePrices, 20, 2);
-
-        // Merge back into data objects
-        const enrichedData = validData.map((candle, i) => ({
-            date: candle.date.toISOString().split('T')[0], // YYYY-MM-DD
-            open: candle.open,
-            high: candle.high,
-            low: candle.low,
-            close: candle.close,
-            volume: candle.volume,
+    // Parallelize queries to be faster and reduce chance of single-timeout killing all
+    const promises = intervals.map(async (interval) => {
+        try {
+            const queryOptions = {
+                period1: period1, 
+                period2: period2,
+                interval: interval 
+            };
             
-            // Indicators
-            indicators: {
-                sma: {
-                    period20: sma20[i],
-                    period50: sma50[i],
-                    period200: sma200[i]
-                },
-                ema: {
-                    period12: ema12[i],
-                    period26: ema26[i]
-                },
-                rsi: {
-                    period14: rsi14[i]
-                },
-                macd: {
-                    macdLine: macd.macd[i],
-                    signalLine: macd.signal[i],
-                    histogram: macd.histogram[i]
-                },
-                bollinger: {
-                    upper: bb.upper[i],
-                    middle: bb.middle[i],
-                    lower: bb.lower[i]
-                }
+            // Use chart() 
+            const result = await yf.chart(symbol, queryOptions);
+            const data = result ? result.quotes : [];
+            
+            if (!data || data.length === 0) {
+                results[interval] = [];
+                return;
             }
-        }));
+            
+            // Extract close prices AND valid data together
+            const validData = data.filter(d => 
+                d.close !== null && 
+                d.close !== undefined &&
+                d.date // Ensure date exists
+            );
 
-        results[interval] = enrichedData;
+            // Sort by date ascending
+            validData.sort((a,b) => new Date(a.date) - new Date(b.date));
 
-      } catch(err) {
-          console.error(`Error fetching historical for ${symbol} interval ${interval}:`, err.message);
-          results[interval] = [];
-      }
-    }
+            const closePrices = validData.map(d => d.close);
+
+            if (closePrices.length === 0) {
+                 results[interval] = [];
+                 return;
+            }
+
+            // Calculate Indicators
+            const sma20 = calculateSMA(closePrices, 20);
+            const sma50 = calculateSMA(closePrices, 50);
+            const sma200 = calculateSMA(closePrices, 200);
+            const ema12 = calculateEMA(closePrices, 12);
+            const ema26 = calculateEMA(closePrices, 26);
+            const rsi14 = calculateRSI(closePrices, 14);
+            const macd = calculateMACD(closePrices, 12, 26, 9);
+            const bb = calculateBollingerBands(closePrices, 20, 2);
+
+            // Merge back
+            const enrichedData = validData.map((candle, i) => ({
+                date: candle.date.toISOString().split('T')[0],
+                open: candle.open,
+                high: candle.high,
+                low: candle.low,
+                close: candle.close,
+                volume: candle.volume,
+                indicators: {
+                    sma: {
+                        period20: sma20[i],
+                        period50: sma50[i],
+                        period200: sma200[i]
+                    },
+                    ema: {
+                        period12: ema12[i],
+                        period26: ema26[i]
+                    },
+                    rsi: {
+                        period14: rsi14[i]
+                    },
+                    macd: {
+                        macdLine: macd.macd[i],
+                        signalLine: macd.signal[i],
+                        histogram: macd.histogram[i]
+                    },
+                    bollinger: {
+                        upper: bb.upper[i],
+                        middle: bb.middle[i],
+                        lower: bb.lower[i]
+                    }
+                }
+            }));
+
+            results[interval] = enrichedData;
+
+        } catch(err) {
+            console.error(`Error fetching historical for ${symbol} interval ${interval}:`, err.message);
+            results[interval] = [];
+        }
+    });
+
+    await Promise.all(promises);
 
     return results;
 
