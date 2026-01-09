@@ -1,6 +1,8 @@
 // src/services/twelveDataService.js
 import axios from "axios";
 import yahooFinance from "yahoo-finance2";
+import * as cheerio from "cheerio";
+import https from "https";
 
 // Robust Yahoo Finance Initialization
 // Handle both CommonJS/ESM interop differences
@@ -84,76 +86,199 @@ try {
 /* ------------------------------------------------------
    SYMBOL SEARCH (Stocks + Real-time Quote + Full Profile)
 ------------------------------------------------------ */
-export async function searchSymbol(keyword) {
+/* ------------------------------------------------------
+   1. SYMBOL SEARCH (Stocks Only) - ENHANCED
+------------------------------------------------------ */
+
+
+
+export async function searchSymbol(symbol) {
+  const SYM = symbol.toUpperCase();
+  console.log(`Scraping Yahoo Finance for ${SYM}...`);
+
   try {
-    // 1. Search via Yahoo Finance
-    const searchResult = await yf.search(keyword);
-    if (!searchResult || !searchResult.quotes || searchResult.quotes.length === 0) {
-        return { Stocks: [] };
-    }
+     const url = `https://finance.yahoo.com/quote/${SYM}/`;
+     
+     // Robust headers to mimic browser
+     const headers = { 
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/json,xml;q=0.9,*/*;q=0.8",
+     };
 
-    // 2. Filter for Equities and ETFs, take Top 10
-    const topResults = searchResult.quotes
-        .filter(q => q.isYahooFinance && (q.quoteType === 'EQUITY' || q.quoteType === 'ETF'))
-        .slice(0, 10);
+     const { data } = await axios.get(url, { headers });
+     const $ = cheerio.load(data);
 
-    if (topResults.length === 0) return { Stocks: [] };
+     // 1. Core Price Data (fin-streamer)
+     const getStreamer = (field) => {
+         // Try matching by data-field AND data-symbol
+         const el = $(`fin-streamer[data-field="${field}"][data-symbol="${SYM}"]`);
+         if (el.length) return el.attr('value') || el.text().replace(/[(),%]/g, ''); // Remove parens and % for parsing
+         
+         // Fallback just data-field
+         const el2 = $(`fin-streamer[data-field="${field}"]`);
+         return el2.attr('value') || el2.text().replace(/[(),%]/g, '');
+     };
 
-    // 3. Fetch Real-time Quotes for these symbols to get full data
-    const symbols = topResults.map(r => r.symbol);
-    
-    // helper for safety
-    const timeout = (ms) => new Promise((_, reject) => setTimeout(() => reject(new Error("Yahoo timeout")), ms));
+     const currentPrice = parseFloat(getStreamer("regularMarketPrice"));
+     const change = parseFloat(getStreamer("regularMarketChange"));
+     const percentChange = parseFloat(getStreamer("regularMarketChangePercent"));
+     const volume = parseFloat(getStreamer("regularMarketVolume"));
 
-    // Fetch per symbol or bulk if reliable. getTrendingStocks uses individual promises with race.
-    // Let's use individual promises to ensure we get as much data as possible even if one fails.
-    const quotePromises = symbols.map(symbol =>
-      Promise.race([
-        yf.quote(symbol),
-        timeout(10000)
-      ])
-      .then(quote => quote)
-      .catch(err => {
-        console.warn(`Quote failed for ${symbol}:`, err.message);
-        return null;
-      })
-    );
+     // 2. Stats from Labels
+     const getStat = (label) => {
+         let el = $('*').filter((i, e) => {
+             const text = $(e).clone().children().remove().end().text().trim().replace(/\s+/g, ' ');
+             return text === label;
+         }).first();
 
-    const quotes = await Promise.all(quotePromises);
+         if (el.length) return el.next().text().trim();
 
-    // Create a map for easy lookup if needed, or just iterate valid quotes
-    const validQuotes = quotes.filter(Boolean);
+         // Fallback to startsWith if exact match failed
+         el = $('*').filter((i, e) => {
+             const text = $(e).clone().children().remove().end().text().trim().replace(/\s+/g, ' ');
+             return text.startsWith(label);
+         }).first();
 
-    // 4. Map Data to Rich Format (Same as getTrendingStocks)
-    const formattedStocks = validQuotes.map(q => ({
-        ...q,
-        // Ensure these critical fields for frontend are present and normalized
-        symbol: q.symbol,
-        name: q.longName || q.shortName || q.displayName || q.symbol,
-        current_price: q.regularMarketPrice ?? 0,
-        change: q.regularMarketChange ?? 0,
-        percent_change: q.regularMarketChangePercent ?? 0,
-        volume: q.regularMarketVolume ?? 0,
-        market_cap: q.marketCap ?? 0,
-        exchange: q.fullExchangeName || q.exchange || "US",
-        datetime: q.regularMarketTime
-          ? new Date(q.regularMarketTime).toISOString()
-          : new Date().toISOString(),
-        is_up: (q.regularMarketChange ?? 0) >= 0,
-        
-        // Fallback for logo if not in quote (it usually isn't in standard quote, but might be in summary)
-        // We can add it manually if missing
-        image: `https://financialmodelingprep.com/image-stock/${q.symbol}.png`
-    }));
+         if (el.length) return el.next().text().trim();
+         
+         return null;
+     };
 
-    // Return wrapped in Stocks as per original contract
-    return { Stocks: formattedStocks };
+     const prevClose = getStat("Previous Close");
+     const open = getStat("Open");
+     const dayRange = getStat("Day's Range"); 
+     const fiftyTwoWeekRange = getStat("52 Week Range");
+     const marketCap = getStat("Market Cap") || getStreamer("marketCap");
+     const avgVolume = getStat("Avg. Volume");
+     const peRatio = getStat("PE Ratio (TTM)");
+     const eps = getStat("EPS (TTM)");
+     const earningsDate = getStat("Earnings Date");
+     const divYield = getStat("Forward Dividend & Yield");
+     const targetEst = getStat("1y Target Est");
+
+     // Valuation Measures
+     const enterpriseValue = getStat("Enterprise Value");
+     const trailingPE = getStat("Trailing P/E");
+     const forwardPE = getStat("Forward P/E");
+     const pegRatio = getStat("PEG Ratio (5yr expected)");
+     const priceSales = getStat("Price/Sales (ttm)");
+     const priceBook = getStat("Price/Book (mrq)");
+     const evRevenue = getStat("Enterprise Value/Revenue");
+     const evEbitda = getStat("Enterprise Value/EBITDA");
+
+     // Financial Highlights
+     const profitMargin = getStat("Profit Margin");
+     const returnOnAssets = getStat("Return on Assets (ttm)");
+     const returnOnEquity = getStat("Return on Equity (ttm)");
+     const revenue = getStat("Revenue (ttm)");
+     const netIncome = getStat("Net Income Avi to Common (ttm)") || getStat("Net Income (ttm)"); // Fallback
+     const dilutedEPS = getStat("Diluted EPS (ttm)");
+     const totalCash = getStat("Total Cash (mrq)");
+     const totalDebtEquity = getStat("Total Debt/Equity (mrq)");
+     const leveredFCF = getStat("Levered Free Cash Flow (ttm)");
+
+     // Analyst Insights
+     const analystRating = getStat("Rating");
+     const analystTarget = getStat("Price Target");
+
+
+     // Parse ranges
+     let dayLow = null, dayHigh = null;
+     if (dayRange) {
+        const parts = dayRange.split('-').map(s => parseFloat(s.trim()));
+        if (parts.length === 2) { dayLow = parts[0]; dayHigh = parts[1]; }
+     }
+     
+     let yearLow = null, yearHigh = null;
+     if (fiftyTwoWeekRange) {
+        const parts = fiftyTwoWeekRange.split('-').map(s => parseFloat(s.trim()));
+        if (parts.length === 2) { yearLow = parts[0]; yearHigh = parts[1]; }
+     }
+
+     // Name extraction strategy: Try Title first as it is cleaner
+     // Title: "NVIDIA Corporation (NVDA) Stock Price..."
+     let name = SYM;
+     const title = $('title').text();
+     if (title) {
+        const match = title.match(/^(.*?) \(/);
+        if (match && match[1]) {
+            name = match[1].trim();
+        }
+     }
+     if (name === SYM) {
+          // Fallback to h1 but clean it up
+          const h1 = $('h1').first().text(); 
+          // If h1 starts with Yahoo Finance, strip it
+          name = h1.replace("Yahoo Finance", "").replace(/\(.*?\)/g, "").trim(); 
+     }
+
+     const result = {
+       symbol: SYM,
+       name: name || SYM, 
+       
+       // Real-time
+       current_price: currentPrice || 0,
+       change: change || 0,
+       percent_change: percentChange || 0,
+       is_up: (change || 0) >= 0,
+       currency: "USD",
+       datetime: new Date().toISOString(),
+
+       // Stats
+       previous_close: parseFloat(prevClose) || 0,
+       open: parseFloat(open) || 0,
+       day_low: dayLow,
+       day_high: dayHigh,
+       fifty_two_week_low: yearLow,
+       fifty_two_week_high: yearHigh,
+       volume: volume || 0,
+       average_volume: avgVolume,
+       market_cap: marketCap,
+       pe_ratio: parseFloat(peRatio),
+       eps: parseFloat(eps),
+       earnings_date: earningsDate,
+       forward_dividend_yield: divYield,
+       target_est_1y: parseFloat(targetEst),
+
+       // Valuation
+       enterprise_value: enterpriseValue,
+       trailing_pe: parseFloat(trailingPE) || 0,
+       forward_pe: parseFloat(forwardPE) || 0,
+       peg_ratio: parseFloat(pegRatio) || 0,
+       price_to_sales: parseFloat(priceSales) || 0,
+       price_to_book: parseFloat(priceBook) || 0,
+       enterprise_value_to_revenue: parseFloat(evRevenue) || 0,
+       enterprise_value_to_ebitda: parseFloat(evEbitda) || 0,
+
+       // Financials
+       profit_margin: profitMargin,
+       return_on_assets: returnOnAssets,
+       return_on_equity: returnOnEquity,
+       revenue: revenue,
+       net_income: netIncome,
+       diluted_eps: parseFloat(dilutedEPS) || 0,
+       total_cash: totalCash,
+       total_debt_to_equity: totalDebtEquity,
+       levered_free_cash_flow: leveredFCF,
+
+       // Analyst
+       analyst_rating: analystRating,
+       analyst_price_target: analystTarget,
+       
+       // Add missing fields to match previous schema if needed (nulls)
+       bid: 0, ask: 0,
+     };
+
+     return { Stocks: [result] };
 
   } catch (err) {
-    console.error(`Error in searchSymbol('${keyword}'):`, err.message);
+    console.error(`Scraping failed for ${SYM}:`, err.message);
+    // Return empty but consistent structure
     return { Stocks: [] };
   }
 }
+
+
 
 
 /* ------------------------------------------------------
@@ -351,56 +476,106 @@ export async function getStockRecommendations(symbol) {
 -
 ----------------------------------------------------- */
 
-export async function getTrendingStocks() {
-  try {
-    // ⏱ safety timeout helper
-    const timeout = (ms) =>
-      new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("Yahoo timeout")), ms)
-      );
+// Helper: Yahoo Implementation
+// Helper: Cheerio Scraper Implementation
+async function scrapeMostActiveStocks() {
+  const url =
+    "https://query2.finance.yahoo.com/v1/finance/screener/predefined/saved?count=200&formatted=false&scrIds=most_actives";
 
-    // Fetch per symbol with individual timeout to ensure we get partial results if some hang
-    // Using `yf` instance instead of default export from user snippet
-    const quotePromises = SYMBOLS.map(symbol =>
-      Promise.race([
-        yf.quote(symbol),
-        timeout(12000) // 12s per symbol max
-      ])
-      .then(quote => quote)
-      .catch(err => {
-        // Log locally but return null so Promise.all doesn't fail globally
-        console.warn(`Quote failed for ${symbol}:`, err.message);
-        return null;
-      })
-    );
+  const { data } = await axios.get(url, {
+    headers: {
+      "User-Agent": "Mozilla/5.0",
+      Accept: "application/json",
+    }
+  });
 
-    const quotes = await Promise.all(quotePromises);
+  const results = data.finance.result[0].quotes;
 
-    const results = quotes
-      .filter(Boolean)
-      .map(q => ({
-        ...q,
-        symbol: q.symbol,
-        name: q.longName || q.shortName || q.displayName || q.symbol,
-        current_price: q.regularMarketPrice ?? 0,
-        change: q.regularMarketChange ?? 0,
-        percent_change: q.regularMarketChangePercent ?? 0,
-        volume: q.regularMarketVolume ?? 0,
-        market_cap: q.marketCap ?? 0,
-        exchange: q.fullExchangeName || q.exchange || "US",
-        // Valid for Date object (no *1000 multiplier needed as verified)
-        datetime: q.regularMarketTime
-          ? new Date(q.regularMarketTime).toISOString()
-          : new Date().toISOString(),
-        is_up: (q.regularMarketChange ?? 0) >= 0
-      }));
+  return results.map(x => ({
+    symbol: x.symbol,
+    name: x.shortName,
+    current_price: x.regularMarketPrice,
+    change: x.regularMarketChange,
+    percent_change: x.regularMarketChangePercent,
+    volume: x.regularMarketVolume,
+    market_cap: x.marketCap,
+    exchange: x.fullExchangeName,
+    datetime: new Date().toISOString(),
+    is_up: x.regularMarketChange >= 0
+  }));
+}
 
+
+// Helper: Finnhub Implementation
+async function getTrendingStocksFinnhub() {
+    console.log("Attempting to fetch trending stocks from Finnhub...");
+    if (!finnhubClient) {
+        console.error("Finnhub client not initialized.");
+        return [];
+    }
+
+    // Limit to top 10 to respect rate limits (60 calls/min free tier)
+    const limitedSymbols = SYMBOLS.slice(0, 10);
+    
+    // Helper to promisify finnhub callback
+    const getQuoteFinnhub = (symbol) => {
+        return new Promise((resolve, reject) => {
+            finnhubClient.quote(symbol, (error, data, response) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve({ symbol, ...data });
+                }
+            });
+        });
+    };
+
+    const results = [];
+    
+    // Sequential fetching for Finnhub to be safe with limits
+    for (const symbol of limitedSymbols) {
+        try {
+            const data = await getQuoteFinnhub(symbol);
+            // Finnhub Response Map: c: Current, d: Change, dp: Percent, h: High, l: Low, o: Open, pc: Prev Close
+            results.push({
+                symbol: data.symbol,
+                name: data.symbol, // Finnhub quote doesn't give name, use symbol
+                current_price: data.c,
+                change: data.d,
+                percent_change: data.dp,
+                volume: 0, // Quote endpoint doesn't return volume in free tier usually
+                market_cap: 0, 
+                exchange: "US",
+                datetime: new Date().toISOString(), // t is unix timestamp
+                is_up: data.d >= 0
+            });
+            // tiny delay
+            await new Promise(r => setTimeout(r, 100)); // 100ms delay
+        } catch(err) {
+            console.warn(`Finnhub quote failed for ${symbol}:`, err.message);
+        }
+    }
+    
+    console.log(`Fetched ${results.length} quotes from Finnhub.`);
     return results;
+}
 
-  } catch (err) {
-    console.error("getTrendingStocks fatal error:", err);
-    return [];
+
+export async function getTrendingStocks(filters = {}) {
+  // 1. Try Cheerio Scraper First
+  let data = await scrapeMostActiveStocks();
+
+  // 2. Fallback to Finnhub if Yahoo fails or returns empty
+  if (!data || data.length === 0) {
+      console.warn("Yahoo Finance returned empty/null. Switching to Finnhub fallback...");
+      data = await getTrendingStocksFinnhub();
   }
+
+  // 3. Apply any filters if passed (placeholder for future logic)
+  // Currently the controller passes body, but logic wasn't fully defined. 
+  // We return whatever we found.
+  
+  return data;
 }
 
 
