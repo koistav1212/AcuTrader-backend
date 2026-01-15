@@ -105,14 +105,15 @@ export async function searchSymbol(symbol) {
         "Accept": "text/html,application/xhtml+xml,application/json,xml;q=0.9,*/*;q=0.8",
      };
 
+     const start = Date.now();
      const { data } = await axios.get(url, { headers });
      const $ = cheerio.load(data);
 
-     // 1. Core Price Data (fin-streamer)
+     // 1. Core Price Data (fin-streamer) is fast, keep it.
      const getStreamer = (field) => {
          // Try matching by data-field AND data-symbol
          const el = $(`fin-streamer[data-field="${field}"][data-symbol="${SYM}"]`);
-         if (el.length) return el.attr('value') || el.text().replace(/[(),%]/g, ''); // Remove parens and % for parsing
+         if (el.length) return el.attr('value') || el.text().replace(/[(),%]/g, ''); 
          
          // Fallback just data-field
          const el2 = $(`fin-streamer[data-field="${field}"]`);
@@ -124,23 +125,67 @@ export async function searchSymbol(symbol) {
      const percentChange = parseFloat(getStreamer("regularMarketChangePercent"));
      const volume = parseFloat(getStreamer("regularMarketVolume"));
 
-     // 2. Stats from Labels
-     const getStat = (label) => {
-         let el = $('*').filter((i, e) => {
-             const text = $(e).clone().children().remove().end().text().trim().replace(/\s+/g, ' ');
-             return text === label;
-         }).first();
+     // 2. Optimized Usage: Single Pass Extraction
+     // Instead of $('*').filter(...) 25 times, we scan common containers once.
+     // Yahoo Finance typically puts stats in <table> rows or lists.
+     
+     const statsMap = new Map();
 
-         if (el.length) return el.next().text().trim();
+     // Helper to clean text
+     const clean = (text) => text.replace(/\s+/g, ' ').trim();
 
-         // Fallback to startsWith if exact match failed
-         el = $('*').filter((i, e) => {
-             const text = $(e).clone().children().remove().end().text().trim().replace(/\s+/g, ' ');
-             return text.startsWith(label);
-         }).first();
+     // Strategy A: Scan all Table Rows (most stats are here)
+     $('tr').each((i, row) => {
+        const cells = $(row).children('td, th');
+        if (cells.length >= 2) {
+            const label = clean($(cells[0]).text());
+            const value = clean($(cells[1]).text());
+            if (label && value) {
+                statsMap.set(label, value);
+            }
+        }
+     });
 
-         if (el.length) return el.next().text().trim();
+     // Strategy B: Scan specific list items (divs/ul/li)
+     // Yahoo is using <ul class="yf-..."><li><p class="label">...</p><p class="value">...</p></li></ul>
+     $('li').each((i, li) => {
+         // Try finding spans first (common in some views)
+         let items = $(li).find('span');
          
+         // If not enough spans, try paragraphs (Financial Highlights, Valuation uses this)
+         if (items.length < 2) {
+             items = $(li).find('p');
+         }
+
+         // If still nothing, try divs directly children if it's a list of divs? 
+         // (Unlikely for li, but good to be safe)
+
+         if (items.length >= 2) {
+             const label = clean($(items[0]).text());
+             const value = clean($(items[1]).text());
+             if (label && value) {
+                 statsMap.set(label, value);
+             }
+         }
+     });
+     
+     // Strategy C: Some summary data is in <div class="container"><div class="label">...</div><div class="value">...</div></div>
+     // Often specifically for "Bid", "Ask", "Volume" in the summary header.
+     // These might not be in 'li' or 'tr'.
+     
+     // Inspecting the 'Statistics' screenshot, it's definitely li > p.
+     // But for "Bid"/"Ask", they are often in the "Quote Summary" area.
+     // Check if standard table scan caught them. If not, we might need a specific look.
+     // Let's add 'div' scan for specific class-less structures if needed, but let's stick to 'li' fix first as that is the main user complaint (Highlights).
+
+     const getStat = (label) => {
+         // Exact match
+         if (statsMap.has(label)) return statsMap.get(label);
+
+         // StartsWith fallback (search keys)
+         for (const [key, value] of statsMap.entries()) {
+             if (key.startsWith(label)) return value;
+         }
          return null;
      };
 
@@ -148,13 +193,17 @@ export async function searchSymbol(symbol) {
      const open = getStat("Open");
      const dayRange = getStat("Day's Range"); 
      const fiftyTwoWeekRange = getStat("52 Week Range");
-     const marketCap = getStat("Market Cap") || getStreamer("marketCap");
+     const marketCap = getStat("Market Cap") || getStreamer("marketCap") || getStat("Market Cap (intraday)");
      const avgVolume = getStat("Avg. Volume");
      const peRatio = getStat("PE Ratio (TTM)");
      const eps = getStat("EPS (TTM)");
      const earningsDate = getStat("Earnings Date");
      const divYield = getStat("Forward Dividend & Yield");
      const targetEst = getStat("1y Target Est");
+     
+     // Bid/Ask might be "Bid" or "Ask"
+     const bid = getStat("Bid");
+     const ask = getStat("Ask");
 
      // Valuation Measures
      const enterpriseValue = getStat("Enterprise Value");
@@ -212,6 +261,8 @@ export async function searchSymbol(symbol) {
           name = h1.replace("Yahoo Finance", "").replace(/\(.*?\)/g, "").trim(); 
      }
 
+     console.log(`Scraping took ${(Date.now() - start)}ms`);
+
      const result = {
        symbol: SYM,
        name: name || SYM, 
@@ -266,7 +317,8 @@ export async function searchSymbol(symbol) {
        analyst_price_target: analystTarget,
        
        // Add missing fields to match previous schema if needed (nulls)
-       bid: 0, ask: 0,
+       bid: parseFloat(bid) || 0, 
+       ask: parseFloat(ask) || 0,
      };
 
      return { Stocks: [result] };
@@ -479,97 +531,97 @@ export async function getStockRecommendations(symbol) {
 // Helper: Yahoo Implementation
 // Helper: Cheerio Scraper Implementation
 async function scrapeMostActiveStocks() {
-  const url =
-    "https://query2.finance.yahoo.com/v1/finance/screener/predefined/saved?count=200&formatted=false&scrIds=most_actives";
+  const url = "https://finance.yahoo.com/most-active";
+  console.log(`Scraping Yahoo Finance Most Actives from HTML...`);
 
-  const { data } = await axios.get(url, {
-    headers: {
-      "User-Agent": "Mozilla/5.0",
-      Accept: "application/json",
-    }
-  });
+  const headers = { 
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/json,xml;q=0.9,*/*;q=0.8",
+  };
 
-  const results = data.finance.result[0].quotes;
+  try {
+     const { data } = await axios.get(url, { headers });
+     const $ = cheerio.load(data);
+     const results = [];
 
-  return results.map(x => ({
-    symbol: x.symbol,
-    name: x.shortName,
-    current_price: x.regularMarketPrice,
-    change: x.regularMarketChange,
-    percent_change: x.regularMarketChangePercent,
-    volume: x.regularMarketVolume,
-    market_cap: x.marketCap,
-    exchange: x.fullExchangeName,
-    datetime: new Date().toISOString(),
-    is_up: x.regularMarketChange >= 0
-  }));
+     $('table tbody tr').each((i, row) => {
+         const cells = $(row).find('td');
+         if (cells.length < 8) return; // Skip invalid rows
+
+         const symbol = $(cells[0]).text().trim();
+         const name = $(cells[1]).text().trim();
+         // Cell 3 text is like "176.25 -2.14 (-1.20%)" or sometimes just price dependent on checking.
+         // Based on inspection:
+         // Cell 3: "183.27  -2.54 (-1.36%)"
+         // Cell 4: "-2.54"
+         // Cell 5: "-1.36%"
+         // This redundancy is helpful. Let's use individual cells if available.
+         
+         // Extract price from Cell 3 which seems to have it all? Or check if Cell 2 is empty/graph?
+         // Inspection: Cell 2 was empty/graph.
+         // Let's rely on specific cells for change/percent which are cleaner: 4 and 5.
+         
+         // Price: Cell 3 often has Price + Change combined in text view, but let's try to get just the first number or Fin-Streamer if inside?
+         // Simpler: Split cell 3 text by space? "183.27 -2.54..." -> 0 index is 183.27
+         
+         const rawPriceCell = $(cells[3]).text().trim(); // "183.27 -2.54 (-1.36%)"
+         // Matches typical number at start
+         const priceMatch = rawPriceCell.match(/^[\d,.]+/);
+         const current_price = priceMatch ? parseFloat(priceMatch[0].replace(/,/g, '')) : 0;
+
+         const changeText = $(cells[4]).text().trim();
+         const change = parseFloat(changeText.replace(/,/g, '')) || 0;
+
+         const percentChangeText = $(cells[5]).text().trim().replace('%', '');
+         const percent_change = parseFloat(percentChangeText.replace(/,/g, '')) || 0;
+
+         const volumeText = $(cells[6]).text().trim();
+         // Handle M/B/T suffixes if typically present in text? 
+         // Inspection showed "141.055M". We need to parse this.
+         const parseVolume = (txt) => {
+             const m = txt.match(/([\d.]+)([MBT]?)/);
+             if (!m) return 0;
+             let val = parseFloat(m[1]);
+             const suffix = m[2];
+             if (suffix === 'M') val *= 1_000_000;
+             if (suffix === 'B') val *= 1_000_000_000;
+             if (suffix === 'T') val *= 1_000_000_000_000;
+             return val;
+         };
+         const volume = parseVolume(volumeText);
+
+         const marketCapText = $(cells[8]).text().trim();
+         const market_cap = parseVolume(marketCapText); // "4.462T"
+
+         results.push({
+             symbol,
+             name,
+             current_price,
+             change,
+             percent_change,
+             volume,
+             market_cap,
+             exchange: 'N/A', // Not easily available in table
+             datetime: new Date().toISOString(),
+             is_up: change >= 0
+         });
+     });
+
+     return results;
+
+  } catch (err) {
+     console.error(`HTML Scraping failed: ${err.message}`);
+     throw new Error("Failed to scrape most active stocks via Cheerio");
+  }
 }
 
-
-// Helper: Finnhub Implementation
-async function getTrendingStocksFinnhub() {
-    console.log("Attempting to fetch trending stocks from Finnhub...");
-    if (!finnhubClient) {
-        console.error("Finnhub client not initialized.");
-        return [];
-    }
-
-    // Limit to top 10 to respect rate limits (60 calls/min free tier)
-    const limitedSymbols = SYMBOLS.slice(0, 10);
-    
-    // Helper to promisify finnhub callback
-    const getQuoteFinnhub = (symbol) => {
-        return new Promise((resolve, reject) => {
-            finnhubClient.quote(symbol, (error, data, response) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve({ symbol, ...data });
-                }
-            });
-        });
-    };
-
-    const results = [];
-    
-    // Sequential fetching for Finnhub to be safe with limits
-    for (const symbol of limitedSymbols) {
-        try {
-            const data = await getQuoteFinnhub(symbol);
-            // Finnhub Response Map: c: Current, d: Change, dp: Percent, h: High, l: Low, o: Open, pc: Prev Close
-            results.push({
-                symbol: data.symbol,
-                name: data.symbol, // Finnhub quote doesn't give name, use symbol
-                current_price: data.c,
-                change: data.d,
-                percent_change: data.dp,
-                volume: 0, // Quote endpoint doesn't return volume in free tier usually
-                market_cap: 0, 
-                exchange: "US",
-                datetime: new Date().toISOString(), // t is unix timestamp
-                is_up: data.d >= 0
-            });
-            // tiny delay
-            await new Promise(r => setTimeout(r, 100)); // 100ms delay
-        } catch(err) {
-            console.warn(`Finnhub quote failed for ${symbol}:`, err.message);
-        }
-    }
-    
-    console.log(`Fetched ${results.length} quotes from Finnhub.`);
-    return results;
-}
 
 
 export async function getTrendingStocks(filters = {}) {
   // 1. Try Cheerio Scraper First
   let data = await scrapeMostActiveStocks();
 
-  // 2. Fallback to Finnhub if Yahoo fails or returns empty
-  if (!data || data.length === 0) {
-      console.warn("Yahoo Finance returned empty/null. Switching to Finnhub fallback...");
-      data = await getTrendingStocksFinnhub();
-  }
+ 
 
   // 3. Apply any filters if passed (placeholder for future logic)
   // Currently the controller passes body, but logic wasn't fully defined. 
