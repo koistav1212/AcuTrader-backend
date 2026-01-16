@@ -338,88 +338,172 @@ export async function searchSymbol(symbol) {
 ------------------------------------------------------ */
 
 export async function getQuote(symbol) {
+  const SYM = symbol.toUpperCase();
+  // console.log(`Getting Quote for ${SYM}...`);
+
   try {
-    const modules = [
-        "price",
-        "summaryDetail",
-        "financialData",
-        "defaultKeyStatistics",
-        "recommendationTrend",
-        "assetProfile"
-    ];
+     const url = `https://finance.yahoo.com/quote/${SYM}/`;
+     
+     // Robust headers to mimic browser
+     const headers = { 
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/json,xml;q=0.9,*/*;q=0.8",
+     };
 
-    const result = await yf.quoteSummary(symbol, { modules });
-    
-    // Safety checks
-    const price = result.price || {};
-    const summary = result.summaryDetail || {};
-    const financials = result.financialData || {};
-    const stats = result.defaultKeyStatistics || {};
-    const profile = result.assetProfile || {};
+     const { data } = await axios.get(url, { headers });
+     const $ = cheerio.load(data);
 
-    return {
+     // 1. Core Price Data
+     const getStreamer = (field) => {
+         const el = $(`fin-streamer[data-field="${field}"][data-symbol="${SYM}"]`);
+         if (el.length) return el.attr('value') || el.text().replace(/[(),%]/g, ''); 
+         const el2 = $(`fin-streamer[data-field="${field}"]`);
+         return el2.attr('value') || el2.text().replace(/[(),%]/g, '');
+     };
+
+     const currentPrice = parseFloat(getStreamer("regularMarketPrice"));
+     const change = parseFloat(getStreamer("regularMarketChange"));
+     const percentChange = parseFloat(getStreamer("regularMarketChangePercent"));
+     const volume = parseFloat(getStreamer("regularMarketVolume"));
+     
+     // 2. Stats Parsing
+     const statsMap = new Map();
+     const clean = (text) => text.replace(/\s+/g, ' ').trim();
+
+     $('tr').each((i, row) => {
+        const cells = $(row).children('td, th');
+        if (cells.length >= 2) {
+            const label = clean($(cells[0]).text());
+            const value = clean($(cells[1]).text());
+            if (label && value) statsMap.set(label, value);
+        }
+     });
+
+     $('li').each((i, li) => {
+         let items = $(li).find('span');
+         if (items.length < 2) items = $(li).find('p');
+         if (items.length >= 2) {
+             const label = clean($(items[0]).text());
+             const value = clean($(items[1]).text());
+             if (label && value) statsMap.set(label, value);
+         }
+     });
+
+     const getStat = (label) => {
+         if (statsMap.has(label)) return statsMap.get(label);
+         for (const [key, value] of statsMap.entries()) {
+             if (key.startsWith(label)) return value;
+         }
+         return null;
+     };
+
+
+
+     // Fields extraction
+     const prevClose = parseFloat(getStat("Previous Close")) || 0;
+     const open = parseFloat(getStat("Open")) || 0;
+     const dayRange = getStat("Day's Range");
+     const fiftyTwoWeekRange = getStat("52 Week Range");
+     const avgVolumeStr = getStat("Avg. Volume");
+     const marketCapStr = getStat("Market Cap") || getStreamer("marketCap");
+     
+     const bid = getStat("Bid");
+     const ask = getStat("Ask");
+     
+     const peRatio = parseFloat(getStat("PE Ratio (TTM)")) || 0;
+     const eps = parseFloat(getStat("EPS (TTM)")) || 0;
+     const divYieldStats = getStat("Forward Dividend & Yield");
+
+     // Parse Ranges
+     let dayLow = null, dayHigh = null;
+     if (dayRange) {
+        const parts = dayRange.split('-').map(s => parseFloat(s.trim()));
+        if (parts.length === 2) { dayLow = parts[0]; dayHigh = parts[1]; }
+     }
+     
+     let yearLow = null, yearHigh = null;
+     if (fiftyTwoWeekRange) {
+        const parts = fiftyTwoWeekRange.split('-').map(s => parseFloat(s.trim()));
+        if (parts.length === 2) { yearLow = parts[0]; yearHigh = parts[1]; }
+     }
+
+     // Parse Dividend
+     let dividendRate = 0;
+     let dividendYield = 0;
+     if (divYieldStats && divYieldStats !== "N/A") {
+         const parts = divYieldStats.split('(');
+         if (parts.length > 0) dividendRate = parseFloat(parts[0].trim()) || 0;
+         if (parts.length > 1) dividendYield = parseFloat(parts[1].replace(/[%)]/g, '')) || 0;
+     }
+
+     // Name extraction
+     let name = SYM;
+     const title = $('title').text();
+     if (title) {
+        const match = title.match(/^(.*?) \(/);
+        if (match && match[1]) name = match[1].trim();
+     }
+     if (name === SYM) {
+          const h1 = $('h1').first().text(); 
+          name = h1.replace("Yahoo Finance", "").replace(/\(.*?\)/g, "").trim(); 
+     }
+
+     return {
         // Identity
-        symbol: symbol,
-        name: price.longName || price.shortName || symbol,
-        exchange: price.exchangeName || "US",
-        currency: price.currency || "USD",
+        symbol: SYM,
+        name: name || SYM,
+        exchange: "US", // Default
+        currency: "USD",
         datetime: new Date().toISOString(),
-        logo: `https://financialmodelingprep.com/image-stock/${symbol}.png`, // Keep using FMP image CDN if mostly reliable for logos, or switch to clearbit
+        logo: `https://financialmodelingprep.com/image-stock/${SYM}.png`,
 
         // Trading Information
-        open: summary.open,
-        high: summary.dayHigh,
-        low: summary.dayLow,
-        previousClose: summary.previousClose,
-        volume: summary.volume,
-        avgVolume3M: summary.averageVolume,
-        bid: summary.bid,
-        bidSize: summary.bidSize,
-        ask: summary.ask,
-        askSize: summary.askSize,
-        beta: summary.beta,
+        open: open,
+        high: dayHigh || 0,
+        low: dayLow || 0,
+        previousClose: prevClose,
+        volume: volume || 0,
+        avgVolume3M: parseMultiplier(avgVolumeStr),
+        bid: parseFloat(bid) || 0,
+        bidSize: 0,
+        ask: parseFloat(ask) || 0,
+        askSize: 0,
+        beta: parseFloat(getStat("Beta (5Y Monthly)")) || 0,
 
         // Prices
-        current_price: price.regularMarketPrice,
-        change: price.regularMarketChange,
-        percent_change: price.regularMarketChangePercent ? price.regularMarketChangePercent * 100 : 0, // QuoteSummary returns decimal e.g. 0.015 for 1.5%? Need to verify. standard yf.quote is % value. quoteSummary detail is usually decimal.
-        // Actually, usually summaryDetail.regularMarketChangePercent is not there, check price module.
-        // price.regularMarketChangePercent is typically a decimal like 0.015 (1.5%) in quoteSummary? 
-        // Let's rely on standard Quote if needed, but quoteSummary 'price' module usually has it.
-        // Let's strictly check: if < 1 abs, likely decimal.
+        current_price: currentPrice || 0,
+        change: change || 0,
+        percent_change: percentChange || 0, 
 
         // Valuation & Financials
-        marketCap: summary.marketCap,
-        peRatioTTM: summary.trailingPE,
-        forwardPE: summary.forwardPE,
-        epsTTM: stats.trailingEps,
-        epsForward: stats.forwardEps,
-        priceToBook: stats.priceToBook,
-        bookValue: stats.bookValue,
-        dividendRate: summary.dividendRate,
-        dividendYield: summary.dividendYield, // usually decimal
+        marketCap: parseMultiplier(marketCapStr),
+        peRatioTTM: peRatio,
+        forwardPE: parseFloat(getStat("Forward P/E")) || 0,
+        epsTTM: eps,
+        epsForward: 0, // Not typically in summary
+        priceToBook: parseFloat(getStat("Price/Book (mrq)")) || 0,
+        bookValue: parseFloat(getStat("Book Value (mrq)")) || 0,
+        dividendRate: dividendRate,
+        dividendYield: dividendYield,
 
         // Ranges & Averages
-        fiftyTwoWeekLow: summary.fiftyTwoWeekLow,
-        fiftyTwoWeekHigh: summary.fiftyTwoWeekHigh,
-        fiftyTwoWeekChange: stats['52WeekChange'],
-        fiftyDayAverage: summary.fiftyDayAverage,
-        twoHundredDayAverage: summary.twoHundredDayAverage,
+        fiftyTwoWeekLow: yearLow || 0,
+        fiftyTwoWeekHigh: yearHigh || 0,
+        fiftyTwoWeekChange: 0, // Not typically in summary text
+        fiftyDayAverage: parseFloat(getStat("50-Day Moving Average")) || 0,
+        twoHundredDayAverage: parseFloat(getStat("200-Day Moving Average")) || 0,
 
         // Analyst Rating
-        recommendationKey: financials.recommendationKey,
-        targetMeanPrice: financials.targetMeanPrice,
-        numberOfAnalystOpinions: financials.numberOfAnalystOpinions,
+        recommendationKey: getStat("Rating") || "N/A",
+        targetMeanPrice: parseFloat(getStat("Price Target")) || 0,
+        numberOfAnalystOpinions: 0,
         
-        description: profile.longBusinessSummary || "",
-        sector: profile.sector || "",
-    };
+        description: "", // Description not extracted by this method
+        sector: "", // Sector not extracted by this method
+     };
 
-    // Note: If description/sector is CRITICAL, we need 'assetProfile' module too.
-    // The previous implementation fetched it. Let's add it in next step if user misses it.
-    // The prompt asked for "Trading, Valuation..." specifically.
   } catch (err) {
-    console.error(`Error in getQuote('${symbol}'):`, err.message);
+    console.error(`Error in getQuote('${SYM}'):`, err.message);
     return null;
   }
 }
@@ -454,7 +538,7 @@ export async function getStockPriceChange(symbol) {
             // We want the price on the day <= targetDate
             // Since array is sorted ascending, we can look for the last entry <= targetDate
             for (let i = quotes.length - 1; i >= 0; i--) {
-                const d = new Date(quotes[i].date);
+         const d = new Date(quotes[i].date);
                 if (d <= targetDate) {
                     return quotes[i].close;
                 }
@@ -505,6 +589,107 @@ export async function getStockPriceChange(symbol) {
         console.error(`Error in getStockPriceChange('${symbol}'):`, err.message);
         return null;
     }
+}
+
+// Helper to scrape Gainers/Losers tables (shared logic)
+const parseMultiplier = (text) => {
+    if (!text) return 0;
+    const clean = text.replace(/,/g, '');
+    const match = clean.match(/([\d.]+)([TMBK]?)/);
+    if (!match) return parseFloat(clean) || 0;
+    let val = parseFloat(match[1]);
+    const suffix = match[2];
+    if (suffix === 'T') val *= 1_000_000_000_000;
+    if (suffix === 'B') val *= 1_000_000_000;
+    if (suffix === 'M') val *= 1_000_000;
+    if (suffix === 'K') val *= 1_000;
+    return val;
+};
+
+async function scrapeTopStocks(url) {
+  try {
+     console.log(`Scraping top stocks from ${url}...`);
+     
+     const headers = { 
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/json,xml;q=0.9,*/*;q=0.8",
+     };
+
+     const { data } = await axios.get(url, { headers });
+     const $ = cheerio.load(data);
+     const stocks = [];
+
+     // Yahoo Markets Table Selection
+     // Select rows from the main table
+     $('table tbody tr').each((i, row) => {
+         if (stocks.length >= 10) return; // Limit to 10
+
+         const cells = $(row).find('td');
+         if (cells.length < 6) return; 
+
+         const symbol = $(cells[0]).text().trim();
+         const name = $(cells[1]).text().trim();
+         
+         // Index 2 is Sparkline, skip it
+         const priceText = $(cells[3]).text().trim().replace(/,/g, '');
+         const changeText = $(cells[4]).text().trim().replace(/,/g, '');
+         const changePercentText = $(cells[5]).text().trim().replace(/[%()]/g, '');
+         
+         const volumeText = $(cells[6]).text().trim();
+         const marketCapText = $(cells[8]).text().trim();
+         const fiftyTwoWeekChangeText = $(cells[10]).text().trim().replace(/[%+,]/g, '');
+
+         const price = parseFloat(priceText) || 0;
+         const change = parseFloat(changeText) || 0;
+         const changesPercentage = parseFloat(changePercentText) || 0;
+         const volume = parseMultiplier(volumeText) || 0;
+         const marketCap = parseMultiplier(marketCapText) || 0;
+         const fiftyTwoWeekChangePercent = parseFloat(fiftyTwoWeekChangeText) || 0;
+         
+         // Only add valid stocks
+         if (symbol && price) {
+             stocks.push({
+                 symbol,
+                 name,
+                 price,
+                 change,
+                 changesPercentage,
+                 volume,
+                 marketCap,
+                 fiftyTwoWeekChangePercent
+             });
+         }
+     });
+
+     // Fetch sparklines in parallel for the found stocks
+     const results = await Promise.all(stocks.map(async (stock) => {
+       
+        return {
+            symbol: stock.symbol,
+            name: stock.name,
+            price: stock.price,
+            change: stock.change,
+            changesPercentage: stock.changesPercentage,
+            volume: stock.volume,
+            marketCap: stock.marketCap,
+            fiftyTwoWeekChangePercent: stock.fiftyTwoWeekChangePercent,
+        };
+    }));
+
+    return results;
+
+  } catch (err) {
+      console.error(`Error scraping ${url}:`, err.message);
+      return [];
+  }
+}
+
+export async function getTopGainers() {
+  return await scrapeTopStocks("https://finance.yahoo.com/markets/stocks/gainers/");
+}
+
+export async function getTopLosers() {
+    return await scrapeTopStocks("https://finance.yahoo.com/markets/stocks/losers/");
 }
 
 /* ------------------------------------------------------
@@ -751,101 +936,3 @@ export async function getHistoricalData(symbol) {
   }
 }
 
-/* ------------------------------------------------------
-   7. TOP GAINERS & LOSERS (With 1-Month Sparkline)
------------------------------------------------------- */
-
-// Helper to fetch 1-month sparkline data
-async function getSparklineData(symbol) {
-  try {
-    const endDate = new Date();
-    const startDate = new Date();
-    startDate.setMonth(endDate.getMonth() - 1);
-
-    const period1 = Math.floor(startDate.getTime() / 1000);
-    const period2 = Math.floor(endDate.getTime() / 1000);
-
-    // Fetch 1-month data with daily interval
-    const result = await yf.chart(symbol, {
-      period1,
-      period2,
-      interval: '1d'
-    });
-
-    const quotes = result ? result.quotes : [];
-    
-    // Simplify data for sparkline (Date + Close)
-    if (!quotes || quotes.length === 0) return [];
-    
-    return quotes
-      .filter(q => q.close !== null && q.close !== undefined)
-      .map(q => ({
-        date: q.date.toISOString().split('T')[0],
-        value: q.close
-      }));
-
-  } catch (err) {
-    console.warn(`Sparkline fetch failed for ${symbol}:`, err.message);
-    return [];
-  }
-}
-
-export async function getTopGainers() {
-  try {
-    // 1. Fetch Gainers from Yahoo Screener
-    // yf.screener({ scrIds: 'day_gainers', count: 10 })
-    const result = await yf.screener({ scrIds: 'day_gainers', count: 10 });
-    const gainers = result && result.quotes ? result.quotes : [];
-
-    if (!gainers || gainers.length === 0) return [];
-
-    // 2. Fetch Sparklines in Parallel
-    const results = await Promise.all(gainers.map(async (stock) => {
-        const chartData = await getSparklineData(stock.symbol);
-        return {
-            symbol: stock.symbol,
-            name: stock.longName || stock.shortName || stock.displayName || stock.symbol,
-            price: stock.regularMarketPrice,
-            change: stock.regularMarketChange,
-            changesPercentage: stock.regularMarketChangePercent,
-            chartData: chartData
-        };
-    }));
-
-    return results;
-
-  } catch (err) {
-    console.error("Error fetching top gainers:", err.message);
-    return [];
-  }
-}
-
-export async function getTopLosers() {
-  try {
-    // 1. Fetch Losers from Yahoo Screener
-    // yf.screener({ scrIds: 'day_losers', count: 10 })
-    const result = await yf.screener({ scrIds: 'day_losers', count: 10 });
-    const losers = result && result.quotes ? result.quotes : [];
-
-    if (!losers || losers.length === 0) return [];
-
-    // 2. Fetch Sparklines in Parallel
-    const results = await Promise.all(losers.map(async (stock) => {
-        const chartData = await getSparklineData(stock.symbol);
-        return {
-            symbol: stock.symbol,
-            name: stock.longName || stock.shortName || stock.displayName || stock.symbol,
-            price: stock.regularMarketPrice,
-            change: stock.regularMarketChange,
-            changesPercentage: stock.regularMarketChangePercent,
-            chartData: chartData
-        };
-    }));
-
-    return results;
-
-  } catch (err) {
-    console.error("Error fetching top losers:", err.message);
-    return [];
-  }
-}
