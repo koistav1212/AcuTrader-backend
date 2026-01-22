@@ -5,10 +5,7 @@ import { auth } from "../middleware/auth.js";
 import {
   search,
   quote,
-  priceChange,
-  recommendations,
   trending,
-  historical,
   topGainers,
   topLosers
 } from "../controllers/marketController.js";
@@ -57,47 +54,9 @@ router.get("/search", auth(false), search);
  */
 router.get("/quote/:symbol", auth(false), quote);
 
-/**
- * @openapi
- * /api/market/price-change/{symbol}:
- *   get:
- *     tags:
- *       - Market
- *     summary: Get stock price change (1D, 5D, 1M, 3M, 6M, ytd, 1Y, 5Y, Max)
- *     parameters:
- *       - name: symbol
- *         in: path
- *         description: Stock symbol
- *         required: true
- *         schema:
- *           type: string
- *           example: AAPL
- *     responses:
- *       200:
- *         description: Stock price change data
- */
-router.get("/price-change/:symbol", auth(false), priceChange);
 
-/**
- * @openapi
- * /api/market/recommendations/{symbol}:
- *   get:
- *     tags:
- *       - Market
- *     summary: Get stock recommendation trends (Strong Buy, Buy, Hold, Sell, etc.)
- *     parameters:
- *       - name: symbol
- *         in: path
- *         description: Stock symbol
- *         required: true
- *         schema:
- *           type: string
- *           example: AAPL
- *     responses:
- *       200:
- *         description: Analyst recommendation trends
- */
-router.get("/recommendations/:symbol", auth(false), recommendations);
+
+
 
 /**
  * @openapi
@@ -131,7 +90,7 @@ router.get("/trending", auth(false), trending);
  *       200:
  *         description: Historical data with indicators
  */
-router.get("/historical/:symbol", auth(false), historical);
+// router.get("/historical/:symbol", auth(false), historical);
 
 /**
  * @openapi

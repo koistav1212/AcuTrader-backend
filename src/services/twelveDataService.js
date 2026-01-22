@@ -83,13 +83,6 @@ try {
 /* ------------------------------------------------------
    1. SYMBOL SEARCH (Stocks Only)
 ------------------------------------------------------ */
-/* ------------------------------------------------------
-   SYMBOL SEARCH (Stocks + Real-time Quote + Full Profile)
------------------------------------------------------- */
-/* ------------------------------------------------------
-   1. SYMBOL SEARCH (Stocks Only) - ENHANCED
------------------------------------------------------- */
-
 
 
 export async function searchSymbol(symbol) {
@@ -508,88 +501,6 @@ export async function getQuote(symbol) {
   }
 }
 
-/* ------------------------------------------------------
-   3. STOCK PRICE CHANGE
------------------------------------------------------- */
-export async function getStockPriceChange(symbol) {
-    try {
-        // 1. Get Current Quote (for 1D and Current Price)
-        const quote = await yf.quote(symbol);
-        if (!quote) throw new Error("Quote not found");
-
-        const currentPrice = quote.regularMarketPrice;
-        const current1D = quote.regularMarketChangePercent;
-
-        // 2. Get Historical Data (Max Range)
-        // 'chart' requires period1 (start) and period2 (end). range is not always supported directly in options validation.
-        const period1 = 0; // Epoch
-        const period2 = Math.floor(Date.now() / 1000);
-        
-        const chart = await yf.chart(symbol, { interval: '1d', period1, period2 });
-        const quotes = chart?.quotes || [];
-
-        if (quotes.length === 0) throw new Error("No historical data");
-
-        // Sort just in case, though usually sorted
-        quotes.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-        // Helper to find Close Price closest to a target date (going backwards)
-        function getCloseAtDate(targetDate) {
-            // We want the price on the day <= targetDate
-            // Since array is sorted ascending, we can look for the last entry <= targetDate
-            for (let i = quotes.length - 1; i >= 0; i--) {
-         const d = new Date(quotes[i].date);
-                if (d <= targetDate) {
-                    return quotes[i].close;
-                }
-            }
-            return quotes[0].close; // Return earliest if target is before start
-        }
-
-        const now = new Date();
-        const getShiftedDate = (days, months = 0, years = 0) => {
-            const d = new Date(now);
-            d.setDate(d.getDate() - days);
-            d.setMonth(d.getMonth() - months);
-            d.setFullYear(d.getFullYear() - years);
-            return d;
-        };
-
-        const periods = {
-            "5D": getShiftedDate(5),
-            "1M": getShiftedDate(0, 1),
-            "3M": getShiftedDate(0, 3),
-            "6M": getShiftedDate(0, 6),
-            "ytd": new Date(new Date().getFullYear(), 0, 1), // Jan 1st of current year
-            "1Y": getShiftedDate(0, 0, 1),
-            "3Y": getShiftedDate(0, 0, 3),
-            "5Y": getShiftedDate(0, 0, 5),
-            "10Y": getShiftedDate(0, 0, 10),
-            "max": new Date(0) // Earliest possible
-        };
-
-        const result = {
-            symbol: symbol,
-            "1D": current1D
-        };
-
-        for (const [key, date] of Object.entries(periods)) {
-            const oldPrice = getCloseAtDate(date);
-            if (oldPrice) {
-                const change = ((currentPrice - oldPrice) / oldPrice) * 100;
-                result[key] = change;
-            } else {
-                result[key] = null;
-            }
-        }
-
-        return result;
-
-    } catch(err) {
-        console.error(`Error in getStockPriceChange('${symbol}'):`, err.message);
-        return null;
-    }
-}
 
 // Helper to scrape Gainers/Losers tables (shared logic)
 const parseMultiplier = (text) => {
@@ -690,22 +601,6 @@ export async function getTopGainers() {
 
 export async function getTopLosers() {
     return await scrapeTopStocks("https://finance.yahoo.com/markets/stocks/losers/");
-}
-
-/* ------------------------------------------------------
-   4. STOCK RECOMMENDATIONS (Finnhub)
------------------------------------------------------- */
-export async function getStockRecommendations(symbol) {
-    try {
-        const result = await yf.quoteSummary(symbol, { modules: ['recommendationTrend'] });
-        if (result && result.recommendationTrend && result.recommendationTrend.trend) {
-            return result.recommendationTrend.trend;
-        }
-        return [];
-    } catch (err) {
-        console.error(`Error in getStockRecommendations('${symbol}'):`, err.message);
-        return [];
-    }
 }
 
 /* ------------------------------------------------------
@@ -819,120 +714,120 @@ export async function getTrendingStocks(filters = {}) {
 /* ------------------------------------------------------
    6. HISTORICAL DATA WITH INDICATORS
 ------------------------------------------------------ */
-export async function getHistoricalData(symbol) {
-  try {
-    const endDate = new Date();
-    const startDate = new Date();
-    startDate.setMonth(endDate.getMonth() - 6); // 6 Months ago
+// export async function getHistoricalData(symbol) {
+//   try {
+//     const endDate = new Date();
+//     const startDate = new Date();
+//     startDate.setMonth(endDate.getMonth() - 6); // 6 Months ago
 
-    const period1 = Math.floor(startDate.getTime() / 1000);
-    const period2 = Math.floor(endDate.getTime() / 1000);
+//     const period1 = Math.floor(startDate.getTime() / 1000);
+//     const period2 = Math.floor(endDate.getTime() / 1000);
 
-    // Fetch data for multiple intervals in parallel
-    // Yahoo intervals: 1d, 1wk, 1mo
-    const intervals = ["1d", "1wk", "1mo"];
+//     // Fetch data for multiple intervals in parallel
+//     // Yahoo intervals: 1d, 1wk, 1mo
+//     const intervals = ["1d", "1wk", "1mo"];
     
-    // We can't use detailed options with simple chart queries in yahoo-finance2 easily without using historical
-    // yf.historical(symbol, queryOptions)
-    // queryOptions: { period1, period2, interval }
+//     // We can't use detailed options with simple chart queries in yahoo-finance2 easily without using historical
+//     // yf.historical(symbol, queryOptions)
+//     // queryOptions: { period1, period2, interval }
 
-    const results = {};
+//     const results = {};
 
-    // Parallelize queries to be faster and reduce chance of single-timeout killing all
-    const promises = intervals.map(async (interval) => {
-        try {
-            const queryOptions = {
-                period1: period1, 
-                period2: period2,
-                interval: interval 
-            };
+//     // Parallelize queries to be faster and reduce chance of single-timeout killing all
+//     const promises = intervals.map(async (interval) => {
+//         try {
+//             const queryOptions = {
+//                 period1: period1, 
+//                 period2: period2,
+//                 interval: interval 
+//             };
             
-            // Use chart() 
-            const result = await yf.chart(symbol, queryOptions);
-            const data = result ? result.quotes : [];
+//             // Use chart() 
+//             const result = await yf.chart(symbol, queryOptions);
+//             const data = result ? result.quotes : [];
             
-            if (!data || data.length === 0) {
-                results[interval] = [];
-                return;
-            }
+//             if (!data || data.length === 0) {
+//                 results[interval] = [];
+//                 return;
+//             }
             
-            // Extract close prices AND valid data together
-            const validData = data.filter(d => 
-                d.close !== null && 
-                d.close !== undefined &&
-                d.date // Ensure date exists
-            );
+//             // Extract close prices AND valid data together
+//             const validData = data.filter(d => 
+//                 d.close !== null && 
+//                 d.close !== undefined &&
+//                 d.date // Ensure date exists
+//             );
 
-            // Sort by date ascending
-            validData.sort((a,b) => new Date(a.date) - new Date(b.date));
+//             // Sort by date ascending
+//             validData.sort((a,b) => new Date(a.date) - new Date(b.date));
 
-            const closePrices = validData.map(d => d.close);
+//             const closePrices = validData.map(d => d.close);
 
-            if (closePrices.length === 0) {
-                 results[interval] = [];
-                 return;
-            }
+//             if (closePrices.length === 0) {
+//                  results[interval] = [];
+//                  return;
+//             }
 
-            // Calculate Indicators
-            const sma20 = calculateSMA(closePrices, 20);
-            const sma50 = calculateSMA(closePrices, 50);
-            const sma200 = calculateSMA(closePrices, 200);
-            const ema12 = calculateEMA(closePrices, 12);
-            const ema26 = calculateEMA(closePrices, 26);
-            const rsi14 = calculateRSI(closePrices, 14);
-            const macd = calculateMACD(closePrices, 12, 26, 9);
-            const bb = calculateBollingerBands(closePrices, 20, 2);
+//             // Calculate Indicators
+//             const sma20 = calculateSMA(closePrices, 20);
+//             const sma50 = calculateSMA(closePrices, 50);
+//             const sma200 = calculateSMA(closePrices, 200);
+//             const ema12 = calculateEMA(closePrices, 12);
+//             const ema26 = calculateEMA(closePrices, 26);
+//             const rsi14 = calculateRSI(closePrices, 14);
+//             const macd = calculateMACD(closePrices, 12, 26, 9);
+//             const bb = calculateBollingerBands(closePrices, 20, 2);
 
-            // Merge back
-            const enrichedData = validData.map((candle, i) => ({
-                date: candle.date.toISOString().split('T')[0],
-                open: candle.open,
-                high: candle.high,
-                low: candle.low,
-                close: candle.close,
-                volume: candle.volume,
-                indicators: {
-                    sma: {
-                        period20: sma20[i],
-                        period50: sma50[i],
-                        period200: sma200[i]
-                    },
-                    ema: {
-                        period12: ema12[i],
-                        period26: ema26[i]
-                    },
-                    rsi: {
-                        period14: rsi14[i]
-                    },
-                    macd: {
-                        macdLine: macd.macd[i],
-                        signalLine: macd.signal[i],
-                        histogram: macd.histogram[i]
-                    },
-                    bollinger: {
-                        upper: bb.upper[i],
-                        middle: bb.middle[i],
-                        lower: bb.lower[i]
-                    }
-                }
-            }));
+//             // Merge back
+//             const enrichedData = validData.map((candle, i) => ({
+//                 date: candle.date.toISOString().split('T')[0],
+//                 open: candle.open,
+//                 high: candle.high,
+//                 low: candle.low,
+//                 close: candle.close,
+//                 volume: candle.volume,
+//                 indicators: {
+//                     sma: {
+//                         period20: sma20[i],
+//                         period50: sma50[i],
+//                         period200: sma200[i]
+//                     },
+//                     ema: {
+//                         period12: ema12[i],
+//                         period26: ema26[i]
+//                     },
+//                     rsi: {
+//                         period14: rsi14[i]
+//                     },
+//                     macd: {
+//                         macdLine: macd.macd[i],
+//                         signalLine: macd.signal[i],
+//                         histogram: macd.histogram[i]
+//                     },
+//                     bollinger: {
+//                         upper: bb.upper[i],
+//                         middle: bb.middle[i],
+//                         lower: bb.lower[i]
+//                     }
+//                 }
+//             }));
 
-            results[interval] = enrichedData;
+//             results[interval] = enrichedData;
 
-        } catch(err) {
-            console.error(`Error fetching historical for ${symbol} interval ${interval}:`, err.message);
-            results[interval] = [];
-        }
-    });
+//         } catch(err) {
+//             console.error(`Error fetching historical for ${symbol} interval ${interval}:`, err.message);
+//             results[interval] = [];
+//         }
+//     });
 
-    await Promise.all(promises);
+//     await Promise.all(promises);
 
-    return results;
+//     return results;
 
 
-  } catch (err) {
-    console.error(`Error in getHistoricalData('${symbol}'):`, err.message);
-    return null;
-  }
-}
+//   } catch (err) {
+//     console.error(`Error in getHistoricalData('${symbol}'):`, err.message);
+//     return null;
+//   }
+// }
 
