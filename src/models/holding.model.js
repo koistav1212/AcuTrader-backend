@@ -10,6 +10,12 @@ const holdingSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  side: {
+    type: String,
+    enum: ["LONG", "SHORT"],
+    default: "LONG",
+    required: true,
+  },
   quantity: {
     type: Number,
     required: true,

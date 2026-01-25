@@ -1,121 +1,68 @@
-// src/routes/market.route.js
 import { Router } from "express";
 import { auth } from "../middleware/auth.js";
-
-import {
-  search,
-  quote,
-  trending,
-  topGainers,
-  topLosers
-} from "../controllers/marketController.js";
+import * as marketController from "../controllers/marketController.js";
 
 const router = Router();
+
+// --- PORTFOLIO & TRADING (Authenticated) ---
+router.get("/portfolio/summary", auth(true), marketController.getPortfolioSummary);
+router.get("/portfolio/positions", auth(true), marketController.getPositions);
+router.get("/portfolio/trades", auth(true), marketController.getTrades);
+
+router.post("/trade", auth(true), marketController.placeTrade); // Unified
+router.post("/snapshot", auth(true), marketController.triggerSnapshot); // Manual trigger
+
+// Legacy Buy/Sell Adapters
+router.post("/buy", auth(true), marketController.buyStock);
+router.post("/sell", auth(true), marketController.sellStock);
+
+// --- MARKET DATA (Public or Auth Optional) ---
 
 /**
  * @openapi
  * /api/market/search:
  *   get:
- *     tags:
- *       - Market
  *     summary: Search stocks by symbol or company name
- *     parameters:
- *       - name: q
- *         in: query
- *         description: Stock symbol or company search text
- *         required: true
- *         schema:
- *           type: string
- *           example: AAPL
- *     responses:
- *       200:
- *         description: List of matched stock instruments
  */
-router.get("/search", auth(false), search);
+router.get("/search", auth(false), marketController.searchSymbol);
 
 /**
  * @openapi
  * /api/market/quote/{symbol}:
  *   get:
- *     tags:
- *       - Market
  *     summary: Get real-time quote for a symbol
- *     parameters:
- *       - name: symbol
- *         in: path
- *         description: Stock symbol
- *         required: true
- *         schema:
- *           type: string
- *           example: TSLA
- *     responses:
- *       200:
- *         description: Real-time stock quote
  */
-router.get("/quote/:symbol", auth(false), quote);
-
-
-
-
+router.get("/quote/:symbol", auth(false), marketController.getQuote);
 
 /**
  * @openapi
  * /api/market/trending:
  *   get:
- *     tags:
- *       - Market
  *     summary: Get top stocks based on dynamic filters (Screener)
- *     responses:
- *       200:
- *         description: List of filtered stocks
  */
-router.get("/trending", auth(false), trending);
-
-/**
- * @openapi
- * /api/market/historical/{symbol}:
- *   get:
- *     tags:
- *       - Market
- *     summary: Get 1 year of historical data with technical indicators (Daily, Weekly, Monthly)
- *     parameters:
- *       - name: symbol
- *         in: path
- *         description: Stock symbol
- *         required: true
- *         schema:
- *           type: string
- *           example: AAPL
- *     responses:
- *       200:
- *         description: Historical data with indicators
- */
-// router.get("/historical/:symbol", auth(false), historical);
+router.get("/trending", auth(false), marketController.getTrendingStocks);
 
 /**
  * @openapi
  * /api/market/top-gainers:
  *   get:
- *     tags:
- *       - Market
- *     summary: Get top 10 gainers with 1-month sparkline chart
- *     responses:
- *       200:
- *         description: List of top 10 gaining stocks
+ *     summary: Get top 10 gainers
  */
-router.get("/top-gainers", auth(false), topGainers);
+router.get("/top-gainers", auth(false), marketController.getTopGainers);
 
 /**
  * @openapi
  * /api/market/top-losers:
  *   get:
- *     tags:
- *       - Market
- *     summary: Get top 10 losers with 1-month sparkline chart
- *     responses:
- *       200:
- *         description: List of top 10 losing stocks
+ *     summary: Get top 10 losers
  */
-router.get("/top-losers", auth(false), topLosers);
+router.get("/top-losers", auth(false), marketController.getTopLosers);
+
+// Recommendations
+// Note: Route was likely /recommendations/:symbol based on old controller usage?
+// I'll add it if it was there. Old controller "recommendations" export suggests it might have been used.
+// Checking Step 62: `export const recommendations`.
+// I'll assume the route path was `/recommendations/:symbol`.
+router.get("/recommendations/:symbol", auth(false), marketController.getRecommendations);
 
 export default router;

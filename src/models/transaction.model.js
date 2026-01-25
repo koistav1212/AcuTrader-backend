@@ -12,7 +12,7 @@ const transactionSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ["BUY", "SELL"],
+    enum: ["BUY", "SELL", "SHORT", "COVER"],
     required: true,
   },
   quantity: {
@@ -37,6 +37,12 @@ const transactionSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now,
+  },
+  entryPrice: { // For Exit trades: The avg cost of the position being closed
+    type: Number,
+  },
+  realizedPnl: { // For Exit trades: The P&L realized
+    type: Number,
   },
 }, { timestamps: true });
 
