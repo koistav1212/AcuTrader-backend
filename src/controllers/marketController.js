@@ -1,3 +1,5 @@
+import * as fs from "fs";
+import path from "path";
 import * as portfolioService from "../services/portfolioService.js";
 import * as transactionService from "../services/transactionService.js";
 import * as snapshotService from "../services/snapshotService.js";
@@ -145,3 +147,52 @@ export async function sellStock(req, res, next) {
       res.json(result);
     } catch (err) { next(err); }
 }
+
+/**
+ * @swagger
+ * /api/market/insights:
+ *   get:
+ *     summary: Get AI-generated stock insights
+ *     tags: [Market]
+ *     parameters:
+ *       - in: query
+ *         name: ticker
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Stock ticker symbol (e.g., TSLA)
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *       404:
+ *         description: Insights not found for ticker
+ */
+export const getStockInsights = async (req, res) => {
+  try {
+    const { ticker } = req.query;
+    if (!ticker) {
+      return res.status(400).json({ message: "Ticker is required" });
+    }
+
+    const insightsPath = path.join(process.cwd(), "ml_service", "insights_cache.json");
+    
+    // Check if cache exists
+    if (!fs.existsSync(insightsPath)) {
+      return res.status(404).json({ message: "Insights data not available yet." });
+    }
+
+    const data = fs.readFileSync(insightsPath, "utf-8");
+    const insights = JSON.parse(data);
+
+    const tickerUpper = ticker.toUpperCase();
+    if (insights[tickerUpper]) {
+      return res.status(200).json(insights[tickerUpper]);
+    } else {
+      return res.status(404).json({ message: `No insights found for ${tickerUpper}` });
+    }
+
+  } catch (error) {
+    console.error("Error fetching insights:", error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};

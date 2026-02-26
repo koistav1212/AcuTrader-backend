@@ -65,4 +65,30 @@ router.get("/top-losers", auth(false), marketController.getTopLosers);
 // I'll assume the route path was `/recommendations/:symbol`.
 router.get("/recommendations/:symbol", auth(false), marketController.getRecommendations);
 
+// Insights Route
+/** 
+ * @openapi
+ * /api/market/insights:
+ *   get:
+ *     summary: Get AI-generated stock insights from the ML pipeline
+ *     description: Returns cached insights including fundamentals, technicals, trade reports, and AI news summaries
+ *     tags:
+ *       - Market
+ *     parameters:
+ *       - in: query
+ *         name: ticker
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Stock ticker symbol (e.g., TSLA, AAPL)
+ *     responses:
+ *       200:
+ *         description: Stock insights data for the specified ticker
+ *       400:
+ *         description: Ticker is required
+ *       404:
+ *         description: No insights found for the ticker
+ */
+router.get("/insights", auth(false), marketController.getStockInsights);
+
 export default router;

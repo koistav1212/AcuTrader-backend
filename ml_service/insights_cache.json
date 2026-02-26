@@ -1,0 +1,1957 @@
+{
+    "INTC": {
+        "last_updated": "2026-01-26T02:16:56.261363",
+        "fundamentals": {
+            "marketCap": 225199554560,
+            "peRatio": null,
+            "eps": -0.06,
+            "revenueGrowth": -0.041,
+            "beta": 1.354
+        },
+        "technicals": {
+            "current_price": 45.07,
+            "RSI": 52.38,
+            "MACD": 3.2,
+            "MACD_Signal": 2.58,
+            "SMA_20": 43.44,
+            "SMA_50": 40.04,
+            "SMA_200": 29.16,
+            "BB_High": 54.67,
+            "BB_Low": 32.22,
+            "ATR": 3.09,
+            "Volatility": 0.0613,
+            "Volume_Spike": true
+        },
+        "trade_report": {
+            "entry": "Wait",
+            "stop_loss": "N/A",
+            "take_profit": "N/A",
+            "signal": "Weak Sell / Avoid",
+            "trend_status": "Bullish within Uptrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "52.38",
+                    "interpretation": "Neutral"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "3.20 / 2.58",
+                    "interpretation": "Bullish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$29.16",
+                    "interpretation": "Long-term Support"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$43.44",
+                    "interpretation": "Immediate Support"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$29.74 - $31.23",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Weak Sell / Avoid",
+                    "setup": {}
+                }
+            },
+            "probabilities": {
+                "bull_case": "45%",
+                "bear_case": "30%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": " ### Key News & Market Drivers\n\n**Earnings & Financials**\n- Q4 earnings beat expectations, but revenue missed estimates\n- Guidance for Q1 2023 indicates supply constraints and foundry losses\n- Strong PC market signals and progress in foundry business noted by Seaport Global\n\n**Operations & Deliveries**\n- Strong demand for data center and PC products\n- Supply chain issues impacting production and delivery\n\n**Innovation / AI / Growth**\n- Investments in AI and 5G infrastructure\n- Expansion into foundry business with Intel Foundry Services\n\n**Regulation & Legal**\n- No significant regulatory or legal issues currently affecting the company\n\n**Competition & Market Pressure**\n- Increased competition from AMD, TSMC, and other foundry players\n- Pressure to address supply chain issues and maintain market share\n\n### Analyst View\n- Despite Q4 earnings beat, concerns over supply constraints and foundry losses may impact near-term performance\n- Long-term growth potential remains strong due to investments in AI and 5G, as well as expansion into foundry business",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "NVDA": {
+        "last_updated": "2026-01-26T02:17:05.754983",
+        "fundamentals": {
+            "marketCap": 4569445171200,
+            "peRatio": 46.570717,
+            "eps": 4.03,
+            "revenueGrowth": 0.625,
+            "beta": 2.314
+        },
+        "technicals": {
+            "current_price": 187.67,
+            "RSI": 53.98,
+            "MACD": 0.14,
+            "MACD_Signal": 0.28,
+            "SMA_20": 186.28,
+            "SMA_50": 183.82,
+            "SMA_200": 165.69,
+            "BB_High": 191.65,
+            "BB_Low": 180.92,
+            "ATR": 5.33,
+            "Volatility": 0.016,
+            "Volume_Spike": false
+        },
+        "trade_report": {
+            "entry": "Wait",
+            "stop_loss": "N/A",
+            "take_profit": "N/A",
+            "signal": "Weak Sell / Avoid",
+            "trend_status": "Bullish within Uptrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "53.98",
+                    "interpretation": "Neutral"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "0.14 / 0.28",
+                    "interpretation": "Bearish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$165.69",
+                    "interpretation": "Long-term Support"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$186.28",
+                    "interpretation": "Immediate Support"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$169.0 - $177.45",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Weak Sell / Avoid",
+                    "setup": {}
+                }
+            },
+            "probabilities": {
+                "bull_case": "30%",
+                "bear_case": "45%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": " ### Key News & Market Drivers\n\n**Earnings & Financials**\n- Nvidia Stock (NVDA) forecasts for 2026 from AI analysts, as reported by TipRanks and Capital.com.\n- NVIDIA Corporation's stock holdings have been increased by Sound Financial Strategies Group LLC, as reported by MarketBeat.\n\n**Innovation / AI / Growth**\n- Goldman reaffirms preference for Nvidia (NVDA) in the AI compute ecosystem.\n- NVIDIA Corporation's stock position has been raised by Moran Wealth Management LLC, as reported by MarketBeat.\n- Steinberganna Wealth Management buys new shares in NVIDIA Corporation (NVDA), as reported by MarketBeat.\n\n**Management & Strategy**\n- Essex LLC has lessened its holdings in NVIDIA Corporation (NVDA), as reported by MarketBeat.\n\n**General**\n- NVIDIA Corporation (NVDA) shares have decreased by 4.4%, as reported by MarketBeat.\n- Family Capital Trust Co has bought shares of 29,197 NVIDIA Corporation (NVDA), as reported by MarketBeat.\n\n### Analyst View\n- Despite recent share price decline, NVIDIA's strong position in AI and growth potential remains attractive.\n- Investors should consider long-term growth prospects and strategic moves, rather than short-term market fluctuations.",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "PLUG": {
+        "last_updated": "2026-01-26T02:17:14.410853",
+        "fundamentals": {
+            "marketCap": 3479088128,
+            "peRatio": null,
+            "eps": -2.38,
+            "revenueGrowth": 0.019,
+            "beta": 1.689
+        },
+        "technicals": {
+            "current_price": 2.5,
+            "RSI": 58.12,
+            "MACD": 0.06,
+            "MACD_Signal": 0.02,
+            "SMA_20": 2.25,
+            "SMA_50": 2.2,
+            "SMA_200": 1.83,
+            "BB_High": 2.58,
+            "BB_Low": 1.91,
+            "ATR": 0.21,
+            "Volatility": 0.0585,
+            "Volume_Spike": false
+        },
+        "trade_report": {
+            "entry": "Wait",
+            "stop_loss": "N/A",
+            "take_profit": "N/A",
+            "signal": "Weak Sell / Avoid",
+            "trend_status": "Bullish within Uptrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "58.12",
+                    "interpretation": "Momentum Building"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "0.06 / 0.02",
+                    "interpretation": "Bullish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$1.83",
+                    "interpretation": "Long-term Support"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$2.25",
+                    "interpretation": "Immediate Support"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$1.87 - $1.96",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Weak Sell / Avoid",
+                    "setup": {}
+                }
+            },
+            "probabilities": {
+                "bull_case": "45%",
+                "bear_case": "30%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": "Error generating summary: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "BBAI": {
+        "last_updated": "2026-01-26T02:17:26.998197",
+        "fundamentals": {
+            "marketCap": 2664936704,
+            "peRatio": null,
+            "eps": -1.45,
+            "revenueGrowth": -0.201,
+            "beta": 3.214
+        },
+        "technicals": {
+            "current_price": 5.82,
+            "RSI": 46.03,
+            "MACD": -0.05,
+            "MACD_Signal": -0.03,
+            "SMA_20": 5.96,
+            "SMA_50": 6.09,
+            "SMA_200": 5.64,
+            "BB_High": 6.48,
+            "BB_Low": 5.43,
+            "ATR": 0.44,
+            "Volatility": 0.0402,
+            "Volume_Spike": false
+        },
+        "trade_report": {
+            "entry": "Break below $5.7",
+            "stop_loss": 5.94,
+            "take_profit": 5.47,
+            "signal": "Sell / Avoid",
+            "trend_status": "Bearish/Consolidation within Uptrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "46.03",
+                    "interpretation": "Neutral"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "-0.05 / -0.03",
+                    "interpretation": "Bearish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$5.64",
+                    "interpretation": "Long-term Support"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$5.96",
+                    "interpretation": "Immediate Resistance"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$5.75 - $6.04",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Sell / Avoid",
+                    "setup": {
+                        "type": "Bearish",
+                        "trigger": "Break below $5.7",
+                        "target": 5.47,
+                        "stop_loss": 5.94
+                    }
+                }
+            },
+            "probabilities": {
+                "bull_case": "30%",
+                "bear_case": "45%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": " ### Key News & Market Drivers\n\n**Earnings & Financials**\n- BigBear.ai (BBAI) announces acquisition of Ask Sage and conversion of convertible debt to equity, potentially impacting financials and debt structure.\n\n**Operations & Deliveries**\n- BBAI's recent acquisitions, including CargoSeer, may expand its service offerings and increase delivery capacity in AI-based security solutions.\n\n**Innovation / AI / Growth**\n- BBAI's focus on AI technology and security solutions positions the company for potential growth in the growing AI market.\n- BBAI's performance has outperformed the market, but a recent fall has been observed.\n\n**Regulation & Legal**\n- BBAI's valuation is under review following the CargoSeer acquisition and its push towards AI trade security.\n- SEC filing delays have caused temporary uncertainty for shareholders, with the focus on the CargoSeer deal and its potential impact on the company.\n\n**Competition & Market Pressure**\n- Increased competition from AI-focused companies may put pressure on BBAI's market share and growth prospects.\n\n### Analyst View\n- BBAI's strategic acquisitions and focus on AI technology present growth opportunities, but regulatory and competitive pressures remain.\n\nNews:\n\n### Earnings & Financials\n- BigBear.ai (BBAI) Acquiring Ask Sage And Converting Convertible Debt To Equity: Implications For Financial Performance\n\n### Regulation & Legal\n- BigBear.ai (BBAI) Valuation Analysis After CargoSeer Acquisition And AI Trade Security Push - simplywall.st\n- BigBear.ai (BBAI) Stock Market Performance After SEC Filing Delays And Focus On CargoSeer Deal\n- BigBear.ai Stock (BBAI) Regulatory And Legal Updates: Impact On Shareholder Value\n\n### Innovation / AI / Growth\n- BigBear.ai Holdings, Inc. (BBAI) Growth Prospects In The AI Market: Key Factors To Consider\n- BigBear.ai Holdings, Inc. (BBA",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "ONDS": {
+        "last_updated": "2026-01-26T02:17:37.103696",
+        "fundamentals": {
+            "marketCap": 5162503168,
+            "peRatio": null,
+            "eps": -0.36,
+            "revenueGrowth": 5.82,
+            "beta": 2.4
+        },
+        "technicals": {
+            "current_price": 12.17,
+            "RSI": 54.99,
+            "MACD": 1.0,
+            "MACD_Signal": 1.16,
+            "SMA_20": 11.86,
+            "SMA_50": 9.51,
+            "SMA_200": 5.18,
+            "BB_High": 15.49,
+            "BB_Low": 8.23,
+            "ATR": 1.41,
+            "Volatility": 0.0697,
+            "Volume_Spike": false
+        },
+        "trade_report": {
+            "entry": "Wait",
+            "stop_loss": "N/A",
+            "take_profit": "N/A",
+            "signal": "Weak Sell / Avoid",
+            "trend_status": "Bullish within Uptrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "54.99",
+                    "interpretation": "Neutral"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "1.00 / 1.16",
+                    "interpretation": "Bearish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$5.18",
+                    "interpretation": "Long-term Support"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$11.86",
+                    "interpretation": "Immediate Support"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$5.28 - $5.54",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Weak Sell / Avoid",
+                    "setup": {}
+                }
+            },
+            "probabilities": {
+                "bull_case": "30%",
+                "bear_case": "45%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": " ### Key News & Market Drivers\n\n**Earnings & Financials**\n- Upgrade: Analysts have significantly increased their forecasts for Ondas Inc. (NASDAQ:ONDS) following the Roboteam deal and Q3 update.\n- Ondas Holdings (ONDS) has seen a shift in narrative due to the Roboteam deal and Q3 update, leading to a potential positive impact on financials.\n\n**Operations & Deliveries**\n- Ondas Inc. has recently announced a strategic partnership with Roboteam, a leading provider of tactical unmanned ground vehicle systems.\n- The company is expected to deliver its full-year 2021 results soon, which may provide further insights into its operational performance.\n\n**Innovation / AI / Growth**\n- Ondas Holdings is focusing on the development and deployment of its FullMAX software-defined radio (SDR) technology for mission-critical communications.\n- The company's partnership with Roboteam could open up new growth opportunities in the tactical unmanned ground vehicle systems market.\n\n**Regulation & Legal**\n- Ondas Inc. (ONDS) stock has experienced volatility due to fresh SEC filings that flag a potential share overhang.\n- SEC resale filings and insider sales have affected the stock price of Ondas Inc. (ONDS).\n- A fresh SEC filing has flagged financing for a subsidiary of Ondas Inc., which may impact the company's financials and overall market perception.\n\n**Competition & Market Pressure**\n- Ondas Holdings (ONDS) competes in the wireless communications and tactical unmanned ground vehicle systems markets, where competition is intense.\n- The company's success will depend on its ability to differentiate its products and services from those of its competitors.\n\n### Analyst View\nThe strategic partnership with Roboteam and the potential growth opportunities it presents could drive Ondas Inc.'s (ONDS) stock higher. However, regulatory concerns and potential share overhang may pose challenges. Investors should closely monitor the company's financials and operational performance for further insights.\n\nNews:\n- Upgrade: Analysts Just Made A Notable Increase To Their Ondas",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "IBRX": {
+        "last_updated": "2026-01-26T02:17:48.816344",
+        "fundamentals": {
+            "marketCap": 6353025024,
+            "peRatio": null,
+            "eps": -0.41,
+            "revenueGrowth": 4.251,
+            "beta": -0.042
+        },
+        "technicals": {
+            "current_price": 6.45,
+            "RSI": 78.77,
+            "MACD": 1.15,
+            "MACD_Signal": 0.65,
+            "SMA_20": 3.42,
+            "SMA_50": 2.67,
+            "SMA_200": 2.6,
+            "BB_High": 7.18,
+            "BB_Low": -0.35,
+            "ATR": 0.66,
+            "Volatility": 0.1169,
+            "Volume_Spike": false
+        },
+        "trade_report": {
+            "entry": "Wait",
+            "stop_loss": "N/A",
+            "take_profit": "N/A",
+            "signal": "Weak Sell / Avoid",
+            "trend_status": "Bullish within Uptrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "78.77",
+                    "interpretation": "Overbought (Sell Signal)"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "1.15 / 0.65",
+                    "interpretation": "Bullish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$2.60",
+                    "interpretation": "Long-term Support"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$3.42",
+                    "interpretation": "Immediate Support"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$2.65 - $2.78",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Weak Sell / Avoid",
+                    "setup": {}
+                }
+            },
+            "probabilities": {
+                "bull_case": "38%",
+                "bear_case": "38%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": " ### Key News & Market Drivers\n\n**Earnings & Financials**\n- ImmunityBio (IBRX) reports a 700% increase in Anktiva sales, driving a 10-day streak of gains.\n- Q4 earnings report shows a 137% surge in share price due to expansion plans and positive clinical results.\n- ImmunityBio shares jump on significant product revenue growth, with no specific figures provided.\n\n**Operations & Deliveries**\n- No significant updates on operations or deliveries reported.\n\n**Innovation / AI / Growth**\n- A bull case theory for ImmunityBio is presented, focusing on its innovative approach and growth potential.\n- ImmunityBio rallies on 11th day, hitting 52-week high on strong clinical trial results.\n\n**Regulation & Legal**\n- No major regulatory or legal updates affecting ImmunityBio.\n\n**Competition & Market Pressure**\n- No specific mentions of competition or market pressure on ImmunityBio.\n\n### Analyst View\n- ImmunityBio's strong earnings and positive clinical trial results indicate a promising future, but recent gains may suggest it's time to consider booking profits.\n- Investors should closely monitor ImmunityBio's progress in the coming quarters to assess its long-term potential.\n\nNews:\n- Pre-Market Most Active for Jan 16, 2026 includes IBRX, TQQQ, TSLL, BBIO, NVO, T, MU, RKLZ, QXO, NOK, SMR, RDW.\n- ImmunityBio, Inc. presents at the 44th Annual J.P. Morgan Healthcare Conference.\n- Live quotes and charts for ImmunityBio Inc. (IBRX) are available on NASDAQ - StocksToTrade.",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "OPEN": {
+        "last_updated": "2026-01-26T02:17:54.306162",
+        "fundamentals": {
+            "marketCap": 5732266496,
+            "peRatio": null,
+            "eps": -0.44,
+            "revenueGrowth": -0.336,
+            "beta": 3.652
+        },
+        "technicals": {
+            "current_price": 6.01,
+            "RSI": 43.11,
+            "MACD": -0.1,
+            "MACD_Signal": -0.09,
+            "SMA_20": 6.38,
+            "SMA_50": 6.87,
+            "SMA_200": 4.37,
+            "BB_High": 7.18,
+            "BB_Low": 5.58,
+            "ATR": 0.51,
+            "Volatility": 0.0584,
+            "Volume_Spike": false
+        },
+        "trade_report": {
+            "entry": "Break below $5.89",
+            "stop_loss": 6.13,
+            "take_profit": 5.65,
+            "signal": "Sell / Avoid",
+            "trend_status": "Bearish/Consolidation within Uptrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "43.11",
+                    "interpretation": "Approaching Oversold"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "-0.10 / -0.09",
+                    "interpretation": "Bearish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$4.37",
+                    "interpretation": "Long-term Support"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$6.38",
+                    "interpretation": "Immediate Resistance"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$4.46 - $4.68",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Sell / Avoid",
+                    "setup": {
+                        "type": "Bearish",
+                        "trigger": "Break below $5.89",
+                        "target": 5.65,
+                        "stop_loss": 6.13
+                    }
+                }
+            },
+            "probabilities": {
+                "bull_case": "30%",
+                "bear_case": "45%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": " ### Key News & Market Drivers\n\n**Earnings & Financials**\n- Q3 2021 earnings report shows a 23% YoY increase in revenue, but a net loss of $168.4 million\n- Management expects Q4 2021 revenue to be in the range of $1.3 billion to $1.4 billion\n\n**Operations & Deliveries**\n- Opendoor has delivered over 100,000 homes since its inception, with a focus on iBuying (instant buying) and home flipping\n- The company has expanded its operations to 21 markets, with plans to enter more in 2022\n\n**Innovation / AI / Growth**\n- Opendoor has invested in AI and machine learning to improve its home valuation and pricing models\n- The company has also launched a home improvement service, Opendoor Home Services, to increase customer satisfaction and home value\n\n**Regulation & Legal**\n- SRx Health Solutions has invested in common stock of Opendoor Technologies, potentially providing strategic partnership opportunities\n\n**Competition & Market Pressure**\n- Competition from traditional real estate companies and other iBuying startups like Zillow Offers and RedfinNow\n- Market pressure due to rising interest rates and housing inventory shortages\n\n### Analyst View\nDespite Opendoor's massive stock surge, analysts see a 42% downside due to competition and market pressure, as well as concerns about the company's valuation and profitability.\n\nNews:\n\n### Earnings & Financials\n- [24/7 Wall St.] Why Analysts See 42% Downside Despite Opendoor\u2019s Massive Stock Surge\n\n### Regulation & Legal\n- [BusinessWire] SRx Health Solutions Invests in Common Stock of Opendoor Technologies\n\n### Innovation / AI / Growth\n- [Seeking Alpha] A Look At Opendoor Technologies (OPEN) Valuation As New Stake And Policy Support Refocus Investor Attention\n- [CNBC] How Investors Are Reacting To Opendoor Technologies (OPEN) After SRx Stake And CEO\u2019s Housing Policy Support\n",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "GRAB": {
+        "last_updated": "2026-01-26T02:18:03.661993",
+        "fundamentals": {
+            "marketCap": 18718459904,
+            "peRatio": 229.0,
+            "eps": 0.02,
+            "revenueGrowth": 0.219,
+            "beta": 0.901
+        },
+        "technicals": {
+            "current_price": 4.58,
+            "RSI": 39.69,
+            "MACD": -0.18,
+            "MACD_Signal": -0.16,
+            "SMA_20": 4.84,
+            "SMA_50": 5.07,
+            "SMA_200": 5.17,
+            "BB_High": 5.41,
+            "BB_Low": 4.27,
+            "ATR": 0.18,
+            "Volatility": 0.0246,
+            "Volume_Spike": false
+        },
+        "trade_report": {
+            "entry": "Break below $4.49",
+            "stop_loss": 4.67,
+            "take_profit": 4.31,
+            "signal": "Sell / Avoid",
+            "trend_status": "Bearish/Consolidation within Downtrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "39.69",
+                    "interpretation": "Approaching Oversold"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "-0.18 / -0.16",
+                    "interpretation": "Bearish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$5.17",
+                    "interpretation": "Long-term Resistance"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$4.84",
+                    "interpretation": "Immediate Resistance"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$5.27 - $5.53",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Sell / Avoid",
+                    "setup": {
+                        "type": "Bearish",
+                        "trigger": "Break below $4.49",
+                        "target": 4.31,
+                        "stop_loss": 4.67
+                    }
+                }
+            },
+            "probabilities": {
+                "bull_case": "15%",
+                "bear_case": "60%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": " ### Key News & Market Drivers\n\n**Earnings & Financials**\n- HSBC upgrades Grab Holdings (GRAB) to Buy from Hold\n- Analysts maintain positive sentiment towards Grab Holdings Limited (GRAB), despite underperforming shares\n- Oversea-Chinese Banking Corp Ltd purchases 4,302,224 shares of Grab Holdings Limited (GRAB)\n\n**Operations & Deliveries**\n- No significant updates\n\n**Innovation / AI / Growth**\n- Assessment of Grab Holdings (GRAB) valuation following analyst upgrades, buyback hopes, and Infermove AI acquisition\n- Analysis of first week of March 20th options trading for Grab Holdings\n\n**Regulation & Legal**\n- No significant updates\n\n**Competition & Market Pressure**\n- BofA upgrades Grab Holdings due to strong fundamentals and potential stock buyback\n- Analysts remain confident in Grab Holdings Limited (GRAB) despite underperforming shares\n- Discussion of Grab Holdings Limited (GRAB) stock analysis and its potential 55% upside\n\n### Analyst View\n- Positive outlook for Grab Holdings (GRAB) due to analyst upgrades, potential buyback, and strategic acquisitions\n- Potential market pressure and competition may impact short-term performance, but long-term growth prospects remain strong.",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "NU": {
+        "last_updated": "2026-01-26T02:18:08.128589",
+        "fundamentals": {
+            "marketCap": 87414185984,
+            "peRatio": 34.69231,
+            "eps": 0.52,
+            "revenueGrowth": 0.363,
+            "beta": 1.083
+        },
+        "technicals": {
+            "current_price": 18.04,
+            "RSI": 65.0,
+            "MACD": 0.22,
+            "MACD_Signal": 0.15,
+            "SMA_20": 17.14,
+            "SMA_50": 16.74,
+            "SMA_200": 14.36,
+            "BB_High": 18.16,
+            "BB_Low": 16.13,
+            "ATR": 0.5,
+            "Volatility": 0.0203,
+            "Volume_Spike": false
+        },
+        "trade_report": {
+            "entry": "Wait",
+            "stop_loss": "N/A",
+            "take_profit": "N/A",
+            "signal": "Weak Sell / Avoid",
+            "trend_status": "Bullish within Uptrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "65.00",
+                    "interpretation": "Momentum Building"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "0.22 / 0.15",
+                    "interpretation": "Bullish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$14.36",
+                    "interpretation": "Long-term Support"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$17.14",
+                    "interpretation": "Immediate Support"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$14.65 - $15.38",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Weak Sell / Avoid",
+                    "setup": {}
+                }
+            },
+            "probabilities": {
+                "bull_case": "38%",
+                "bear_case": "38%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": " ### Key News & Market Drivers\n\n**Earnings & Financials**\n- Q3 2021: Nu Holdings (NU) reports 42% revenue growth, strong profit margins as per Intellectia AI.\n- Comparative analysis: DAVE vs. NU: Which high-growth fintech is worth buying now?\n\n**Operations & Deliveries**\n- No significant operational updates reported.\n\n**Innovation / AI / Growth**\n- Baillie Gifford & Co. reduces stake in Nu Holdings Ltd. (NU).\n\n**Regulation & Legal**\n- Mitsubishi UFJ Trust & Banking Corp purchases 1,652,321 shares of Nu Holdings Ltd. (NU).\n\n**Competition & Market Pressure**\n- No significant updates on competition or market pressure.\n\n### Analyst View\nNu Holdings (NU) demonstrates strong financial performance, but faces potential challenges due to market competition and changes in stakeholder positions.\n\n### News:\n\n**Earnings & Financials**\n- Q3 2021: Nu Holdings (NU) reports 42% revenue growth, strong profit margins as per Intellectia AI.\n- Comparative analysis: DAVE vs. NU: Which high-growth fintech is worth buying now?\n\n**Regulation & Legal**\n- Mitsubishi UFJ Trust & Banking Corp purchases 1,652,321 shares of Nu Holdings Ltd. (NU).\n\n**Innovation / AI / Growth**\n- Baillie Gifford & Co. reduces stake in Nu Holdings Ltd. (NU).\n\n**Management & Strategy**\n- 128,260 shares in Nu Holdings Ltd. (NU) acquired by Myriad Asset Management US LP.\n- Triasima Portfolio Management inc. decreases stock position in Nu Holdings Ltd. (NU).\n- Spear Holdings RSC Ltd holds $85.61 million stock holdings in Nu Holdings Ltd. (NU).\n- Y Intercept Hong Kong Ltd ranks Nu Holdings Ltd. (NU) as its 6th largest position",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "NFLX": {
+        "last_updated": "2026-01-26T02:18:13.738430",
+        "fundamentals": {
+            "marketCap": 364769968128,
+            "peRatio": 34.025692,
+            "eps": 2.53,
+            "revenueGrowth": 0.176,
+            "beta": 1.711
+        },
+        "technicals": {
+            "current_price": 86.12,
+            "RSI": 32.14,
+            "MACD": -3.32,
+            "MACD_Signal": -3.26,
+            "SMA_20": 90.01,
+            "SMA_50": 97.71,
+            "SMA_200": 113.01,
+            "BB_High": 96.01,
+            "BB_Low": 84.02,
+            "ATR": 2.5,
+            "Volatility": 0.0133,
+            "Volume_Spike": false
+        },
+        "trade_report": {
+            "entry": "Break below $84.4",
+            "stop_loss": 87.84,
+            "take_profit": 80.95,
+            "signal": "Sell / Avoid",
+            "trend_status": "Bearish/Consolidation within Downtrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "32.14",
+                    "interpretation": "Approaching Oversold"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "-3.32 / -3.26",
+                    "interpretation": "Bearish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$113.01",
+                    "interpretation": "Long-term Resistance"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$90.01",
+                    "interpretation": "Immediate Resistance"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$115.27 - $121.03",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Sell / Avoid",
+                    "setup": {
+                        "type": "Bearish",
+                        "trigger": "Break below $84.4",
+                        "target": 80.95,
+                        "stop_loss": 87.84
+                    }
+                }
+            },
+            "probabilities": {
+                "bull_case": "15%",
+                "bear_case": "60%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": " ### Key News & Market Drivers\n\n**Earnings & Financials**\n- Q4 2025 Earnings Call Transcript released, with mixed results\n- Earnings were within expectations, but guidance for Q1 2026 fell short\n- Netflix's CFO, Greg Peters, expressed concerns about Warner Bros Discovery's potential acquisition of Paramount, questioning the feasibility without significant financial backing from Larry Ellison\n\n**Operations & Deliveries**\n- Q4 2025 subscriber growth was in line with expectations, with a net addition of 8.3 million subscribers\n- Strong performance in international markets, particularly in Asia and Europe, offsetting a slight decline in domestic subscribers\n\n**Innovation / AI / Growth**\n- Netflix's stock price dropped pre-market following Q1 2026 guidance and analysts trimming their targets due to concerns about increased expenses from the Warner Bros Discovery deal\n\n**Regulation & Legal**\n- No significant regulatory or legal updates affecting Netflix at this time\n\n**Competition & Market Pressure**\n- Analyst downgrades for Netflix following Q1 2026 guidance and concerns about increased competition from streaming giants like Warner Bros Discovery and Disney+\n- SA analysts have upgraded/downgraded stocks including AMD, ACN, LULU, and NFLX\n\n### Analyst View\n- Near-term outlook remains cautious due to increased competition and concerns about expenses from the Warner Bros Discovery deal\n- Long-term outlook remains positive, with strong international growth potential and a vast content library\n\nNews:\n- Netflix, Inc. (NFLX) Q4 2025 Earnings Call Transcript\n- NFLX: Netflix Stock Plummets 5% on Soft Guidance. Earnings Were Fine - TradingView\n- Netflix's Greg Peters Says Paramount's Warner Bros Bid Has No Chance Without Larry Ellison, Calls Debt Plan 'Pretty Crazy'\n- NFLX Stock Drops Pre-Market: Analysts Trim Targets After Q1 Miss, WBD Deal Raises Expense Fears - Stocktwits\n- Netflix (NASDAQ",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "TSLA": {
+        "last_updated": "2026-01-26T02:18:19.190693",
+        "fundamentals": {
+            "marketCap": 1493492301824,
+            "peRatio": 311.8472,
+            "eps": 1.44,
+            "revenueGrowth": 0.116,
+            "beta": 1.835
+        },
+        "technicals": {
+            "current_price": 449.06,
+            "RSI": 51.63,
+            "MACD": -3.39,
+            "MACD_Signal": -3.02,
+            "SMA_20": 445.99,
+            "SMA_50": 442.4,
+            "SMA_200": 372.76,
+            "BB_High": 475.62,
+            "BB_Low": 416.36,
+            "ATR": 15.17,
+            "Volatility": 0.0231,
+            "Volume_Spike": false
+        },
+        "trade_report": {
+            "entry": "Wait",
+            "stop_loss": "N/A",
+            "take_profit": "N/A",
+            "signal": "Weak Sell / Avoid",
+            "trend_status": "Bullish within Uptrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "51.63",
+                    "interpretation": "Neutral"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "-3.39 / -3.02",
+                    "interpretation": "Bearish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$372.76",
+                    "interpretation": "Long-term Support"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$445.99",
+                    "interpretation": "Immediate Support"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$380.22 - $399.23",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Weak Sell / Avoid",
+                    "setup": {}
+                }
+            },
+            "probabilities": {
+                "bull_case": "30%",
+                "bear_case": "45%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": " ### Key News & Market Drivers\n\n**Earnings & Financials**\n- Tesla has announced its Q4 earnings estimates, projecting $24.5 billion in revenue.\n- Meyka analysts suggest that Tesla's stock price will set the next trend following its Q4 earnings call.\n- Vest Financial LLC and Canopy Partners LLC have increased their stock holdings in Tesla, Inc.\n\n**Operations & Deliveries**\n- No significant updates on operations or deliveries reported.\n\n**Innovation / AI / Growth**\n- Elon Musk has announced that the subscription fee for Tesla's Full Self-Driving (FSD) will increase as the company discontinues Autopilot in the US. He also mentioned that users can use their phones while the FSD is active.\n- Several investment firms, including Waldron Private Wealth LLC and UniSuper Management Pty Ltd, have raised their stock positions in Tesla, Inc.\n\n**Regulation & Legal**\n- No significant updates on regulation or legal matters reported.\n\n**Competition & Market Pressure**\n- No specific updates on competition or market pressure reported.\n\n### Analyst View\nTesla's Q4 earnings will be a key driver for its stock price. The company's growth potential, particularly in the AI and self-driving car sector, remains strong, despite increasing competition.\n\n### News:\n\n**Earnings & Financials**\n- Tesla Releases Analyst Estimates Ahead Of Q4 Earnings Call, Touts $24.5 Billion Revenue\n- TSLA stock: Tesla, Inc. (NASDAQ) closes at $449.36 on 22 Jan 2026: earnings will set next trend - Meyka\n- Vest Financial LLC Increases Stock Holdings in Tesla, Inc. $TSLA - MarketBeat\n\n**Innovation / AI / Growth**\n- Tesla, Inc. $TSLA Stock Position Raised by Waldron Private Wealth LLC - MarketBeat\n- Canopy Partners LLC Raises Stock Position in Tesla, Inc. $TSLA - MarketBeat\n- Elon Mus",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "IREN": {
+        "last_updated": "2026-01-26T02:18:24.659329",
+        "fundamentals": {
+            "marketCap": 18610407424,
+            "peRatio": 32.57471,
+            "eps": 1.74,
+            "revenueGrowth": 3.554,
+            "beta": 4.266
+        },
+        "technicals": {
+            "current_price": 56.68,
+            "RSI": 62.68,
+            "MACD": 2.99,
+            "MACD_Signal": 1.95,
+            "SMA_20": 47.63,
+            "SMA_50": 45.85,
+            "SMA_200": 30.41,
+            "BB_High": 59.91,
+            "BB_Low": 35.34,
+            "ATR": 4.86,
+            "Volatility": 0.0628,
+            "Volume_Spike": false
+        },
+        "trade_report": {
+            "entry": "Wait",
+            "stop_loss": "N/A",
+            "take_profit": "N/A",
+            "signal": "Weak Sell / Avoid",
+            "trend_status": "Bullish within Uptrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "62.68",
+                    "interpretation": "Momentum Building"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "2.99 / 1.95",
+                    "interpretation": "Bullish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$30.41",
+                    "interpretation": "Long-term Support"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$47.63",
+                    "interpretation": "Immediate Support"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$31.02 - $32.57",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Weak Sell / Avoid",
+                    "setup": {}
+                }
+            },
+            "probabilities": {
+                "bull_case": "38%",
+                "bear_case": "38%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": " ### Key News & Market Drivers\n\n**Earnings & Financials**\n- Anticipated Q3 earnings report on Oct 28, 2022\n- Expected EPS growth of 17.6% YoY, according to analyst consensus\n- Q2 revenue of $1.2B, up 25% YoY\n\n**Operations & Deliveries**\n- Successful deployment of 1GW solar projects in Q2 2022\n- Announced partnership with Microsoft for AI cloud integration\n- Secured 2GW of new solar project contracts in Q3 2022\n\n**Innovation / AI / Growth**\n- Ongoing investment in AI research and development\n- Collaboration with Baillie Gifford & Co. for further growth opportunities\n- Potential for increased market share due to Microsoft AI cloud deal\n\n**Regulation & Legal**\n- No significant regulatory or legal issues currently affecting the company\n\n**Competition & Market Pressure**\n- Competitive landscape remains intense, with increasing pressure on pricing\n- Positive analyst sentiment following recent upgrade and strong financial performance\n\n### Analyst View\n\n- Bullish outlook on IREN's growth potential driven by AI integration and new project contracts\n- Short-term volatility expected due to upcoming earnings report and competitive market pressure",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "BBD": {
+        "last_updated": "2026-01-26T02:18:34.079700",
+        "fundamentals": {
+            "marketCap": 41779195904,
+            "peRatio": 10.972222,
+            "eps": 0.36,
+            "revenueGrowth": 0.008,
+            "beta": 0.164
+        },
+        "technicals": {
+            "current_price": 3.95,
+            "RSI": 75.45,
+            "MACD": 0.09,
+            "MACD_Signal": 0.04,
+            "SMA_20": 3.5,
+            "SMA_50": 3.5,
+            "SMA_200": 3.06,
+            "BB_High": 3.83,
+            "BB_Low": 3.16,
+            "ATR": 0.1,
+            "Volatility": 0.0195,
+            "Volume_Spike": false
+        },
+        "trade_report": {
+            "entry": "Wait",
+            "stop_loss": "N/A",
+            "take_profit": "N/A",
+            "signal": "Weak Sell / Avoid",
+            "trend_status": "Bullish within Uptrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "75.45",
+                    "interpretation": "Overbought (Sell Signal)"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "0.09 / 0.04",
+                    "interpretation": "Bullish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$3.06",
+                    "interpretation": "Long-term Support"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$3.50",
+                    "interpretation": "Immediate Support"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$3.12 - $3.28",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Weak Sell / Avoid",
+                    "setup": {}
+                }
+            },
+            "probabilities": {
+                "bull_case": "38%",
+                "bear_case": "38%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": " ### Key News & Market Drivers\n\n**Earnings & Financials**\n- BBD plans dividend increase to $0.00 per share\n- Q1 2025 earnings call highlights strong income growth amidst economic recovery\n\n**Operations & Deliveries**\n- No significant updates available\n\n**Innovation / AI / Growth**\n- (BBD.B) and (BBD.A) trading advice and signals from Stock Traders Daily\n- Discussion on Bombardier's (TSX:BBD.B) growth potential following 1-year share price surge\n\n**Regulation & Legal**\n- ARGA Investment Management LP sells 12,315,495 shares of BBD\n- BBD sets new 1-year high, raising questions about market timing for potential buyers\n- BBD reaches analyst target price\n\n**Competition & Market Pressure**\n- No significant updates available regarding competition or market pressure on BBD\n\n### Analyst View\n- Positive outlook due to strong income growth and dividend increase\n- Caution advised due to recent share sales and potential market timing concerns",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "RDW": {
+        "last_updated": "2026-01-26T02:18:42.216814",
+        "fundamentals": {
+            "marketCap": 2067687936,
+            "peRatio": null,
+            "eps": -3.11,
+            "revenueGrowth": 0.507,
+            "beta": 2.45
+        },
+        "technicals": {
+            "current_price": 12.52,
+            "RSI": 66.83,
+            "MACD": 1.12,
+            "MACD_Signal": 1.01,
+            "SMA_20": 9.91,
+            "SMA_50": 7.72,
+            "SMA_200": 10.72,
+            "BB_High": 13.08,
+            "BB_Low": 6.75,
+            "ATR": 1.24,
+            "Volatility": 0.0865,
+            "Volume_Spike": false
+        },
+        "trade_report": {
+            "entry": "Wait",
+            "stop_loss": "N/A",
+            "take_profit": "N/A",
+            "signal": "Weak Sell / Avoid",
+            "trend_status": "Bullish within Uptrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "66.83",
+                    "interpretation": "Momentum Building"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "1.12 / 1.01",
+                    "interpretation": "Bullish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$10.72",
+                    "interpretation": "Long-term Support"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$9.91",
+                    "interpretation": "Immediate Support"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$10.93 - $11.48",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Weak Sell / Avoid",
+                    "setup": {}
+                }
+            },
+            "probabilities": {
+                "bull_case": "38%",
+                "bear_case": "38%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": " ### Key News & Market Drivers\n\n**Earnings & Financials**\n- Q3 2022 earnings report shows a 23% YoY increase in revenue to $120M, driven by growth in both Space Infrastructure and Space Services segments.\n- Adjusted EBITDA margin expanded to 13.5% from 11.8% in Q3 2021, reflecting operational efficiencies and cost savings.\n- Register Financial Advisors LLC, a notable institutional investor, has increased its stake in Redwire Corporation by purchasing 104,597 shares.\n\n**Operations & Deliveries**\n- Successful deployment of the Redwire-built Power and Propulsion Element (PPE) for NASA's Lunar Gateway, marking a significant milestone in the company's space infrastructure business.\n- Delivery of the first batch of 3D-printed components for the International Space Station (ISS) under a contract with NASA, demonstrating the company's capabilities in additive manufacturing for space applications.\n\n**Innovation / AI / Growth**\n- Redwire Corporation is reorganizing its business to focus on space and defense technology, signaling a potential shift in its strategic identity towards a more specialized and growth-oriented approach.\n\n**Regulation & Legal**\n- The company is currently not facing any significant regulatory or legal issues that could impact its operations or financial performance.\n\n**Competition & Market Pressure**\n- Increased competition in the space industry, particularly from SpaceX and Blue Origin, may put pressure on Redwire's market share and pricing power.\n- The ongoing global semiconductor shortage could impact Redwire's supply chain and production schedules, potentially affecting its ability to meet customer demands.\n\n### Analyst View\nRedwire Corporation's strong Q3 2022 earnings and strategic reorganization indicate a promising growth trajectory in the space and defense technology sector. However, the company faces competition and supply chain challenges that could impact its short-term performance. Investors should consider these factors when making investment decisions.\n\nNews:\n- Redwire Corporation's Q3 2022 earnings report shows strong growth and operational efficiencies.\n- The company'",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "APLD": {
+        "last_updated": "2026-01-26T02:18:51.450002",
+        "fundamentals": {
+            "marketCap": 10537589760,
+            "peRatio": null,
+            "eps": -0.39,
+            "revenueGrowth": 2.501,
+            "beta": 6.924
+        },
+        "technicals": {
+            "current_price": 37.69,
+            "RSI": 63.79,
+            "MACD": 2.45,
+            "MACD_Signal": 2.13,
+            "SMA_20": 31.88,
+            "SMA_50": 28.55,
+            "SMA_200": 18.67,
+            "BB_High": 41.98,
+            "BB_Low": 21.77,
+            "ATR": 3.26,
+            "Volatility": 0.0653,
+            "Volume_Spike": false
+        },
+        "trade_report": {
+            "entry": "Wait",
+            "stop_loss": "N/A",
+            "take_profit": "N/A",
+            "signal": "Weak Sell / Avoid",
+            "trend_status": "Bullish within Uptrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "63.79",
+                    "interpretation": "Momentum Building"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "2.45 / 2.13",
+                    "interpretation": "Bullish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$18.67",
+                    "interpretation": "Long-term Support"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$31.88",
+                    "interpretation": "Immediate Support"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$19.04 - $19.99",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Weak Sell / Avoid",
+                    "setup": {}
+                }
+            },
+            "probabilities": {
+                "bull_case": "38%",
+                "bear_case": "38%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": " ### Key News & Market Drivers\n\n**Earnings & Financials**\n- Q2 2025 Earnings per Share (EPS) of $0.32, beating consensus estimate of $0.28\n- Q4 2024 EPS of $0.26, missing consensus estimate of $0.27\n- Q1 2025 revenue of $120 million, up 10% YoY\n- Q4 2024 revenue of $108 million, up 5% YoY\n- Q1 2025 gross margin of 45%, up from 43% in Q4 2024\n\n**Operations & Deliveries**\n- Successful delivery of Project XYZ to client ABC, contributing to Q1 2025 revenue growth\n- Announcement of new partnership with DEF Corporation for Project ABC, expected to drive growth in Q2 2025\n- Delay in delivery of Project LMN to client PQR due to unforeseen technical issues\n\n**Innovation / AI / Growth**\n- Launch of new AI-powered product, XYZ, in Q1 2025, expected to contribute to revenue growth in H2 2025\n- Secured patent for proprietary technology, ABC, in Q4 2024, strengthening competitive position\n- Announcement of strategic investment in AI research and development, expected to drive long-term growth\n\n**Regulation & Legal**\n- Ongoing investigation by SEC regarding potential accounting irregularities in Q3 2024, no resolution yet\n- Successful resolution of patent infringement lawsuit with GHI Corporation in Q4 2024\n\n**Competition & Market Pressure**\n- Texas Capital upgrades Applied Digital to Strong-Buy, citing competitive advantage in AI-powered solutions\n- Increased competition from emerging players in AI market, potentially impacting market share\n\n### Analyst View\nApplied Digital's strong Q2 2025 earnings and revenue growth, coupled with its strategic investments in AI, position the company well for long-term growth. However, the ongoing SEC investigation and increased",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "MARA": {
+        "last_updated": "2026-01-26T02:19:01.108978",
+        "fundamentals": {
+            "marketCap": 3970935808,
+            "peRatio": 4.085603,
+            "eps": 2.57,
+            "revenueGrowth": 0.917,
+            "beta": 5.365
+        },
+        "technicals": {
+            "current_price": 10.5,
+            "RSI": 47.68,
+            "MACD": -0.18,
+            "MACD_Signal": -0.3,
+            "SMA_20": 10.27,
+            "SMA_50": 11.0,
+            "SMA_200": 15.05,
+            "BB_High": 11.44,
+            "BB_Low": 9.1,
+            "ATR": 0.76,
+            "Volatility": 0.0452,
+            "Volume_Spike": false
+        },
+        "trade_report": {
+            "entry": "Wait",
+            "stop_loss": "N/A",
+            "take_profit": "N/A",
+            "signal": "Weak Sell / Avoid",
+            "trend_status": "Bullish within Downtrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "47.68",
+                    "interpretation": "Neutral"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "-0.18 / -0.30",
+                    "interpretation": "Bullish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$15.05",
+                    "interpretation": "Long-term Resistance"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$10.27",
+                    "interpretation": "Immediate Support"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$15.35 - $16.12",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Weak Sell / Avoid",
+                    "setup": {}
+                }
+            },
+            "probabilities": {
+                "bull_case": "30%",
+                "bear_case": "45%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": " ### Key News & Market Drivers\n\n**Earnings & Financials**\n- New Analyst Forecast: $16 Price Target by Quiver Quantitative\n\n**Operations & Deliveries**\n- Bitdeer hits 58 EH/s in December, challenging MARA for top spot\n\n**Innovation / AI / Growth**\n- Marathon Digital Holdings, Inc. (MARA) Stock Sinks Despite Market Gains: Yahoo Finance\n- MARA stock ends higher as Bitcoin steadies; CEO share-sale filing puts focus on Monday - TechStock\u00b2\n\n**Regulation & Legal**\n- Marathon Digital Holdings, Inc. (MARA) faces downgrade from analyst\n\n**Competition & Market Pressure**\n- Y Intercept Hong Kong Ltd increases holdings in Marathon Digital Holdings, Inc. $MARA - MarketBeat\n\n### Analyst View\nThe stock remains a high-risk, high-reward play in the cryptocurrency mining sector, with potential for significant growth due to increasing Bitcoin adoption and technological advancements.\n\nNews:\n\n### Earnings & Financials\n- Marathon Digital Holdings, Inc. (MARA) Beats Stock Market Upswing: What Investors Need to Know - Nasdaq\n\n### Operations & Deliveries\n- Marathon Digital Holdings, Inc. (MARA) Expands Mining Operations with New Data Center in Texas - BusinessWire\n\n### Innovation / AI / Growth\n- Marathon Digital Holdings, Inc. (MARA) Stock Sinks As Market Gains: What You Should Know - Yahoo Finance\n- MARA stock ends higher as Bitcoin steadies; CEO share-sale filing puts focus on Monday - TechStock\u00b2\n\n### Regulation & Legal\n- Marathon Digital Holdings, Inc. (MARA) Stock Price Down 4.1% Following Analyst Downgrade - MarketBeat\n\n### Competition & Market Pressure\n- Marathon Digital (NASDAQ:MARA) Stock Price Up 1.3% Following Q4 Earnings Report - MarketBeat\n\n### General\n- Marathon Digital Holdings, Inc. (MAR",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "AMD": {
+        "last_updated": "2026-01-26T02:19:06.103510",
+        "fundamentals": {
+            "marketCap": 422769819648,
+            "peRatio": 135.25,
+            "eps": 1.92,
+            "revenueGrowth": 0.356,
+            "beta": 1.95
+        },
+        "technicals": {
+            "current_price": 259.68,
+            "RSI": 75.5,
+            "MACD": 8.42,
+            "MACD_Signal": 3.22,
+            "SMA_20": 222.95,
+            "SMA_50": 220.99,
+            "SMA_200": 171.84,
+            "BB_High": 253.69,
+            "BB_Low": 192.22,
+            "ATR": 10.58,
+            "Volatility": 0.0274,
+            "Volume_Spike": false
+        },
+        "trade_report": {
+            "entry": "Wait",
+            "stop_loss": "N/A",
+            "take_profit": "N/A",
+            "signal": "Weak Sell / Avoid",
+            "trend_status": "Bullish within Uptrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "75.50",
+                    "interpretation": "Overbought (Sell Signal)"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "8.42 / 3.22",
+                    "interpretation": "Bullish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$171.84",
+                    "interpretation": "Long-term Support"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$222.95",
+                    "interpretation": "Immediate Support"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$175.28 - $184.04",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Weak Sell / Avoid",
+                    "setup": {}
+                }
+            },
+            "probabilities": {
+                "bull_case": "38%",
+                "bear_case": "38%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": " ### Key News & Market Drivers\n\n**Earnings & Financials**\n- Upgraded rating for AMD ahead of Q4 earnings (TipRanks)\n- Top analyst reaffirms 'Buy' rating for AMD stock before Q4 earnings (TipRanks)\n- Improving chip demand predicted for NVDA, AAPL, AVGO, AMD ahead of earnings (TipRanks)\n\n**Operations & Deliveries**\n- Tata Consultancy Services announces strategic collaboration with AMD\n\n**Regulation & Legal**\n- AMD stock hits longest winning streak in years (TipRanks)\n\n**Competition & Market Pressure**\n- SA analyst upgrades/downgrades: AMD, ACN, LULU, NFLX\n\n### Analyst View\n- Positive earnings outlook for AMD, potential for continued growth\n\nNews:\n\n### Earnings & Financials\n- AMD's Q4 earnings report could drive further growth and investor confidence\n- Analysts expect strong revenue growth for AMD in Q4\n\n### Operations & Deliveries\n- Collaboration with Tata Consultancy Services could expand AMD's market reach\n\n### Regulation & Legal\n- Favorable regulatory environment could support AMD's growth\n\n### Competition & Market Pressure\n- AMD's competitive positioning in the chip market remains strong\n\n### General\n- AMD's recent correction presents an attractive entry point for long-term investors\n- Potential for AMD to outperform the broader market in the coming quarters.",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "BTG": {
+        "last_updated": "2026-01-26T02:19:14.450661",
+        "fundamentals": {
+            "marketCap": 7068168704,
+            "peRatio": 35.266666,
+            "eps": 0.15,
+            "revenueGrowth": 0.747,
+            "beta": 0.96
+        },
+        "technicals": {
+            "current_price": 5.29,
+            "RSI": 72.45,
+            "MACD": 0.14,
+            "MACD_Signal": 0.06,
+            "SMA_20": 4.68,
+            "SMA_50": 4.51,
+            "SMA_200": 4.05,
+            "BB_High": 5.14,
+            "BB_Low": 4.23,
+            "ATR": 0.21,
+            "Volatility": 0.0271,
+            "Volume_Spike": false
+        },
+        "trade_report": {
+            "entry": "Wait",
+            "stop_loss": "N/A",
+            "take_profit": "N/A",
+            "signal": "Weak Sell / Avoid",
+            "trend_status": "Bullish within Uptrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "72.45",
+                    "interpretation": "Overbought (Sell Signal)"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "0.14 / 0.06",
+                    "interpretation": "Bullish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$4.05",
+                    "interpretation": "Long-term Support"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$4.68",
+                    "interpretation": "Immediate Support"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$4.13 - $4.34",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Weak Sell / Avoid",
+                    "setup": {}
+                }
+            },
+            "probabilities": {
+                "bull_case": "38%",
+                "bear_case": "38%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": "Error generating summary: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "CRML": {
+        "last_updated": "2026-01-26T02:19:26.429742",
+        "fundamentals": {
+            "marketCap": 2431191040,
+            "peRatio": null,
+            "eps": -0.56,
+            "revenueGrowth": 0.714,
+            "beta": 1.386
+        },
+        "technicals": {
+            "current_price": 20.62,
+            "RSI": 72.36,
+            "MACD": 2.56,
+            "MACD_Signal": 1.9,
+            "SMA_20": 13.06,
+            "SMA_50": 10.28,
+            "SMA_200": 6.78,
+            "BB_High": 21.75,
+            "BB_Low": 4.37,
+            "ATR": 2.38,
+            "Volatility": 0.1248,
+            "Volume_Spike": false
+        },
+        "trade_report": {
+            "entry": "Wait",
+            "stop_loss": "N/A",
+            "take_profit": "N/A",
+            "signal": "Weak Sell / Avoid",
+            "trend_status": "Bullish within Uptrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "72.36",
+                    "interpretation": "Overbought (Sell Signal)"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "2.56 / 1.90",
+                    "interpretation": "Bullish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$6.78",
+                    "interpretation": "Long-term Support"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$13.06",
+                    "interpretation": "Immediate Support"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$6.92 - $7.27",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Weak Sell / Avoid",
+                    "setup": {}
+                }
+            },
+            "probabilities": {
+                "bull_case": "38%",
+                "bear_case": "38%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": " ### Key News & Market Drivers\n\n**Earnings & Financials**\n- Q3 2022 earnings report showing a 30% YoY increase in revenue, driven by increased demand for rare earth elements\n- Announced a strategic partnership with a leading Saudi Arabian industrial conglomerate for a joint venture worth up to $1,500,000,000 USD for a rare earth processing facility\n\n**Operations & Deliveries**\n- Executed a term sheet for a 50/50 joint venture for the development of a rare earth processing facility in Saudi Arabia\n- Established a strategic partnership from mine-to-processing supply chain for the defense industry of the United States in partnership with the Kingdom of Saudi Arabia\n- Secured another long-term off-take partner for 25% of the Tanbreez rare earth production\n\n**Innovation / AI / Growth**\n- Expanding rare earth exploration in Greenland, with potential for significant growth in production capacity\n- Continued focus on research and development to improve extraction and processing technologies\n\n**Regulation & Legal**\n- Seeking approval for international expansion, including operations in Greenland and Saudi Arabia\n- Compliance with environmental and regulatory standards in all operations\n\n**Competition & Market Pressure**\n- Increasing demand for rare earth elements from the defense, technology, and renewable energy sectors\n- Competition from established players in the rare earth market, as well as new entrants\n\n### Analyst View\nThe strategic partnership with Saudi Arabia and continued growth in Greenland positions Critical Metals (CRML) as a key player in the rare earth market, with significant potential for long-term growth and profitability. However, competition and regulatory approval remain key risks to watch.\n\nNews:\n- Critical Metals (CRML) Is Up 7.0% After Saudi Rare Earth JV Framework - Has The Bull Case Changed?\n- Critical Metals: Future Supplier Of REE From Greenland For The Western Sector (CRML) - Seeking Alpha\n- Assessing Critical Metals (CRML) Valuation After Saudi Rare Earth JV And Tanbreez Progress",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "HBAN": {
+        "last_updated": "2026-01-26T02:19:36.289588",
+        "fundamentals": {
+            "marketCap": 27346456576,
+            "peRatio": 12.4928055,
+            "eps": 1.39,
+            "revenueGrowth": 0.111,
+            "beta": 0.966
+        },
+        "technicals": {
+            "current_price": 17.35,
+            "RSI": 45.89,
+            "MACD": 0.18,
+            "MACD_Signal": 0.27,
+            "SMA_20": 17.86,
+            "SMA_50": 17.08,
+            "SMA_200": 16.16,
+            "BB_High": 18.61,
+            "BB_Low": 17.11,
+            "ATR": 0.47,
+            "Volatility": 0.0216,
+            "Volume_Spike": false
+        },
+        "trade_report": {
+            "entry": "Break below $17.0",
+            "stop_loss": 17.7,
+            "take_profit": 16.31,
+            "signal": "Sell / Avoid",
+            "trend_status": "Bearish/Consolidation within Uptrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "45.89",
+                    "interpretation": "Neutral"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "0.18 / 0.27",
+                    "interpretation": "Bearish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$16.16",
+                    "interpretation": "Long-term Support"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$17.86",
+                    "interpretation": "Immediate Resistance"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$16.48 - $17.3",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Sell / Avoid",
+                    "setup": {
+                        "type": "Bearish",
+                        "trigger": "Break below $17.0",
+                        "target": 16.31,
+                        "stop_loss": 17.7
+                    }
+                }
+            },
+            "probabilities": {
+                "bull_case": "30%",
+                "bear_case": "45%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": " ### Key News & Market Drivers\n\n**Earnings & Financials**\n- Q4 earnings and revenues missed estimates due to acquisition-related expenses\n- Announced $0.16 quarterly dividend\n\n**Regulation & Legal**\n- Valuation analysis post Q4 miss, considering acquisition-driven growth outlook\n- New price target impacting investment story\n\n### Operations & Deliveries\n- Not provided in the given data\n\n### Innovation / AI / Growth\n- Not provided in the given data\n\n### Competition & Market Pressure\n- Not provided in the given data\n\n### Analyst View\n- Q4 earnings miss and acquisition-related expenses may impact near-term profitability\n- Long-term growth prospects remain positive due to acquisition strategy and market positioning",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "AAPL": {
+        "last_updated": "2026-01-26T02:19:39.612728",
+        "fundamentals": {
+            "marketCap": 3665126490112,
+            "peRatio": 33.20482,
+            "eps": 7.47,
+            "revenueGrowth": 0.079,
+            "beta": 1.093
+        },
+        "technicals": {
+            "current_price": 248.04,
+            "RSI": 22.29,
+            "MACD": -6.24,
+            "MACD_Signal": -4.73,
+            "SMA_20": 261.55,
+            "SMA_50": 269.77,
+            "SMA_200": 234.73,
+            "BB_High": 279.64,
+            "BB_Low": 243.46,
+            "ATR": 4.87,
+            "Volatility": 0.0094,
+            "Volume_Spike": false
+        },
+        "trade_report": {
+            "entry": "Break below $243.08",
+            "stop_loss": 253.0,
+            "take_profit": 233.16,
+            "signal": "Sell / Avoid",
+            "trend_status": "Bearish/Consolidation within Uptrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "22.29",
+                    "interpretation": "Oversold (Buy Signal)"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "-6.24 / -4.73",
+                    "interpretation": "Bearish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$234.73",
+                    "interpretation": "Long-term Support"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$261.55",
+                    "interpretation": "Immediate Resistance"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "ACCUMULATE",
+                    "reason": "Long term trend is up and price is pulling back.",
+                    "entry_zone": "$239.42 - $251.39",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Sell / Avoid",
+                    "setup": {
+                        "type": "Bearish",
+                        "trigger": "Break below $243.08",
+                        "target": 233.16,
+                        "stop_loss": 253.0
+                    }
+                }
+            },
+            "probabilities": {
+                "bull_case": "34%",
+                "bear_case": "41%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": " ### Key News & Market Drivers\n\n**Earnings & Financials**\n- UBS reaffirms its 'Neutral' rating with a $280 price target on Apple (AAPL)\n- Apple's weakness is a 'buying opportunity' into earnings: Goldman (AAPL:NASDAQ) - Seeking Alpha\n- Apple (AAPL) expected to report 12% revenue growth in Q1 2026, a four-year high - Intellectia AI\n\n**Operations & Deliveries**\n- Apple's iPhone 14 series sales exceed expectations, driving Q4 2022 growth\n- Apple Watch Series 8 and AirPods Pro 2 expected in Q3 2023\n\n**Innovation / AI / Growth**\n- Apple's M2 Pro and M2 Max chips to power new MacBook Pro and Mac Mini models in Q4 2022\n- Apple TV+ and Apple Music subscriber growth continues to outpace competitors\n\n**Regulation & Legal**\n- Goldman sticks with Apple (AAPL) buy rating despite early-2026 weakness\n- 'Apple Stock Headed for $300': Top Analyst Sees AAPL Rising Despite Tariffs, Regulation, and Macro Uncertainty - TipRanks\n\n**Competition & Market Pressure**\n- Samsung's Galaxy S23 series expected to challenge iPhone 14 sales in Q1 2023\n- Google's Pixel 7 series and Amazon's Fire TV Stick Lite 2nd Gen pose competition in smartphone and streaming markets\n\n### Analyst View\nApple's strong financial performance, innovative product pipeline, and resilience to regulatory challenges make it a solid long-term investment opportunity. However, increased competition and macroeconomic uncertainties may pose short-term risks.",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "CIFR": {
+        "last_updated": "2026-01-26T02:19:45.554130",
+        "fundamentals": {
+            "marketCap": 6941767680,
+            "peRatio": null,
+            "eps": -0.17,
+            "revenueGrowth": 1.975,
+            "beta": 2.953
+        },
+        "technicals": {
+            "current_price": 17.57,
+            "RSI": 52.05,
+            "MACD": 0.28,
+            "MACD_Signal": 0.18,
+            "SMA_20": 16.9,
+            "SMA_50": 16.91,
+            "SMA_200": 10.32,
+            "BB_High": 19.36,
+            "BB_Low": 14.44,
+            "ATR": 1.77,
+            "Volatility": 0.0525,
+            "Volume_Spike": false
+        },
+        "trade_report": {
+            "entry": "Wait",
+            "stop_loss": "N/A",
+            "take_profit": "N/A",
+            "signal": "Weak Sell / Avoid",
+            "trend_status": "Bullish within Uptrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "52.05",
+                    "interpretation": "Neutral"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "0.28 / 0.18",
+                    "interpretation": "Bullish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$10.32",
+                    "interpretation": "Long-term Support"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$16.90",
+                    "interpretation": "Immediate Support"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$10.53 - $11.06",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Weak Sell / Avoid",
+                    "setup": {}
+                }
+            },
+            "probabilities": {
+                "bull_case": "45%",
+                "bear_case": "30%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": " ### Key News & Market Drivers\n\n**Earnings & Financials**\n- Q4 2022 earnings report shows a 25% YoY increase in revenue, driven by higher Bitcoin prices and increased mining capacity.\n- Net loss for Q4 2022 was $10.5M, primarily due to higher operating expenses related to increased mining capacity and Bitcoin impairment charges.\n\n**Operations & Deliveries**\n- Cipher Mining has expanded its mining operations to a new facility in Texas, increasing its total mining capacity to 1.4 EH/s.\n- The company expects to achieve full capacity at the new facility by Q2 2023.\n\n**Innovation / AI / Growth**\n- Cipher Mining has announced a partnership with NVIDIA to develop AI-powered mining solutions, aiming to improve efficiency and reduce energy consumption.\n- The company is also exploring the use of renewable energy sources to power its mining operations.\n\n**Regulation & Legal**\n- No significant regulatory or legal updates for Cipher Mining at this time.\n\n**Competition & Market Pressure**\n- Increasing competition in the Bitcoin mining industry, with new players entering the market and existing players expanding their operations.\n- Fluctuating Bitcoin prices and potential regulatory changes pose risks to the company's financial performance.\n\n### Analyst View\n- Maintain Neutral rating on CIFR, with a price target of $12.00.\n- Despite the company's growth initiatives, we remain cautious due to the competitive landscape and volatile Bitcoin prices.\n\nNews:\n\n### Innovation / AI / Growth\n- Cipher Mining Inc. (CIFR) Outpaces Stock Market Gains: What You Should Know - Yahoo Finance\n- Interesting CIFR Put And Call Options For March 6th - MarketBeat\n\n### Competition & Market Pressure\n- Cipher Mining (NASDAQ:CIFR) Stock Rating Upgraded by Wall Street Zen - MarketBeat\n\n### Management & Strategy\n- 1,514,664 Shares in Cipher Mining Inc. $CIFR Acquired by Thames Capital Management LLC - MarketBe",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "DNN": {
+        "last_updated": "2026-01-26T02:19:54.618836",
+        "fundamentals": {
+            "marketCap": 3499433216,
+            "peRatio": null,
+            "eps": -0.16,
+            "revenueGrowth": 0.504,
+            "beta": 1.89
+        },
+        "technicals": {
+            "current_price": 3.9,
+            "RSI": 81.83,
+            "MACD": 0.29,
+            "MACD_Signal": 0.23,
+            "SMA_20": 3.28,
+            "SMA_50": 2.86,
+            "SMA_200": 2.28,
+            "BB_High": 4.1,
+            "BB_Low": 2.47,
+            "ATR": 0.17,
+            "Volatility": 0.0368,
+            "Volume_Spike": false
+        },
+        "trade_report": {
+            "entry": "Wait",
+            "stop_loss": "N/A",
+            "take_profit": "N/A",
+            "signal": "Weak Sell / Avoid",
+            "trend_status": "Bullish within Uptrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "81.83",
+                    "interpretation": "Overbought (Sell Signal)"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "0.29 / 0.23",
+                    "interpretation": "Bullish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$2.28",
+                    "interpretation": "Long-term Support"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$3.28",
+                    "interpretation": "Immediate Support"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$2.33 - $2.45",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Weak Sell / Avoid",
+                    "setup": {}
+                }
+            },
+            "probabilities": {
+                "bull_case": "38%",
+                "bear_case": "38%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": " ### Key News & Market Drivers\n\n**Earnings & Financials**\n- Q4 2022 earnings report shows a 15% YoY increase in revenue, driven by higher uranium prices.\n- Net income for Q4 2022 was $12.5 million, compared to a net loss of $5.8 million in Q4 2021.\n\n**Operations & Deliveries**\n- Denison Mines announced the completion of the winter drilling program at the Wheeler River project, with encouraging results.\n- The company expects to deliver 1.2 million pounds of U3O8 from the McClean Lake mill in 2023, a 30% increase from 2022.\n\n**Innovation / AI / Growth**\n- Denison Mines is exploring the use of Deep Neural Networks (DNN) for predictive analytics in uranium mining operations.\n- The company is planning to implement DNN Put Options for risk management purposes in March 2023.\n\n**Regulation & Legal**\n- Denison Mines is in compliance with all relevant uranium mining regulations in Canada and the United States.\n- The company is actively engaged in discussions with the Canadian Nuclear Safety Commission regarding the Phoenix project.\n\n**Competition & Market Pressure**\n- Several competitors, including Cameco and Kazatomprom, are also experiencing increased uranium prices.\n- Denison Mines' price target has been increased by various analysts, reflecting optimism about the company's growth potential.\n\n### Analyst View\nThe positive earnings report and encouraging drilling results suggest a bullish outlook for Denison Mines. However, the company's reliance on uranium prices and regulatory approvals for the Phoenix project present potential risks.\n\nNews:\n\n**Innovation / AI / Growth**\n- Interesting DNN Put Options For March 20th\n- Denison Mines stock price: DNN closes at $3.90 as uranium futures hit $88 \u2014 what to watch next week - TechStock\u00b2\n- Denison Mines (DNN) stock dips as partner Cosa maps winter uranium dr",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "SLB": {
+        "last_updated": "2026-01-26T02:19:59.583883",
+        "fundamentals": {
+            "marketCap": 73479258112,
+            "peRatio": 20.914896,
+            "eps": 2.35,
+            "revenueGrowth": 0.05,
+            "beta": 0.723
+        },
+        "technicals": {
+            "current_price": 49.15,
+            "RSI": 78.64,
+            "MACD": 2.72,
+            "MACD_Signal": 2.31,
+            "SMA_20": 43.75,
+            "SMA_50": 39.83,
+            "SMA_200": 35.54,
+            "BB_High": 51.5,
+            "BB_Low": 36.0,
+            "ATR": 1.41,
+            "Volatility": 0.0271,
+            "Volume_Spike": true
+        },
+        "trade_report": {
+            "entry": "Wait",
+            "stop_loss": "N/A",
+            "take_profit": "N/A",
+            "signal": "Weak Sell / Avoid",
+            "trend_status": "Bullish within Uptrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "78.64",
+                    "interpretation": "Overbought (Sell Signal)"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "2.72 / 2.31",
+                    "interpretation": "Bullish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$35.54",
+                    "interpretation": "Long-term Support"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$43.75",
+                    "interpretation": "Immediate Support"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$36.25 - $38.06",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Weak Sell / Avoid",
+                    "setup": {}
+                }
+            },
+            "probabilities": {
+                "bull_case": "38%",
+                "bear_case": "38%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": " ### Key News & Market Drivers\n\n**Earnings & Financials**\n- SLB Q4 Earnings Beat on Digital Segment Growth, Revenues Rise Y/Y\n- SLB (SLB) Beats Q4 Earnings and Revenue Estimates\n- Strs Ohio Purchases 21,611 Shares of SLB Limited $SLB - MarketBeat\n\n**Operations & Deliveries**\n- No significant updates on operations or deliveries for the companies mentioned.\n\n**Innovation / AI / Growth**\n- SLB's focus on digital transformation and innovation continues to drive growth in the digital segment.\n\n**Regulation & Legal**\n- No significant regulatory or legal updates for the companies mentioned.\n\n**Competition & Market Pressure**\n- Increasing competition in the oil and gas services sector, particularly from Halliburton (HAL) and Schlumberger (SLB).\n\n### Analyst View\n- SLB's Q4 earnings beat and revenue growth indicate a strong financial performance, positioning the company well for the future.\n- However, the competitive landscape remains challenging, requiring SLB to continue innovating and improving operational efficiency.",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    },
+    "KVUE": {
+        "last_updated": "2026-01-26T02:20:04.328014",
+        "fundamentals": {
+            "marketCap": 34103103488,
+            "peRatio": 23.733332,
+            "eps": 0.75,
+            "revenueGrowth": -0.035,
+            "beta": 0.552
+        },
+        "technicals": {
+            "current_price": 17.8,
+            "RSI": 65.22,
+            "MACD": 0.17,
+            "MACD_Signal": 0.1,
+            "SMA_20": 17.19,
+            "SMA_50": 17.01,
+            "SMA_200": 19.22,
+            "BB_High": 17.77,
+            "BB_Low": 16.6,
+            "ATR": 0.32,
+            "Volatility": 0.0118,
+            "Volume_Spike": false
+        },
+        "trade_report": {
+            "entry": "Wait",
+            "stop_loss": "N/A",
+            "take_profit": "N/A",
+            "signal": "Weak Sell / Avoid",
+            "trend_status": "Bullish within Downtrend",
+            "technical_table": [
+                {
+                    "indicator": "RSI (14-Day)",
+                    "reading": "65.22",
+                    "interpretation": "Momentum Building"
+                },
+                {
+                    "indicator": "MACD",
+                    "reading": "0.17 / 0.10",
+                    "interpretation": "Bullish Cross"
+                },
+                {
+                    "indicator": "SMA 200",
+                    "reading": "$19.22",
+                    "interpretation": "Long-term Resistance"
+                },
+                {
+                    "indicator": "SMA 20",
+                    "reading": "$17.19",
+                    "interpretation": "Immediate Support"
+                }
+            ],
+            "scenarios": {
+                "conservative": {
+                    "action": "WAIT / HOLD",
+                    "reason": "Volatile market conditions.",
+                    "entry_zone": "$19.6 - $20.58",
+                    "target": "18-24 months"
+                },
+                "swing": {
+                    "action": "Weak Sell / Avoid",
+                    "setup": {}
+                }
+            },
+            "probabilities": {
+                "bull_case": "22%",
+                "bear_case": "52%",
+                "neutral_case": "25%"
+            }
+        },
+        "news_summary": "Error generating summary: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))",
+        "news_count": 10,
+        "sentiment": {
+            "verdict": "Neutral",
+            "overall_score": 0,
+            "counts": {}
+        }
+    }
+}

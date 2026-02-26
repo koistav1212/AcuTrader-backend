@@ -1,0 +1,12 @@
+feedparser
+sentence-transformers
+chromadb
+transformers
+yfinance
+ta
+pandas
+numpy
+requests
+torch
+python-dotenv
+huggingface_hub
