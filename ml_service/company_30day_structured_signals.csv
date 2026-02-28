@@ -1,0 +1,16 @@
+ticker,total_signals,avg_sentiment_polarity,avg_semantic_impact,earnings_count,analyst_count,regulation_count,daily_signal_label
+AAPL,50,0.0419,0.3115,11,6,2,Bearish
+AMD,50,0.0837,0.303,19,7,3,Bullish
+AMZN,36,0.0768,0.3266,9,2,0,Bullish
+BAC,50,0.0378,0.3193,26,5,0,Neutral
+CSCO,50,0.0609,0.2974,31,4,5,Bullish
+GOOGL,50,0.0912,0.3103,28,4,3,Bullish
+INTC,50,0.0392,0.2587,8,3,1,Neutral
+KO,50,0.0593,0.3506,32,5,0,Bullish
+META,50,0.0638,0.2792,25,5,2,Bullish
+MSFT,50,0.0376,0.3078,19,5,1,Neutral
+NFLX,28,0.1863,0.2865,9,1,1,Bullish
+NKE,31,0.0709,0.275,13,0,0,Bullish
+NVDA,50,0.0762,0.3211,31,5,1,Bullish
+TSLA,41,-0.0151,0.296,13,1,2,Bearish
+XOM,50,0.0277,0.3303,30,4,5,Bearish
