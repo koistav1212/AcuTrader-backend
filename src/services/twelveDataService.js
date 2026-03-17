@@ -5,6 +5,9 @@ import https from "https";
 
 // Robust Yahoo Finance Initialization
 
+import YahooFinance from "yahoo-finance2";
+
+const yahooFinance = new YahooFinance(); // ✅ REQUIRED
 
 import finnhub from "finnhub";
 import { 
@@ -605,46 +608,53 @@ async function scrapeTopStocks(url) {
       return [];
   }
 }
+
 export async function getTopMovers() {
   try {
-    const API_KEY = process.env.ALPHA_VANTAGE_KEY;
-
-    const url = `https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=${API_KEY}`;
-
-    const response = await fetch(url);
-    const data = await response.json();
-console.log(data);
-    const gainers = data.top_gainers?.map((stock) => ({
-      ticker: stock.ticker,
-      price: stock.price,
-      change: stock.change_percentage,
-      change_amount: stock.change_amount,
-      volume:stock.volume
-    }));
-
-    const losers = data.top_losers?.map((stock) => ({
-      ticker: stock.ticker,
-      price: stock.price,
-      change: stock.change_percentage,
-      change_amount: stock.change_amount,
-      volume:stock.volume
-    }));
-
-    return {
-      gainers,
-      losers
+    const headers = {
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36"
     };
 
+    const [gainersRes, losersRes] = await Promise.all([
+      fetch(
+        "https://query1.finance.yahoo.com/v1/finance/screener/predefined/saved?count=10&scrIds=day_gainers",
+        { headers }
+      ),
+      fetch(
+        "https://query1.finance.yahoo.com/v1/finance/screener/predefined/saved?count=10&scrIds=day_losers",
+        { headers }
+      )
+    ]);
+
+    const gainersData = await gainersRes.json();
+    const losersData = await losersRes.json();
+
+    const gainers =
+      gainersData?.finance?.result?.[0]?.quotes?.map((s) => ({
+        ticker: s.symbol,
+        price: s.regularMarketPrice,
+        change: s.regularMarketChangePercent + "%",
+        change_amount: s.regularMarketChange,
+        volume: s.regularMarketVolume
+      })) || [];
+
+    const losers =
+      losersData?.finance?.result?.[0]?.quotes?.map((s) => ({
+        ticker: s.symbol,
+        price: s.regularMarketPrice,
+        change: s.regularMarketChangePercent + "%",
+        change_amount: s.regularMarketChange,
+        volume: s.regularMarketVolume
+      })) || [];
+
+    return { gainers, losers };
+
   } catch (error) {
-
-    console.error("AlphaVantage API failed. Falling back to scraping.");
-
-    return await scrapeTopStocks(
-      "https://finance.yahoo.com/markets/stocks/gainers/"
-    );
+    console.error("Yahoo direct API failed", error);
+    return { gainers: [], losers: [] };
   }
 }
-
 export async function getTopLosers() {
     return await scrapeTopStocks("https://finance.yahoo.com/markets/stocks/losers/");
 }
