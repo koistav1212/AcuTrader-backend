@@ -10,3 +10,4 @@ requests
 torch
 python-dotenv
 huggingface_hub
+beautifulsoup4

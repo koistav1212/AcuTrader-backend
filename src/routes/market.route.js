@@ -48,7 +48,7 @@ router.get("/trending", auth(false), marketController.getTrendingStocks);
  *   get:
  *     summary: Get top 10 gainers
  */
-router.get("/top-gainers", auth(false), marketController.getTopGainers);
+router.get("/top-movers", auth(false), marketController.getTopMovers);
 
 /**
  * @openapi

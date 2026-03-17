@@ -103,9 +103,9 @@ export async function getTrendingStocks(req, res, next) {
 }
 
 // Was 'topGainers'
-export async function getTopGainers(req, res, next) {
+export async function getTopMovers(req, res, next) {
   try {
-    const result = await twelveDataService.getTopGainers();
+    const result = await twelveDataService.getTopMovers();
     res.json(result);
   } catch (err) { next(err); }
 }

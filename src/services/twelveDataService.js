@@ -605,9 +605,44 @@ async function scrapeTopStocks(url) {
       return [];
   }
 }
+export async function getTopMovers() {
+  try {
+    const API_KEY = process.env.ALPHA_VANTAGE_KEY;
 
-export async function getTopGainers() {
-  return await scrapeTopStocks("https://finance.yahoo.com/markets/stocks/gainers/");
+    const url = `https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=${API_KEY}`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+console.log(data);
+    const gainers = data.top_gainers?.map((stock) => ({
+      ticker: stock.ticker,
+      price: stock.price,
+      change: stock.change_percentage,
+      change_amount: stock.change_amount,
+      volume:stock.volume
+    }));
+
+    const losers = data.top_losers?.map((stock) => ({
+      ticker: stock.ticker,
+      price: stock.price,
+      change: stock.change_percentage,
+      change_amount: stock.change_amount,
+      volume:stock.volume
+    }));
+
+    return {
+      gainers,
+      losers
+    };
+
+  } catch (error) {
+
+    console.error("AlphaVantage API failed. Falling back to scraping.");
+
+    return await scrapeTopStocks(
+      "https://finance.yahoo.com/markets/stocks/gainers/"
+    );
+  }
 }
 
 export async function getTopLosers() {
