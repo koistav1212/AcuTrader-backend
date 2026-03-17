@@ -766,23 +766,57 @@ export async function getMostActiveStocks() {
 
 
 export async function getTrendingStocks(filters = {}) {
-  // 1. Try Cheerio Scraper First
-let stockData = await getMostActiveStocks();
-if(stockData.length > 0){
-  return stockData;
-}
 
+  // ✅ 1. Try API (FAST + NO SCRAPING)
+  let stockData = await getMostActiveStocksAPI();
+
+  if (stockData.length > 0) {
+    return stockData;
+  }
+
+  // ⚠️ 2. Fallback (only if API fails)
+  console.log("Falling back to scraper...");
   let data = await scrapeMostActiveStocks();
 
- 
-
-  // 3. Apply any filters if passed (placeholder for future logic)
-  // Currently the controller passes body, but logic wasn't fully defined. 
-  // We return whatever we found.
-  
   return data;
 }
 
+
+async function getMostActiveStocksAPI() {
+  try {
+    const url =
+      "https://query1.finance.yahoo.com/v1/finance/screener/predefined/saved?count=25&scrIds=most_actives";
+
+    const { data } = await axios.get(url, {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36"
+      },
+      timeout: 10000
+    });
+
+    const quotes = data?.finance?.result?.[0]?.quotes || [];
+
+    const results = quotes.map((stock) => ({
+      symbol: stock.symbol,
+      name: stock.shortName || stock.longName || "",
+      current_price: stock.regularMarketPrice || 0,
+      change: stock.regularMarketChange || 0,
+      percent_change: stock.regularMarketChangePercent || 0,
+      volume: stock.regularMarketVolume || 0,
+      market_cap: stock.marketCap || 0,
+      exchange: stock.fullExchangeName || stock.exchange || "N/A",
+      datetime: new Date().toISOString(),
+      is_up: (stock.regularMarketChange || 0) >= 0
+    }));
+
+    return results;
+
+  } catch (err) {
+    console.error("Yahoo API failed:", err.message);
+    return [];
+  }
+}
 
 /* ------------------------------------------------------
    6. HISTORICAL DATA WITH INDICATORS
