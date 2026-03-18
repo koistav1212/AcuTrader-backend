@@ -2,7 +2,8 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
 import https from "https";
-
+import fs from "fs";
+import path from "path";
 // Robust Yahoo Finance Initialization
 
 import YahooFinance from "yahoo-finance2";
@@ -80,152 +81,236 @@ const CACHE_TTL = 10000; // 10 sec
 
 export async function searchSymbol(symbol) {
   const SYM = symbol.toUpperCase();
-
-  // ✅ Cache hit (~20–50ms)
-  const cached = cache.get(SYM);
-  if (cached && Date.now() - cached.time < CACHE_TTL) {
-    return cached.data;
-  }
+  console.log(`Scraping Yahoo Finance for ${SYM}...`);
 
   try {
-    const url = `https://finance.yahoo.com/quote/${SYM}/`;
+     const url = `https://finance.yahoo.com/quote/${SYM}/`;
+     
+     // Robust headers to mimic browser
+     const headers = { 
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/json,xml;q=0.9,*/*;q=0.8",
+     };
 
-    const { data } = await axios.get(url, {
-      httpsAgent: agent,
-      headers: {
-        "User-Agent": "Mozilla/5.0",
-        "Accept": "text/html",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Connection": "keep-alive",
-        "Cookie": ""
-      },
-      timeout: 4000,
-      decompress: true
-    });
+     const start = Date.now();
+     const { data } = await axios.get(url, { headers });
+     const $ = cheerio.load(data);
 
-    const $ = cheerio.load(data);
+     // 1. Core Price Data (fin-streamer) is fast, keep it.
+     const getStreamer = (field) => {
+         // Try matching by data-field AND data-symbol
+         const el = $(`fin-streamer[data-field="${field}"][data-symbol="${SYM}"]`);
+         if (el.length) return el.attr('value') || el.text().replace(/[(),%]/g, ''); 
+         
+         // Fallback just data-field
+         const el2 = $(`fin-streamer[data-field="${field}"]`);
+         return el2.attr('value') || el2.text().replace(/[(),%]/g, '');
+     };
 
-    // ⚡ Faster streamer selector (single pass)
-    const streamer = {};
-    $("fin-streamer").each((_, el) => {
-      const field = el.attribs["data-field"];
-      if (field) {
-        streamer[field] =
-          el.attribs.value ||
-          $(el).text().replace(/[(),%]/g, "");
-      }
-    });
 
-    const currentPrice = parseFloat(streamer["regularMarketPrice"]) || 0;
-    const change = parseFloat(streamer["regularMarketChange"]) || 0;
-    const percentChange = parseFloat(streamer["regularMarketChangePercent"]) || 0;
-    const volume = parseFloat(streamer["regularMarketVolume"]) || 0;
+let forecastData = {};
 
-    // ⚡ Single pass stats extraction (merged tr + li)
-    const statsMap = new Map();
-    const clean = (t) => t.replace(/\s+/g, " ").trim();
+  const filePath = path.join(process.cwd(), "ml_service/company_3day_forecast.json");
+  forecastData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
 
-    $("tr, li").each((_, el) => {
-      const items = $(el).find("td, th, span, p");
-      if (items.length >= 2) {
-        const label = clean($(items[0]).text());
-        const value = clean($(items[1]).text());
-        if (label && value && !statsMap.has(label)) {
-          statsMap.set(label, value);
+     const currentPrice = parseFloat(getStreamer("regularMarketPrice"));
+     const change = parseFloat(getStreamer("regularMarketChange"));
+     const percentChange = parseFloat(getStreamer("regularMarketChangePercent"));
+     const volume = parseFloat(getStreamer("regularMarketVolume"));
+
+     // 2. Optimized Usage: Single Pass Extraction
+     // Instead of $('*').filter(...) 25 times, we scan common containers once.
+     // Yahoo Finance typically puts stats in <table> rows or lists.
+     
+     const statsMap = new Map();
+
+     // Helper to clean text
+     const clean = (text) => text.replace(/\s+/g, ' ').trim();
+
+     // Strategy A: Scan all Table Rows (most stats are here)
+     $('tr').each((i, row) => {
+        const cells = $(row).children('td, th');
+        if (cells.length >= 2) {
+            const label = clean($(cells[0]).text());
+            const value = clean($(cells[1]).text());
+            if (label && value) {
+                statsMap.set(label, value);
+            }
         }
-      }
-    });
+     });
 
-    const getStat = (label) => {
-      if (statsMap.has(label)) return statsMap.get(label);
-      for (const [key, val] of statsMap) {
-        if (key.startsWith(label)) return val;
-      }
-      return null;
-    };
+     // Strategy B: Scan specific list items (divs/ul/li)
+     // Yahoo is using <ul class="yf-..."><li><p class="label">...</p><p class="value">...</p></li></ul>
+     $('li').each((i, li) => {
+         // Try finding spans first (common in some views)
+         let items = $(li).find('span');
+         
+         // If not enough spans, try paragraphs (Financial Highlights, Valuation uses this)
+         if (items.length < 2) {
+             items = $(li).find('p');
+         }
 
-    const prevClose = getStat("Previous Close");
-    const open = getStat("Open");
-    const dayRange = getStat("Day's Range");
-    const fiftyTwoWeekRange = getStat("52 Week Range");
+         // If still nothing, try divs directly children if it's a list of divs? 
+         // (Unlikely for li, but good to be safe)
 
-    let dayLow = null, dayHigh = null;
-    if (dayRange) {
-      const [l, h] = dayRange.split("-").map(s => parseFloat(s.trim()));
-      dayLow = l; dayHigh = h;
-    }
+         if (items.length >= 2) {
+             const label = clean($(items[0]).text());
+             const value = clean($(items[1]).text());
+             if (label && value) {
+                 statsMap.set(label, value);
+             }
+         }
+     });
+     
+ 
+     const getStat = (label) => {
+         // Exact match
+         if (statsMap.has(label)) return statsMap.get(label);
 
-    let yearLow = null, yearHigh = null;
-    if (fiftyTwoWeekRange) {
-      const [l, h] = fiftyTwoWeekRange.split("-").map(s => parseFloat(s.trim()));
-      yearLow = l; yearHigh = h;
-    }
+         // StartsWith fallback (search keys)
+         for (const [key, value] of statsMap.entries()) {
+             if (key.startsWith(label)) return value;
+         }
+         return null;
+     };
 
-    const title = $("title").text();
-    let name = SYM;
-    const match = title.match(/^(.*?) \(/);
-    if (match) name = match[1].trim();
+     const prevClose = getStat("Previous Close");
+     const open = getStat("Open");
+     const dayRange = getStat("Day's Range"); 
+     const fiftyTwoWeekRange = getStat("52 Week Range");
+     const marketCap = getStat("Market Cap") || getStreamer("marketCap") || getStat("Market Cap (intraday)");
+     const avgVolume = getStat("Avg. Volume");
+     const peRatio = getStat("PE Ratio (TTM)");
+     const eps = getStat("EPS (TTM)");
+     const earningsDate = getStat("Earnings Date");
+     const divYield = getStat("Forward Dividend & Yield");
+     const targetEst = getStat("1y Target Est");
+     
+     // Bid/Ask might be "Bid" or "Ask"
+     const bid = getStat("Bid");
+     const ask = getStat("Ask");
 
-    const result = {
-      Stocks: [
-        {
-          symbol: SYM,
-          name,
+     // Valuation Measures
+     const enterpriseValue = getStat("Enterprise Value");
+     const trailingPE = getStat("Trailing P/E");
+     const forwardPE = getStat("Forward P/E");
+     const pegRatio = getStat("PEG Ratio (5yr expected)");
+     const priceSales = getStat("Price/Sales (ttm)");
+     const priceBook = getStat("Price/Book (mrq)");
+     const evRevenue = getStat("Enterprise Value/Revenue");
+     const evEbitda = getStat("Enterprise Value/EBITDA");
 
-          current_price: currentPrice,
-          change,
-          percent_change: percentChange,
-          is_up: change >= 0,
-          currency: "USD",
-          datetime: new Date().toISOString(),
+     // Financial Highlights
+     const profitMargin = getStat("Profit Margin");
+     const returnOnAssets = getStat("Return on Assets (ttm)");
+     const returnOnEquity = getStat("Return on Equity (ttm)");
+     const revenue = getStat("Revenue (ttm)");
+     const netIncome = getStat("Net Income Avi to Common (ttm)") || getStat("Net Income (ttm)"); // Fallback
+     const dilutedEPS = getStat("Diluted EPS (ttm)");
+     const totalCash = getStat("Total Cash (mrq)");
+     const totalDebtEquity = getStat("Total Debt/Equity (mrq)");
+     const leveredFCF = getStat("Levered Free Cash Flow (ttm)");
 
-          previous_close: parseFloat(prevClose) || 0,
-          open: parseFloat(open) || 0,
-          day_low: dayLow,
-          day_high: dayHigh,
-          fifty_two_week_low: yearLow,
-          fifty_two_week_high: yearHigh,
+     // Analyst Insights
+     const analystRating = getStat("Rating");
+     const analystTarget = getStat("Price Target");
 
-          volume,
-          average_volume: getStat("Avg. Volume"),
-          market_cap: getStat("Market Cap"),
 
-          pe_ratio: parseFloat(getStat("PE Ratio (TTM)")),
-          eps: parseFloat(getStat("EPS (TTM)")),
-          earnings_date: getStat("Earnings Date"),
+     // Parse ranges
+     let dayLow = null, dayHigh = null;
+     if (dayRange) {
+        const parts = dayRange.split('-').map(s => parseFloat(s.trim()));
+        if (parts.length === 2) { dayLow = parts[0]; dayHigh = parts[1]; }
+     }
+     
+     let yearLow = null, yearHigh = null;
+     if (fiftyTwoWeekRange) {
+        const parts = fiftyTwoWeekRange.split('-').map(s => parseFloat(s.trim()));
+        if (parts.length === 2) { yearLow = parts[0]; yearHigh = parts[1]; }
+     }
 
-          forward_dividend_yield: getStat("Forward Dividend & Yield"),
-          target_est_1y: parseFloat(getStat("1y Target Est")),
-
-          enterprise_value: getStat("Enterprise Value"),
-          trailing_pe: parseFloat(getStat("Trailing P/E")) || 0,
-          forward_pe: parseFloat(getStat("Forward P/E")) || 0,
-          peg_ratio: parseFloat(getStat("PEG Ratio (5yr expected)")) || 0,
-          price_to_sales: parseFloat(getStat("Price/Sales (ttm)")) || 0,
-          price_to_book: parseFloat(getStat("Price/Book (mrq)")) || 0,
-
-          profit_margin: getStat("Profit Margin"),
-          return_on_assets: getStat("Return on Assets (ttm)"),
-          return_on_equity: getStat("Return on Equity (ttm)"),
-          revenue: getStat("Revenue (ttm)"),
-          net_income: getStat("Net Income (ttm)"),
-
-          analyst_rating: getStat("Rating"),
-          analyst_price_target: getStat("Price Target"),
-
-          bid: parseFloat(getStat("Bid")) || 0,
-          ask: parseFloat(getStat("Ask")) || 0,
+     // Name extraction strategy: Try Title first as it is cleaner
+     // Title: "NVIDIA Corporation (NVDA) Stock Price..."
+     let name = SYM;
+     const title = $('title').text();
+     if (title) {
+        const match = title.match(/^(.*?) \(/);
+        if (match && match[1]) {
+            name = match[1].trim();
         }
-      ]
-    };
+     }
+     if (name === SYM) {
+          // Fallback to h1 but clean it up
+          const h1 = $('h1').first().text(); 
+          // If h1 starts with Yahoo Finance, strip it
+          name = h1.replace("Yahoo Finance", "").replace(/\(.*?\)/g, "").trim(); 
+     }
+console.log(forecastData)
+const forecast = forecastData[SYM] || {};
+     const result = {
+       symbol: SYM,
+       name: name || SYM, 
+       
+       // Real-time
+       current_price: currentPrice || 0,
+       change: change || 0,
+       percent_change: percentChange || 0,
+       is_up: (change || 0) >= 0,
+       currency: "USD",
+       datetime: new Date().toISOString(),
 
-    // ✅ cache store
-    cache.set(SYM, { data: result, time: Date.now() });
+       // Stats
+       previous_close: parseFloat(prevClose) || 0,
+       open: parseFloat(open) || 0,
+       day_low: dayLow,
+       day_high: dayHigh,
+       fifty_two_week_low: yearLow,
+       fifty_two_week_high: yearHigh,
+       volume: volume || 0,
+       average_volume: avgVolume,
+       market_cap: marketCap,
+       pe_ratio: parseFloat(peRatio),
+       eps: parseFloat(eps),
+       earnings_date: earningsDate,
+       forward_dividend_yield: divYield,
+       target_est_1y: parseFloat(targetEst),
 
-    return result;
+    forecast_3day: forecast, 
+       // Valuation
+       enterprise_value: enterpriseValue,
+       trailing_pe: parseFloat(trailingPE) || 0,
+       forward_pe: parseFloat(forwardPE) || 0,
+       peg_ratio: parseFloat(pegRatio) || 0,
+       price_to_sales: parseFloat(priceSales) || 0,
+       price_to_book: parseFloat(priceBook) || 0,
+       enterprise_value_to_revenue: parseFloat(evRevenue) || 0,
+       enterprise_value_to_ebitda: parseFloat(evEbitda) || 0,
+
+       // Financials
+       profit_margin: profitMargin,
+       return_on_assets: returnOnAssets,
+       return_on_equity: returnOnEquity,
+       revenue: revenue,
+       net_income: netIncome,
+       diluted_eps: parseFloat(dilutedEPS) || 0,
+       total_cash: totalCash,
+       total_debt_to_equity: totalDebtEquity,
+       levered_free_cash_flow: leveredFCF,
+
+       // Analyst
+       analyst_rating: analystRating,
+       analyst_price_target: analystTarget,
+       
+       // Add missing fields to match previous schema if needed (nulls)
+       bid: parseFloat(bid) || 0, 
+       ask: parseFloat(ask) || 0,
+     };
+
+     return { Stocks: [result] };
 
   } catch (err) {
     console.error(`Scraping failed for ${SYM}:`, err.message);
+    // Return empty but consistent structure
     return { Stocks: [] };
   }
 }
