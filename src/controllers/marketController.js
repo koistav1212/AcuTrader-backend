@@ -16,7 +16,7 @@ export async function getPortfolioSummary(req, res, next) {
       equity: portfolio.summary.equity,
       unrealizedPnl: portfolio.summary.totalUnrealizedPnl,
       dayPnl: dayPnl,
-      cash: portfolio.summary.balance 
+      cash: portfolio.summary.balance
     });
   } catch (err) { next(err); }
 }
@@ -52,10 +52,10 @@ export async function placeTrade(req, res, next) {
 }
 
 export async function triggerSnapshot(req, res, next) {
-    try {
-        const snapshot = await snapshotService.takeDailySnapshot(req.user.id);
-        res.json(snapshot);
-    } catch (err) { next(err); }
+  try {
+    const snapshot = await snapshotService.takeDailySnapshot(req.user.id);
+    res.json(snapshot);
+  } catch (err) { next(err); }
 }
 
 // --- LEGACY / MARKET DATA ENDPOINTS (Restored & Standardized) ---
@@ -66,24 +66,36 @@ export async function searchSymbol(req, res, next) {
     const { q } = req.query;
     if (!q) throw new Error("Query parameter 'q' is required");
     const result = await twelveDataService.searchSymbol(q);
-    if (!result || (Array.isArray(result) && result.length === 0) || (result.Stocks && result.Stocks.length === 0)) { 
-        const error = new Error("No stocks found matching query");
-        error.status = 404;
-        throw error;
+    if (!result || (Array.isArray(result) && result.length === 0) || (result.Stocks && result.Stocks.length === 0)) {
+      const error = new Error("No stocks found matching query");
+      error.status = 404;
+      throw error;
     }
     res.json(result);
   } catch (err) { next(err); }
 }
-
+export async function getHistoricalData(req, res, next) {
+  try {
+    const { q } = req.query;
+    if (!q) throw new Error("Query parameter 'q' is required");
+    const result = await twelveDataService.getHistoricalData(q);
+    if (!result || (Array.isArray(result) && result.length === 0) || (result.Stocks && result.Stocks.length === 0)) {
+      const error = new Error("No stocks found matching query");
+      error.status = 404;
+      throw error;
+    }
+    res.json(result);
+  } catch (err) { next(err); }
+}
 // Was 'quote'
 export async function getQuote(req, res, next) {
   try {
     const { symbol } = req.params;
     const result = await twelveDataService.getQuote(symbol);
     if (!result) {
-        const error = new Error(`Quote not found for symbol ${symbol}`);
-        error.status = 404;
-        throw error;
+      const error = new Error(`Quote not found for symbol ${symbol}`);
+      error.status = 404;
+      throw error;
     }
     res.json(result);
   } catch (err) { next(err); }
@@ -94,9 +106,9 @@ export async function getTrendingStocks(req, res, next) {
   try {
     const result = await twelveDataService.getTrendingStocks(req.body);
     if (!result || result.length === 0) {
-        const error = new Error("No trending stocks found");
-        error.status = 404;
-        throw error;
+      const error = new Error("No trending stocks found");
+      error.status = 404;
+      throw error;
     }
     res.json(result);
   } catch (err) { next(err); }
@@ -133,19 +145,19 @@ export async function getRecommendations(req, res, next) {
 
 // Was 'buyStock' / 'sellStock' (Legacy Adapters for users/legacy routes)
 export async function buyStock(req, res, next) {
-    try {
-      const { symbol, quantity, price } = req.body;
-      const result = await transactionService.executeTrade(req.user.id, symbol, "BUY", Number(quantity), Number(price));
-      res.json(result);
-    } catch (err) { next(err); }
+  try {
+    const { symbol, quantity, price } = req.body;
+    const result = await transactionService.executeTrade(req.user.id, symbol, "BUY", Number(quantity), Number(price));
+    res.json(result);
+  } catch (err) { next(err); }
 }
 
 export async function sellStock(req, res, next) {
-    try {
-      const { symbol, quantity, price } = req.body;
-      const result = await transactionService.executeTrade(req.user.id, symbol, "SELL", Number(quantity), Number(price));
-      res.json(result);
-    } catch (err) { next(err); }
+  try {
+    const { symbol, quantity, price } = req.body;
+    const result = await transactionService.executeTrade(req.user.id, symbol, "SELL", Number(quantity), Number(price));
+    res.json(result);
+  } catch (err) { next(err); }
 }
 
 /**
@@ -175,7 +187,7 @@ export const getStockInsights = async (req, res) => {
     }
 
     const insightsPath = path.join(process.cwd(), "ml_service", "insights_cache.json");
-    
+
     // Check if cache exists
     if (!fs.existsSync(insightsPath)) {
       return res.status(404).json({ message: "Insights data not available yet." });
