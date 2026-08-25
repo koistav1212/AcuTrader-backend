@@ -41,3 +41,21 @@ venv/
 __pycache__/
 *.pyc
 ml_service/chroma_db/
+
+# Generated research / ML data
+*.csv
+*.parquet
+*.pkl
+*.joblib
+
+# Generated large JSON/data outputs
+*_dataset.json
+*_research.json
+*_predictions.json
+*_results.json
+
+# Generated model/data directories
+data/generated/
+data/processed/
+models/generated/
+outputs/

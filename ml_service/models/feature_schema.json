@@ -1,0 +1,30 @@
+{
+  "sequence_length": 60, 
+  "features": [
+    "ohlcv", 
+    "returns_1d", 
+    "returns_3d", 
+    "returns_5d", 
+    "returns_20d", 
+    "rsi", 
+    "macd", 
+    "sma_20", 
+    "sma_50", 
+    "sma_200", 
+    "ema_20", 
+    "ema_50", 
+    "atr", 
+    "volatility", 
+    "relative_volume", 
+    "spy_relative", 
+    "vix_relative", 
+    "sector_relative", 
+    "news_sentiment", 
+    "news_relevance", 
+    "event_impact", 
+    "fundamental_pe", 
+    "fundamental_pb", 
+    "fundamental_de"
+  ], 
+  "target_horizon": 3
+}

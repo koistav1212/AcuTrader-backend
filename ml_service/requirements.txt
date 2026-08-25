@@ -11,3 +11,5 @@ torch
 python-dotenv
 huggingface_hub
 beautifulsoup4
+fastapi
+uvicorn

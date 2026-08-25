@@ -108,11 +108,6 @@ export async function searchSymbol(symbol) {
     };
 
 
-    let forecastData = {};
-
-    const filePath = path.join(process.cwd(), "ml_service/company_3day_forecast.json");
-    forecastData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
-
     const currentPrice = parseFloat(getStreamer("regularMarketPrice"));
     const change = parseFloat(getStreamer("regularMarketChange"));
     const percentChange = parseFloat(getStreamer("regularMarketChangePercent"));
@@ -245,8 +240,6 @@ export async function searchSymbol(symbol) {
       // If h1 starts with Yahoo Finance, strip it
       name = h1.replace("Yahoo Finance", "").replace(/\(.*?\)/g, "").trim();
     }
-    console.log(forecastData)
-    const forecast = forecastData[SYM] || {};
     const result = {
       symbol: SYM,
       name: name || SYM,
@@ -275,7 +268,6 @@ export async function searchSymbol(symbol) {
       forward_dividend_yield: divYield,
       target_est_1y: parseFloat(targetEst),
 
-      forecast_3day: forecast,
       // Valuation
       enterprise_value: enterpriseValue,
       trailing_pe: parseFloat(trailingPE) || 0,

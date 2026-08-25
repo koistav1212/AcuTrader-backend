@@ -8,5 +8,8 @@ export const config = {
   alphaKey: process.env.ALPHA_VANTAGE_KEY,
 
   twelveKey: process.env.TWELVEDATA_KEY,
-  mongoUri: process.env.MONGO_URI
+  mongoUri: process.env.MONGO_URI,
+  
+  pythonServiceUrl: process.env.PYTHON_SERVICE_URL || "http://localhost:8000",
+  backendUrl: process.env.BACKEND_URL || (process.env.NODE_ENV === "production" ? "https://acutrader-backend.onrender.com" : "http://localhost:4000")
 };

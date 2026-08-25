@@ -9,6 +9,9 @@ import swaggerUi from "swagger-ui-express";
 import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";
 import marketRoutes from "./routes/market.route.js";
+import newsRoutes from "./modules/news/news.routes.js";
+import forecastRoutes from "./modules/forecast/forecast.routes.js";
+import researchRoutes from "./modules/research/research.routes.js";
 
 import { errorHandler } from "./middleware/errorHandler.js";
 import dns from "dns";
@@ -30,6 +33,8 @@ app.get("/health", (_req, res) => {
   res.json({ status: "ok", service: "acu-trader-backend" });
 });
 
+import { config } from "./config/env.js";
+
 // ------------------------------
 // 📘 Swagger Auto Documentation
 // ------------------------------
@@ -42,6 +47,10 @@ const swaggerOptions = {
       description: "Professional auto-generated API docs for AcuTrader backend",
     },
     servers: [
+      {
+        url: config.backendUrl,
+        description: "Current Environment Server",
+      },
       {
         url: "http://localhost:4000",
         description: "Local Dev Server",
@@ -66,6 +75,9 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/market", marketRoutes);
+app.use("/api/news", newsRoutes);
+app.use("/api/forecast", forecastRoutes);
+app.use("/api/research", researchRoutes);
 
 // ------------------------------
 // ❌ Global Error Handler
