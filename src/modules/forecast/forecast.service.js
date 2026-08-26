@@ -1,31 +1,38 @@
-import axios from "axios";
-import { config } from "../../config/env.js";
+import mlServiceClient from "../../services/mlServiceClient.js";
 
 class ForecastService {
   async getForecastForSymbol(symbol, ohlcv = [], news_features = [], technical_features = {}, fundamental_features = {}) {
-    const mlUrl = config.pythonServiceUrl || "http://localhost:8000";
     try {
-      const response = await axios.post(`${mlUrl}/predict`, {
+      console.log(`[Node] ML request → ${symbol}`);
+      
+      const payload = {
         symbol,
         horizon: 3,
         ohlcv,
         news_features,
         technical_features,
-        fundamental_features
-      });
-      return response.data;
+        fundamental_features,
+        prediction_timestamp: new Date().toISOString()
+      };
+
+      const response = await mlServiceClient.getPrediction(payload);
+      
+      console.log(`[Node] ML response received → ${symbol}`);
+      return response;
+      
     } catch (error) {
-      console.error(`Failed to get forecast for ${symbol} from ML service:`, error.message);
+      if (error.message === "ML_SERVICE_UNAVAILABLE") {
+        return {
+          success: false,
+          forecastStatus: "ML_SERVICE_UNAVAILABLE"
+        };
+      }
+      
+      console.error(`Failed to get forecast for ${symbol}:`, error.message);
       return {
-        symbol,
-        horizon: "3d",
-        scenarios: {
-          bull: { probability: 0, targetPrice: 0 },
-          base: { probability: 0, targetPrice: 0 },
-          bear: { probability: 0, targetPrice: 0 }
-        },
-        expectedTarget: 0,
-        confidence: 0
+        success: false,
+        forecastStatus: "ERROR",
+        message: error.message
       };
     }
   }

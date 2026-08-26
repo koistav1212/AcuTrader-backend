@@ -1,31 +1,55 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
 import { config } from "../../config/env.js";
+import { analyzeNewsSentiment, aggregateSentiment } from "./sentiment.util.js";
 
 class NewsService {
   async getNewsForSymbol(symbol, days = 30) {
-    // 1. Fetch from multiple sources in parallel
     const [finnhubNews, googleNews, tavilyNews] = await Promise.allSettled([
       this.fetchFinnhub(symbol, days),
       this.fetchGoogleNews(symbol, days),
       this.fetchTavily(symbol, days)
     ]);
 
-    // 2. Normalize and combine
     let combined = [];
     if (finnhubNews.status === "fulfilled") combined.push(...finnhubNews.value);
     if (googleNews.status === "fulfilled") combined.push(...googleNews.value);
     if (tavilyNews.status === "fulfilled") combined.push(...tavilyNews.value);
 
-    // 3. Deduplicate
+    // Filter noisy/generic URLs
+    const noisyDomains = ['finance.yahoo.com/quote', 'sec.gov', 'kaggle.com', 'stocktwits.com'];
+    combined = combined.filter(article => {
+      if (!article.url) return false;
+      const url = article.url.toLowerCase();
+      return !noisyDomains.some(domain => url.includes(domain));
+    });
+
+    // Enforce strict 30-day window
+    const cutoffDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
+    combined = combined.filter(article => {
+      if (!article.publishedAt) return false;
+      const pubDate = new Date(article.publishedAt);
+      return pubDate >= cutoffDate;
+    });
+
+    // Deduplicate
     const deduped = this.deduplicateNews(combined);
 
-    // 4. Sort by date descending
-    deduped.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+    // Apply Sentiment & Intent Analysis
+    const enriched = deduped.map(article => {
+      const sentiment = analyzeNewsSentiment(article);
+      return { ...article, ...sentiment };
+    });
+
+    // Sort by date descending
+    enriched.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+
+    const aggregate = aggregateSentiment(enriched);
 
     return {
       window: `${days}d`,
-      articles: deduped
+      articles: enriched,
+      aggregate
     };
   }
 
@@ -43,11 +67,7 @@ class NewsService {
         summary: item.summary,
         source: item.source,
         url: item.url,
-        publishedAt: new Date(item.datetime * 1000).toISOString(),
-        category: item.category || "general",
-        semanticScore: 0,
-        sentimentScore: 0,
-        impactScore: 0
+        publishedAt: new Date(item.datetime * 1000).toISOString()
       }));
     } catch (err) {
       console.warn(`Finnhub fetch failed for ${symbol}`);
@@ -57,14 +77,13 @@ class NewsService {
 
   async fetchGoogleNews(symbol, days) {
     try {
-      // Google News RSS feed for 30 days
       const url = `https://news.google.com/rss/search?q=${symbol}+when:${days}d`;
       const response = await axios.get(url, { timeout: 8000 });
       const $ = cheerio.load(response.data, { xmlMode: true });
       
       const articles = [];
       $('item').each((i, el) => {
-        if (i >= 10) return; // Limit to top 10 to avoid huge payloads
+        if (i >= 10) return;
         const headline = $(el).find('title').text();
         const url = $(el).find('link').text();
         const pubDate = $(el).find('pubDate').text();
@@ -72,14 +91,10 @@ class NewsService {
         articles.push({
           symbol,
           headline,
-          summary: "", // RSS often has HTML in description, keeping it empty or simple
+          summary: "",
           source: "Google News",
           url,
-          publishedAt: new Date(pubDate).toISOString(),
-          category: "general",
-          semanticScore: 0,
-          sentimentScore: 0,
-          impactScore: 0
+          publishedAt: new Date(pubDate).toISOString()
         });
       });
       return articles;
@@ -93,17 +108,10 @@ class NewsService {
     if (!process.env.TAVILY_API_KEY) return [];
     try {
       const categories = [
-        "news",
-        "earnings",
-        "analyst",
-        "guidance",
-        "regulation",
-        "product",
-        "partnership",
-        "management"
+        "news", "earnings", "analyst", "guidance", 
+        "regulation", "product", "partnership", "management"
       ];
       
-      // Parallel requests to Tavily for different categories
       const requests = categories.map(async (cat) => {
         try {
           const response = await axios.post("https://api.tavily.com/search", {
@@ -121,11 +129,7 @@ class NewsService {
             summary: item.content,
             source: "Tavily",
             url: item.url,
-            publishedAt: new Date().toISOString(), // Tavily may not always provide exact date
-            category: cat,
-            semanticScore: 0,
-            sentimentScore: 0,
-            impactScore: 0
+            publishedAt: new Date().toISOString()
           }));
         } catch (innerErr) {
           console.warn(`Tavily fetch failed for ${symbol} category: ${cat}`);
@@ -144,9 +148,8 @@ class NewsService {
   deduplicateNews(articles) {
     const seen = new Set();
     return articles.filter(article => {
-      // Create a simple signature based on headline (lowercase, alphanumeric only)
       const sig = (article.headline || "").toLowerCase().replace(/[^a-z0-9]/g, "");
-      if (seen.has(sig)) return false;
+      if (!sig || seen.has(sig)) return false;
       seen.add(sig);
       return true;
     });

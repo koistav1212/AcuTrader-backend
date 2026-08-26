@@ -1,0 +1,25 @@
+services:
+  # The Node.js Public Web Service
+  - type: web
+    name: acutrader-backend
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ML_SERVICE_URL
+        fromService:
+          type: pserv
+          name: acutrader-ml
+          property: hostport
+          
+  # The Python Private Service (ML)
+  - type: pserv
+    name: acutrader-ml
+    env: python
+    buildCommand: pip install -r ml_service/requirements.txt
+    startCommand: uvicorn ml_service.app:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0

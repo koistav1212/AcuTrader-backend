@@ -52,6 +52,20 @@ class MarketDataService {
       merged['52WeekRange'] = `${merged.week52Low} - ${merged.week52High}`;
     }
 
+    // Explicitly extract and ensure required fundamental fields are present (or null)
+    const fundamentalKeys = [
+      'marketCap', 'pe', 'forwardPE', 'trailingPE', 'pegRatio', 'priceToSales',
+      'priceToBook', 'evToEBITDA', 'revenue', 'netIncome', 'profitMargin',
+      'operatingMargin', 'returnOnEquity', 'totalCash', 'totalDebt',
+      'debtToEquity', 'sector', 'industry'
+    ];
+    
+    fundamentalKeys.forEach(key => {
+      if (merged[key] === undefined) {
+        merged[key] = null;
+      }
+    });
+
     return {
       data: merged,
       source: quoteData.source,

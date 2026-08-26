@@ -4,7 +4,8 @@ export async function getResearch(req, res, next) {
   try {
     const { symbol } = req.params;
     const result = await researchService.getResearchForSymbol(symbol);
-    res.json({ success: true, data: result });
+    const success = result.success !== false;
+    res.json({ success, data: result });
   } catch (error) {
     next(error);
   }
