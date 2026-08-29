@@ -126,7 +126,7 @@ for ep in all_endpoints:
     except Exception as e:
         add_result(ep['desc'], ep['route'], ep['method'], 500, traceback.format_exc(), False)
 
-with open("/Users/koustavsarkar/Documents/mba_projects/AcuTrader-backend/API_TEST_REPORT.md", "w") as f:
+with open("/Users/koustavsarkar/Documents/mba_projects/AcuTrader-backend/backend/API_TEST_REPORT.md", "w") as f:
     f.write("\n".join(report_lines))
 
 print("Comprehensive report generated successfully.")

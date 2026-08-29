@@ -18,7 +18,9 @@ from forecasting.ensemble import EnsembleForecaster
 from features.technical import compute_technicals
 from features.market import compute_market_features
 from news.sentiment import analyze_sentiment
-from news.intent import extract_event_impact
+from news.impact import extract_event_impact
+from news.embeddings import generate_embeddings
+from news.verification import verify_news_events
 from calibration.probabilities import calibrate_probabilities
 
 @asynccontextmanager
@@ -50,6 +52,7 @@ class TrainRequest(BaseModel):
     symbol: str
     horizon: int = 3
     ohlcv: List[Dict[str, Any]] = []
+    news_features: List[Dict[str, Any]] = [] # Optional historical news for training
     
 @app.get("/health")
 def health_check():
@@ -114,8 +117,15 @@ def train_model(req: TrainRequest):
         # Filter targets to match X
         y_train = {day: y[day].loc[valid_idx] for day in range(1, req.horizon + 1)}
         
+        # Build mock news sequences for training if none provided
+        # In a production setting, this should be real historical news aligned by date
+        # (N, seq_len, 389)
+        seq_len = 30
+        input_size = 389
+        X_news_seq = np.zeros((len(X), seq_len, input_size))
+        
         # Train ensemble
-        forecaster.train(X, y_train)
+        forecaster.train(X, y_train, X_news_seq=X_news_seq)
         
         return {"success": True, "message": "Models trained successfully.", "rows_trained": len(X)}
         
@@ -128,7 +138,7 @@ def predict_stock(req: PredictRequest):
         if not req.ohlcv or len(req.ohlcv) < 20:
             raise ValueError("Insufficient history for prediction.")
             
-        # 1. Feature Engineering
+        # 1. Feature Engineering (Quant)
         df = _build_features_df(req.ohlcv)
         if len(df) == 0:
             raise ValueError("Failed to build features from OHLCV.")
@@ -136,24 +146,48 @@ def predict_stock(req: PredictRequest):
         feature_cols = ['returns', 'volatility_20', 'sma_20', 'sma_50', 'momentum_10', 'volume']
         feature_cols = [c for c in feature_cols if c in df.columns]
         
-        # Get the latest row for point-in-time prediction
         X_latest = df[feature_cols].iloc[[-1]]
         current_price = df['close'].iloc[-1]
         
-        # 2. Inference (returns log returns array)
-        raw_pred = forecaster.predict(X_latest)
+        # 2. NLP Pipeline (News)
+        # We process the recent news window
+        raw_articles = req.news_features or []
         
-        # 3. Calibration
+        # We limit to last 30 articles for performance if there's a huge dump
+        raw_articles = raw_articles[:30]
+        
+        sentiment_result = analyze_sentiment(raw_articles)
+        impact_result = extract_event_impact(raw_articles)
+        embedded_articles = generate_embeddings(raw_articles)
+        verification_result = verify_news_events(req.symbol, raw_articles)
+        
+        # 3. Build Temporal Sequence for LSTM
+        # Real implementation would map articles to exact trading days over 30 days.
+        # Here we build a sequence of the recent news available at prediction time.
+        seq_len = 30
+        input_size = 389
+        news_seq = np.zeros((seq_len, input_size))
+        
+        # Fill the last sequence step with the aggregate of recent news
+        if embedded_articles and 'embedding' in embedded_articles[0]:
+            # average embedding
+            avg_emb = np.mean([a['embedding'] for a in embedded_articles if 'embedding' in a], axis=0)
+            if len(avg_emb) == 384:
+                news_seq[-1, :384] = avg_emb
+                news_seq[-1, 384] = impact_result.get('impact', 0.0)
+                news_seq[-1, 385] = sentiment_result.get('score', 0.0)
+                news_seq[-1, 386] = sentiment_result.get('positive', 0.0)
+                news_seq[-1, 387] = sentiment_result.get('negative', 0.0)
+                news_seq[-1, 388] = impact_result.get('news_count', 0)
+        
+        # 4. Multimodal Inference
+        raw_pred, probabilities, news_encoding = forecaster.predict(X_latest, news_seq=news_seq)
+        
+        # 5. Output Formatting
         volatility = df['volatility_20'].iloc[-1]
         if pd.isna(volatility) or volatility == 0:
             volatility = 0.02
             
-        missing = 0
-        if len(df) < 1000: missing += 0.2
-        if not req.fundamental_features: missing += 0.1
-        if not req.news_features: missing += 0.1
-        data_completeness = max(0.1, 1.0 - missing)
-        
         base_date = datetime.date.today()
         if req.prediction_timestamp:
             try:
@@ -165,24 +199,30 @@ def predict_stock(req: PredictRequest):
         for i in range(1, req.horizon + 1):
             target_date = (base_date + datetime.timedelta(days=i)).isoformat()
             
-            # Extract prediction for horizon day (0-indexed in array)
-            day_log_return = raw_pred[i-1] 
+            day_log_return = float(raw_pred[i-1])
+            day_probs = probabilities[i-1]
             
-            calibrated = calibrate_probabilities(
-                day_log_return, 
-                current_price, 
-                horizon_day=i, 
-                volatility=volatility, 
-                data_completeness=data_completeness
-            )
-            calibrated["date"] = target_date
-            daily_forecasts.append(calibrated)
+            # Use probability max to determine expected return direction magnitude 
+            # Or just pass the probabilities back directly.
+            
+            daily_forecasts.append({
+                "date": target_date,
+                "expected_return": day_log_return,
+                "probabilities": day_probs
+            })
         
         return {
             "success": True,
             "symbol": req.symbol,
             "horizon": f"{req.horizon}d",
             "forecast": daily_forecasts,
+            "news_signal": {
+                "sentiment": sentiment_result,
+                "impact": impact_result,
+                "verified_events": verification_result,
+                "news_count": impact_result.get("news_count", 0),
+                "encoding_norm": float(np.linalg.norm(news_encoding))
+            },
             "model": {
                 "ensembleLoaded": forecaster.loaded,
                 "historyLength": len(df)

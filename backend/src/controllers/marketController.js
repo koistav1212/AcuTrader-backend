@@ -186,7 +186,7 @@ export const getStockInsights = async (req, res) => {
       return res.status(400).json({ message: "Ticker is required" });
     }
 
-    const insightsPath = path.join(process.cwd(), "ml_service", "insights_cache.json");
+    const insightsPath = path.join(process.cwd(), "..", "ml_service", "insights_cache.json");
 
     // Check if cache exists
     if (!fs.existsSync(insightsPath)) {

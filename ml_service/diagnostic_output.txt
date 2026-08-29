@@ -1,0 +1,160 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 6931.40it/s]
+Semantic filter: ENABLED
+Initializing ML ensemble...
+Model initialization complete.
+pipeline_run_id:
+ACUTRADER_DIAGNOSTIC_AAPL_001
+
+==================================================
+2. NEWS INGESTION OUTPUT
+==================================================
+Fetching news for AAPL from 7 quality sources...
+Company keywords: ['aapl', 'apple inc.', 'apple', 'inc.']
+Raw articles fetched: 73
+After dedup: 70
+After relevance filter: 49
+After noise filter: 49
+Final top articles: 8
+
+STAGE 1 — RAW NEWS
+article_count: 8
+{
+  title: Apple App Store net revenues see dip Y/Y, monthly data shows: Morgan Stanley
+  source: Apple Inc. - News and Analysis on Seeking Alpha
+  published_at: 2026-08-20 17:47:37
+  url: https://seekingalpha.com/symbol/AAPL/news?source=feed_symbol_AAPL
+}
+{
+  title: AAPL Stock Jumps After Strong Q3 Guidance Shows Signs iPhone Maker Is Resilient To Chip Shortages - Stocktwits
+  source: "AAPL stock" - Google News
+  published_at: 2026-08-24 23:58:57
+  url: https://news.google.com/rss/articles/CBMi2gFBVV95cUxPcXBIQkFLNFhkMlpRMXZrNUsyemQ4dkxaakNDbXJlT09RNDd0aGFYeE4zZXU2eHNKZ0NHTFVLcWZsamhGSk5IY0NqdUp1Z3l5M2xOX2JaRjhQUXJyUW5ZNUtDXzJwMXBVaVdVQ0t3MWFOOG5yRHhCc1hkSmxLQUt2NmFWckt2T1U2eXVFcFlCWlFyb0FobXIwUWNxeWZDbWZsMEQ4NzNhX2JNSDVjT1ZIcUdwS0UtWF84WUtGeXRrV2VqVUFNRmZid1RNT1dySzNTM2VOMEFLTTNDZw?oc=5
+}
+{
+  title: SA analyst upgrades/downgrades: AAPL, AAP, AMD, LOW
+  source: Apple Inc. - News and Analysis on Seeking Alpha
+  published_at: 2026-08-21 17:57:11
+  url: https://seekingalpha.com/symbol/AAPL/news?source=feed_symbol_AAPL
+}
+{
+  title: Apple Stock (AAPL) Opinions on Market Downgrade and AI Developments - Quiver Quantitative
+  source: "AAPL stock" - Google News
+  published_at: 2026-08-22 17:33:00
+  url: https://news.google.com/rss/articles/CBMipwFBVV95cUxNMzkzaVdOdDB1Q3k3NklHd1dtUXZEbnJpOVFxRnhNUlVsM05uZzNLbTAzOXFna0FGNWpiOW1sZ1VtdFI2bnkyZ2hkWVV4M3lPbkpfV2owcEpvNWw0SE1EZ28zOHdCWkFWOVlabS1zUjRUNEFUSmtQQzdoQ3psWFowRkV5S19tdGFOdHUtS194R25FakMwS3VRekRiNVB0clR3SlRZam1MRQ?oc=5
+}
+{
+  title: Apple Stock Outlook: AAPL CEO Transition, Foldable iPhone and EU Deal - FXLeaders
+  source: "AAPL stock" - Google News
+  published_at: 2026-08-25 05:56:40
+  url: https://news.google.com/rss/articles/CBMilAFBVV95cUxQWHcwV0tFQk16elI5NEVvZTRyejJTQ3E4VVc3MjN1N0xRWlVMUEx6WHdsNW1xcFUyZmZFbFE3YzNkZVVwUGFacFFEVmQ3RFdDVG1KTkdJb0czMFlud0EybmdBR2JKRDB5N0lqZTlUdWV2WWRpNTNqcDhGclRXN3ZNRm41cVU5Qlg4STdCV1JhMnk2b3Bu?oc=5
+}
+{
+  title: Apple Stock Outlook: AAPL Faces CEO Change, iPhone 18 Launch and EU Risks - TradingKey
+  source: "AAPL stock" - Google News
+  published_at: 2026-08-23 12:04:32
+  url: https://news.google.com/rss/articles/CBMiwAFBVV95cUxQWGtZR0ljYlJySk9ucWtGcEVGTGtoQ1drdXduNVRpMFB6YVczOVJqVkgxblB1azZGZmxkLUY0VUQtbTI2cjU5aFo3d2xUTGx3MW82WGczMnk2cTBiSzFXcmJuY0hZSG9NcTN6amZ2VUt0S2NfNUlabllTam1iQlJvMTlSSmNfSGVLT3J5TkRvdHFJN1pvZUtJVDI1SGE3U2NGQnhxeU00TkVMbk5SUHA3TWV3TkNieUJPUnczTm5wLU0?oc=5
+}
+{
+  title: AAPL Stock Unmoved After-Hours — Apple Sues OpenAI Over Alleged 'Rotten' Campaign To Steal AI Hardware Secrets - Stocktwits
+  source: "AAPL stock" - Google News
+  published_at: 2026-08-26 10:06:03
+  url: https://news.google.com/rss/articles/CBMigAJBVV95cUxQTnBwNnVKX0pJdXpHOXZ2T3lHYlQ4by1WYzBhVGFnWlBTWVlscnppalJadnZmcmp1X0hQcjFSMHpFZ2N2WkE5Zmp1RHlCNWw3anl4RGVJU19majFIVng0UnctMnJXYzVVZXE3emU3NEhQR29UcS1vTHBqS0d6bjNMMHkxQzZvaVBzU1VQYVcyRDVZVXZ4M3FBbmx2WVBOeG5QczNraG9oblk5QlNPMzlncEQweDBfTDBsSHIzc1Q4c3kxeWhhUTI4T3JwSGFuaUNuODBoZTRfbnY3aldGb21tTjlGSHNsa29Yd3daQ0xmTldqZFRBUGp3cVhzTmt6Q2Ja?oc=5
+}
+{
+  title: Apple (AAPL) Stock Looks Fully Priced After New AI Push - simplywall.st
+  source: "AAPL stock" - Google News
+  published_at: 2026-08-25 18:43:01
+  url: https://news.google.com/rss/articles/CBMiuAFBVV95cUxPWE81eDlXMW5mbVJZY3dpekNaSEdVcEh4M1EySFNXaDRMb3AtSDFLajZmRm9zRjlTVGotTklsLS1SUUdNR19JeFg1WUlVbm9oNW9IOHNGb3VsYkl5T1VJdVpoRl8tXzN6WWV4R3QxYXF2ZHdhNDZaVWJlX1FlXzVPeDIzWUpsWUNxNTQ3RG1aWDBic1NKLXU0dVFNSGNUMXF1V3V3SW1RLTJBbWZCdmRlZzBFZmQ2U2Yt0gG4AUFVX3lxTE9YTzV4OVcxbmZtUlljd2l6Q1pIR1VwSHgzUTJIU1doNExvcC1IMUtqNmZGb3NGOVNUai1OSWwtLVJRR01HX0l4WDVZSVVub2g1b0g4c0ZvdWxiSXlPVUl1WmhGXy1fM3pZZXhHdDFhcXZkd2E0NlpVYmVfUWVfNU94MjNZSmxZQ3E1NDdEbVpYMGJzU0otdTR1UU1IY1QxcXVXdXdJbVEtMkFtZkJ2ZGVnMEVmZDZTZi0?oc=5
+}
+
+==================================================
+3. NEWS PARSING / FILTERING
+==================================================
+raw_article_count: 8
+deduplicated_count: 8
+relevant_article_count: 8
+article_id: 0
+title: Apple App Store net revenues see dip Y/Y, monthly data shows: Morgan Stanley
+source: Apple Inc. - News and Analysis on Seeking Alpha
+original timestamp: 2026-08-20 17:47:37
+stock relevance: True
+whether accepted/rejected: Accepted
+--------------------
+article_id: 1
+title: AAPL Stock Jumps After Strong Q3 Guidance Shows Signs iPhone Maker Is Resilient To Chip Shortages - Stocktwits
+source: "AAPL stock" - Google News
+original timestamp: 2026-08-24 23:58:57
+stock relevance: True
+whether accepted/rejected: Accepted
+--------------------
+article_id: 2
+title: SA analyst upgrades/downgrades: AAPL, AAP, AMD, LOW
+source: Apple Inc. - News and Analysis on Seeking Alpha
+original timestamp: 2026-08-21 17:57:11
+stock relevance: True
+whether accepted/rejected: Accepted
+--------------------
+article_id: 3
+title: Apple Stock (AAPL) Opinions on Market Downgrade and AI Developments - Quiver Quantitative
+source: "AAPL stock" - Google News
+original timestamp: 2026-08-22 17:33:00
+stock relevance: True
+whether accepted/rejected: Accepted
+--------------------
+article_id: 4
+title: Apple Stock Outlook: AAPL CEO Transition, Foldable iPhone and EU Deal - FXLeaders
+source: "AAPL stock" - Google News
+original timestamp: 2026-08-25 05:56:40
+stock relevance: True
+whether accepted/rejected: Accepted
+--------------------
+article_id: 5
+title: Apple Stock Outlook: AAPL Faces CEO Change, iPhone 18 Launch and EU Risks - TradingKey
+source: "AAPL stock" - Google News
+original timestamp: 2026-08-23 12:04:32
+stock relevance: True
+whether accepted/rejected: Accepted
+--------------------
+article_id: 6
+title: AAPL Stock Unmoved After-Hours — Apple Sues OpenAI Over Alleged 'Rotten' Campaign To Steal AI Hardware Secrets - Stocktwits
+source: "AAPL stock" - Google News
+original timestamp: 2026-08-26 10:06:03
+stock relevance: True
+whether accepted/rejected: Accepted
+--------------------
+article_id: 7
+title: Apple (AAPL) Stock Looks Fully Priced After New AI Push - simplywall.st
+source: "AAPL stock" - Google News
+original timestamp: 2026-08-25 18:43:01
+stock relevance: True
+whether accepted/rejected: Accepted
+--------------------
+
+==================================================
+4. FINBERT OUTPUT
+==================================================
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 60835.27it/s]
+FINBERT PROVIDER: HuggingFace
+FINBERT MODEL: ProsusAI/finbert
+FINBERT STATUS: PASS
+positive_probability: 0.11242175102233887
+neutral_probability: 0.430313415825367
+negative_probability: 0.2926729992032051
+sentiment_score: -0.18025124818086624
+
+==================================================
+5. DAILY NEWS AGGREGATION
+==================================================
+date: 2026-08-27
+news_count: 8
+daily_sentiment: -0.18025124818086624
+daily_impact: 0.5
+news_confidence: 0
+
+==================================================
+6. EMBEDDING OUTPUT
+==================================================
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8081.66it/s]
+/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
