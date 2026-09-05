@@ -28,4 +28,25 @@ export default class FinnhubProvider extends BaseProvider {
   async getFundamentals(symbol) {
     return null;
   }
+
+  /**
+   * Returns the raw Finnhub /quote API response without normalization.
+   * Used by the quote aggregator in MarketDataService.
+   */
+  async getQuoteRaw(symbol) {
+    if (!this.apiKey) return null;
+    try {
+      const response = await axios.get(`${this.baseUrl}/quote`, {
+        params: { symbol, token: this.apiKey },
+        timeout: 8000
+      });
+      const data = response.data;
+      if (data.c === 0 && data.h === 0) return null; // Invalid symbol
+      data.symbol = symbol;
+      return data;
+    } catch (error) {
+      console.error(`[FinnhubProvider] getQuoteRaw error for ${symbol}:`, error.message);
+      return null;
+    }
+  }
 }

@@ -6,7 +6,9 @@ import marketStreamService from './MarketStreamService.js';
 export async function getQuote(req, res, next) {
   try {
     const { symbol } = req.params;
-    const result = await marketService.getQuote(symbol);
+    const { debug } = req.query;
+    const isDebug = debug === 'true';
+    const result = await marketService.getQuote(symbol, isDebug);
     res.json({ success: true, ...result, error: null });
   } catch (error) {
     next(error);

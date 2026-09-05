@@ -104,4 +104,30 @@ export default class AlphaVantageProvider extends BaseProvider {
       return null;
     }
   }
+
+  /**
+   * Returns raw Alpha Vantage data (OVERVIEW) for the quote aggregator.
+   */
+  async getQuoteRaw(symbol) {
+    if (!this.apiKey) return null;
+    try {
+      const response = await axios.get(this.baseUrl, {
+        params: {
+          function: 'OVERVIEW',
+          symbol,
+          apikey: this.apiKey
+        },
+        timeout: 10000
+      });
+      const data = response.data;
+      if (!data || Object.keys(data).length === 0 || data.Information) {
+        return null;
+      }
+      data.symbol = symbol;
+      return data;
+    } catch (error) {
+      console.error(`[AlphaVantageProvider] getQuoteRaw error for ${symbol}:`, error.message);
+      return null;
+    }
+  }
 }

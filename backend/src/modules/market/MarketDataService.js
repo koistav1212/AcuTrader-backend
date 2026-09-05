@@ -1,79 +1,124 @@
 import cacheService from './cache/CacheService.js';
 import providerRouter from './ProviderRouter.js';
+import {
+  normalizeQuote,
+  mergeQuoteFields,
+  computeDerivedMetrics,
+  computeDataQuality,
+  buildSourceString
+} from './transformers/quoteNormalizer.js';
+
+// Direct provider references for quote aggregation
+import TwelveDataProvider from './providers/TwelveDataProvider.js';
+import YahooProvider from './providers/YahooProvider.js';
+import FinnhubProvider from './providers/FinnhubProvider.js';
+import AlphaVantageProvider from './providers/AlphaVantageProvider.js';
+import SecProvider from './providers/SecProvider.js';
+
+const twelveDataProvider = new TwelveDataProvider();
+const alphaVantageProvider = new AlphaVantageProvider();
+const secProvider = new SecProvider();
+const yahooProvider = new YahooProvider();
+const finnhubProvider = new FinnhubProvider();
 
 class MarketDataService {
-  async getQuote(symbol) {
-    const quoteCacheKey = `quote:${symbol}`;
-    const quoteTtl = 10; // 10 seconds
-
-    const fundCacheKey = `fundamentals:${symbol}`;
-    const fundTtl = 86400; // 24 hours
-
-    const fetchQuote = cacheService.getOrSet(quoteCacheKey, async () => {
-      const result = await providerRouter.executeWithFallback('quote', [symbol]);
-      return { ...(result || { data: null, source: null }), cached: false, updatedAt: new Date().toISOString() };
-    }, quoteTtl);
-
-    const fetchFundamentals = cacheService.getOrSet(fundCacheKey, async () => {
-      try {
-        const result = await providerRouter.executeWithFallback('fundamentals', [symbol]);
-        return { ...(result || { data: null, source: null }), cached: false, updatedAt: new Date().toISOString() };
-      } catch (error) {
-        console.warn(`[MarketDataService] Error fetching fundamentals for ${symbol}:`, error.message);
-        return { data: null, source: null, cached: false, updatedAt: new Date().toISOString() };
+  async getQuote(symbol, debug = false) {
+    const SYM = symbol.toUpperCase();
+    const cacheKey = `quote:${SYM}:merged`;
+    const cacheTtl = 20; // 20 seconds for fast quotes
+    
+    // We only skip cache if debug is true, so we can see fresh diagnostic data
+    if (!debug) {
+      const cached = await cacheService.get(cacheKey);
+      if (cached) {
+        return { ...cached, cached: true };
       }
-    }, fundTtl);
-
-    const [quoteData, fundData] = await Promise.all([fetchQuote, fetchFundamentals]);
-    
-    if (!quoteData.cached && quoteData.updatedAt && new Date() - new Date(quoteData.updatedAt) > 500) {
-      quoteData.cached = true;
     }
 
-    let merged = { ...(quoteData.data || {}) };
-    
-    if (fundData && fundData.data) {
-       const fund = fundData.data;
-       Object.keys(fund).forEach(key => {
-         if (fund[key] !== null && fund[key] !== undefined && (merged[key] === null || merged[key] === undefined)) {
-           merged[key] = fund[key];
-         }
-       });
-    }
+    // ── Fetch all providers in parallel ────────────────────────────────
+    console.log(`[QuoteAggregator] Fetching ${SYM} from all providers...`);
+    const startTime = Date.now();
 
-    if (merged.revenue && merged.netIncome && (merged.profitMargin === null || merged.profitMargin === undefined)) {
-       merged.profitMargin = (merged.netIncome / merged.revenue) * 100;
-    }
-    
-    if (merged.dayRange === null && merged.low !== null && merged.high !== null) {
-      merged.dayRange = `${merged.low} - ${merged.high}`;
-    }
-    if (merged.week52High !== null && merged.week52Low !== null) {
-      merged['52WeekRange'] = `${merged.week52Low} - ${merged.week52High}`;
-    }
+    const [twelveDataResult, alphaVantageResult, secResult, yahooResult, finnhubResult] = await Promise.allSettled([
+      twelveDataProvider.getQuoteRaw(SYM),
+      alphaVantageProvider.getQuoteRaw(SYM),
+      secProvider.getQuoteRaw(SYM),
+      yahooProvider.getQuoteRaw(SYM), // Kept as fallback, without scraping
+      finnhubProvider.getQuoteRaw(SYM)
+    ]);
 
-    // Explicitly extract and ensure required fundamental fields are present (or null)
-    const fundamentalKeys = [
-      'marketCap', 'pe', 'forwardPE', 'trailingPE', 'pegRatio', 'priceToSales',
-      'priceToBook', 'evToEBITDA', 'revenue', 'netIncome', 'profitMargin',
-      'operatingMargin', 'returnOnEquity', 'totalCash', 'totalDebt',
-      'debtToEquity', 'sector', 'industry'
-    ];
-    
-    fundamentalKeys.forEach(key => {
-      if (merged[key] === undefined) {
-        merged[key] = null;
-      }
-    });
-
-    return {
-      data: merged,
-      source: quoteData.source,
-      fundSource: fundData ? fundData.source : null,
-      cached: quoteData.cached,
-      updatedAt: quoteData.updatedAt,
-      error: null
+    const raw = {
+      twelvedata: twelveDataResult.status === 'fulfilled' ? twelveDataResult.value : null,
+      alphavantage: alphaVantageResult.status === 'fulfilled' ? alphaVantageResult.value : null,
+      sec: secResult.status === 'fulfilled' ? secResult.value : null,
+      yahoo: yahooResult.status === 'fulfilled' ? yahooResult.value : null,
+      finnhub: finnhubResult.status === 'fulfilled' ? finnhubResult.value : null,
     };
+
+    // Log provider status
+    const providerStatus = {
+      twelvedata: raw.twelvedata ? 'OK' : (twelveDataResult.status === 'rejected' ? `FAIL: ${twelveDataResult.reason?.message}` : 'NULL'),
+      alphavantage: raw.alphavantage ? 'OK' : (alphaVantageResult.status === 'rejected' ? `FAIL: ${alphaVantageResult.reason?.message}` : 'NULL'),
+      sec: raw.sec ? 'OK' : (secResult.status === 'rejected' ? `FAIL: ${secResult.reason?.message}` : 'NULL'),
+      yahoo: raw.yahoo ? 'OK' : (yahooResult.status === 'rejected' ? `FAIL: ${yahooResult.reason?.message}` : 'NULL'),
+      finnhub: raw.finnhub ? 'OK' : (finnhubResult.status === 'rejected' ? `FAIL: ${finnhubResult.reason?.message}` : 'NULL')
+    };
+    console.log(`[QuoteAggregator] Provider status for ${SYM}:`, providerStatus);
+
+    // If ALL quote providers failed, return error
+    if (!raw.twelvedata && !raw.alphavantage && !raw.yahoo && !raw.finnhub) {
+      const error = new Error(`Quote data unavailable for ${SYM}. All providers failed.`);
+      error.status = 404;
+      throw error;
+    }
+
+    // ── Normalize each to canonical schema ─────────────────────────────
+    const normalized = {
+      twelvedata: raw.twelvedata ? normalizeQuote('twelvedata', raw.twelvedata, SYM) : null,
+      alphavantage: raw.alphavantage ? normalizeQuote('alphavantage', raw.alphavantage, SYM) : null,
+      sec: raw.sec ? normalizeQuote('sec', raw.sec, SYM) : null,
+      yahoo: raw.yahoo ? normalizeQuote('yahoo', raw.yahoo, SYM) : null,
+      finnhub: raw.finnhub ? normalizeQuote('finnhub', raw.finnhub, SYM) : null
+    };
+
+    // ── Merge with field-level priority ────────────────────────────────
+    const { merged, fieldSources, fieldAsOf, providersUsed, sourceDiscrepancies } = mergeQuoteFields(normalized);
+
+    // ── Compute derived metrics ────────────────────────────────────────
+    computeDerivedMetrics(merged);
+
+    // ── Data quality ───────────────────────────────────────────────────
+    merged.dataQuality = computeDataQuality(merged, providersUsed, sourceDiscrepancies);
+    merged.fieldSources = fieldSources;
+    merged.fieldAsOf = fieldAsOf;
+    merged.source = buildSourceString(providersUsed);
+    merged.updatedAt = new Date().toISOString();
+
+    const elapsed = Date.now() - startTime;
+    console.log(`[QuoteAggregator] ${SYM} merged in ${elapsed}ms — source: ${merged.source}, completeness: ${merged.dataQuality.completeness}%`);
+
+    const result = {
+      data: merged,
+      source: merged.source,
+      cached: false,
+      updatedAt: merged.updatedAt
+    };
+
+    // Include debug diagnostic if requested
+    if (debug) {
+      result.diagnostic = {
+        providerStatus,
+        sourceDiscrepancies,
+        raw
+      };
+    }
+
+    // ── Cache the final merged result ──────────────────────────────────
+    if (!debug) {
+      await cacheService.set(cacheKey, result, cacheTtl);
+    }
+
+    return result;
   }
 
   _getDynamicTTL(range, interval) {
