@@ -1,0 +1,367 @@
+{
+  "success": true,
+  "symbol": "SMCI",
+  "raw_article_count": 219,
+  "valid_article_count": 100,
+  "deduplicated_count": 0,
+  "relevant_count": 96,
+  "final_article_count": 96,
+  "market_context": {
+    "AVAILABLE": {
+      "open": 38.16,
+      "high": 40.91,
+      "low": 37.92,
+      "previousClose": 37.87,
+      "change": 1.72,
+      "changePercent": 4.54186,
+      "volume": 53548400,
+      "averageVolume": 36358150,
+      "revenue": 2484929000,
+      "netIncome": 2230453000,
+      "profitMargin": 0.8976,
+      "totalCash": 7521474000,
+      "totalDebt": 120179000,
+      "debtToEquity": null
+    },
+    "MISSING": [
+      "currentPrice",
+      "marketCap",
+      "pe",
+      "forwardPE",
+      "trailingPE",
+      "pegRatio",
+      "priceToSales",
+      "priceToBook",
+      "evToEBITDA",
+      "operatingMargin",
+      "returnOnEquity",
+      "sector",
+      "industry"
+    ],
+    "DERIVED": {},
+    "NOT_APPLICABLE": [],
+    "STALE": []
+  },
+  "technical_context": {
+    "currentPrice": 39.59,
+    "sma20": 37.0345001,
+    "sma50": 31.70660004,
+    "sma200": 31.368249989999995,
+    "ema9": 37.66889730177249,
+    "ema21": 36.1892075194847,
+    "rsi14": 54.35216062515897,
+    "macd": {
+      "macdLine": 1.720404775437288,
+      "signalLine": 0,
+      "histogram": 0
+    },
+    "bollingerBands": {
+      "upper": 41.29172208580257,
+      "middle": 37.0345001,
+      "lower": 32.777278114197436
+    },
+    "atr14": 2.230000000000001,
+    "volatility": 0.8350538860001638,
+    "momentum": 0.058273188986902084,
+    "volumeRatio": 0.976376987957475
+  },
+  "numerical_evidence": {
+    "news_volume": 96,
+    "current_price": 39.59,
+    "current_volatility": 0.8350538860001638,
+    "trend_regime": "Bullish",
+    "volume_anomaly": 0.976376987957475
+  },
+  "models": {
+    "xgboost": null,
+    "newsLstm": null,
+    "llmSynthesis": {
+      "symbol": "SMCI",
+      "asOf": "2026-09-04",
+      "status": "ready",
+      "data_validation": {
+        "issues": []
+      },
+      "news_regime": "neutral",
+      "news_summary": {
+        "weighted_sentiment": 0,
+        "material_events": [
+          "Super Micro Computer (SMCI) Joins A Major Enterprise AI Infrastructure Build",
+          "Fast-paced Momentum Stock Super Micro (SMCI) Is Still Trading at a Bargain",
+          "Super Micro Shares Dip 1.8% Amid $6.8 Billion Cash Outflow, Raising Questions on Growth Sustainability"
+        ]
+      },
+      "market_context": {
+        "daily_change": 1.72,
+        "daily_change_percent": 4.54186,
+        "volume": 53548400,
+        "volume_vs_average": 1.4728032091841856
+      },
+      "technical_context": {
+        "sma20": 37.0345001,
+        "sma50": 31.70660004,
+        "sma200": 31.368249989999995,
+        "rsi14": 54.35216062515897,
+        "bollinger_bands": {
+          "upper": 41.29172208580257,
+          "middle": 37.0345001,
+          "lower": 32.777278114197436
+        },
+        "volatility": 0.8350538860001638
+      },
+      "fundamental_context": {
+        "revenue": 2484929000,
+        "net_income": 2230453000,
+        "profit_margin": 0.8976,
+        "total_cash": 7521474000,
+        "total_debt": 120179000
+      },
+      "model_context": {
+        "xgboost": {
+          "available": false,
+          "output": null
+        },
+        "downstream_model": {
+          "available": false,
+          "output": null
+        },
+        "model_agreement": "unavailable",
+        "model_disagreements": []
+      },
+      "news_market_interaction": {
+        "sentiment": 0,
+        "impact": 0
+      },
+      "forecast": {
+        "day_1": {
+          "date": "2026-09-07",
+          "direction": "bullish",
+          "probabilities": {
+            "bull_case": 0.55,
+            "neutral_case": 0.3,
+            "bear_case": 0.15
+          },
+          "expected_price": 40.93,
+          "expected_return_percent": 3.38,
+          "scenarios": {
+            "bull": {
+              "target": 42.19,
+              "drivers": [
+                "AI infrastructure deal",
+                "momentum stock"
+              ],
+              "evidence_ids": [
+                "2d045def46ab5025a3656b1622330c7626c36a280472ca62c52ebbf2d6a86a2d",
+                "824a92eae9590e958723fbb15e7200d6b0f65b6d2412c883350d4493fc01aff5"
+              ]
+            },
+            "base": {
+              "target": 40.19,
+              "drivers": [
+                "current price momentum"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 38.59,
+              "drivers": [
+                "cash outflow concerns"
+              ],
+              "evidence_ids": [
+                "d756af232f1cc780e2cbab450d65611c4c6a5ea595d179af3225cce7cc21e1fa"
+              ]
+            }
+          },
+          "key_drivers": [
+            "AI infrastructure deal",
+            "momentum stock",
+            "cash outflow concerns"
+          ],
+          "risk_flags": [
+            "high volatility"
+          ],
+          "confidence": 0.8,
+          "evidence_ids": [
+            "2d045def46ab5025a3656b1622330c7626c36a280472ca62c52ebbf2d6a86a2d",
+            "824a92eae9590e958723fbb15e7200d6b0f65b6d2412c883350d4493fc01aff5",
+            "d756af232f1cc780e2cbab450d65611c4c6a5ea595d179af3225cce7cc21e1fa"
+          ]
+        },
+        "day_2": {
+          "date": "2026-09-08",
+          "direction": "bullish",
+          "probabilities": {
+            "bull_case": 0.6,
+            "neutral_case": 0.25,
+            "bear_case": 0.15
+          },
+          "expected_price": 41.49,
+          "expected_return_percent": 4.59,
+          "scenarios": {
+            "bull": {
+              "target": 43.29,
+              "drivers": [
+                "AI infrastructure deal",
+                "momentum stock"
+              ],
+              "evidence_ids": [
+                "2d045def46ab5025a3656b1622330c7626c36a280472ca62c52ebbf2d6a86a2d",
+                "824a92eae9590e958723fbb15e7200d6b0f65b6d2412c883350d4493fc01aff5"
+              ]
+            },
+            "base": {
+              "target": 40.99,
+              "drivers": [
+                "current price momentum"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 39.29,
+              "drivers": [
+                "cash outflow concerns"
+              ],
+              "evidence_ids": [
+                "d756af232f1cc780e2cbab450d65611c4c6a5ea595d179af3225cce7cc21e1fa"
+              ]
+            }
+          },
+          "key_drivers": [
+            "AI infrastructure deal",
+            "momentum stock",
+            "cash outflow concerns"
+          ],
+          "risk_flags": [
+            "high volatility"
+          ],
+          "confidence": 0.8,
+          "evidence_ids": [
+            "2d045def46ab5025a3656b1622330c7626c36a280472ca62c52ebbf2d6a86a2d",
+            "824a92eae9590e958723fbb15e7200d6b0f65b6d2412c883350d4493fc01aff5",
+            "d756af232f1cc780e2cbab450d65611c4c6a5ea595d179af3225cce7cc21e1fa"
+          ]
+        },
+        "day_3": {
+          "date": "2026-09-09",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.4,
+            "neutral_case": 0.4,
+            "bear_case": 0.2
+          },
+          "expected_price": 41.19,
+          "expected_return_percent": 3.99,
+          "scenarios": {
+            "bull": {
+              "target": 42.99,
+              "drivers": [
+                "AI infrastructure deal",
+                "momentum stock"
+              ],
+              "evidence_ids": [
+                "2d045def46ab5025a3656b1622330c7626c36a280472ca62c52ebbf2d6a86a2d",
+                "824a92eae9590e958723fbb15e7200d6b0f65b6d2412c883350d4493fc01aff5"
+              ]
+            },
+            "base": {
+              "target": 40.99,
+              "drivers": [
+                "current price momentum"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 39.99,
+              "drivers": [
+                "cash outflow concerns"
+              ],
+              "evidence_ids": [
+                "d756af232f1cc780e2cbab450d65611c4c6a5ea595d179af3225cce7cc21e1fa"
+              ]
+            }
+          },
+          "key_drivers": [
+            "AI infrastructure deal",
+            "momentum stock",
+            "cash outflow concerns"
+          ],
+          "risk_flags": [
+            "high volatility"
+          ],
+          "confidence": 0.7,
+          "evidence_ids": [
+            "2d045def46ab5025a3656b1622330c7626c36a280472ca62c52ebbf2d6a86a2d",
+            "824a92eae9590e958723fbb15e7200d6b0f65b6d2412c883350d4493fc01aff5",
+            "d756af232f1cc780e2cbab450d65611c4c6a5ea595d179af3225cce7cc21e1fa"
+          ]
+        }
+      },
+      "overall_assessment": {
+        "summary": "The stock is expected to move upwards in the next three days, driven by the AI infrastructure deal and its momentum stock status. However, cash outflow concerns may pose a risk to the stock's performance."
+      },
+      "evidence": [
+        {
+          "evidence_id": "2d045def46ab5025a3656b1622330c7626c36a280472ca62c52ebbf2d6a86a2d",
+          "event_cluster_id": "c61cd20e3bae8a0c",
+          "date": "2026-09-03",
+          "publisher": "finance.yahoo.com",
+          "title": "Super Micro Computer (SMCI) Joins A Major Enterprise AI Infrastructure Build"
+        },
+        {
+          "evidence_id": "824a92eae9590e958723fbb15e7200d6b0f65b6d2412c883350d4493fc01aff5",
+          "event_cluster_id": "64f13ad9a70fefe8",
+          "date": "2026-09-03",
+          "publisher": "finance.yahoo.com",
+          "title": "Fast-paced Momentum Stock Super Micro (SMCI) Is Still Trading at a Bargain"
+        },
+        {
+          "evidence_id": "d756af232f1cc780e2cbab450d65611c4c6a5ea595d179af3225cce7cc21e1fa",
+          "event_cluster_id": "f1a001c5c1694b5a",
+          "date": "2026-09-03",
+          "publisher": "TechStock²",
+          "title": "Super Micro Shares Dip 1.8% Amid $6.8 Billion Cash Outflow, Raising Questions on Growth Sustainability"
+        }
+      ]
+    }
+  },
+  "forecast_metadata": {
+    "reference_price": 39.59,
+    "reference_date": "2026-09-04",
+    "forecast_horizon": "3_trading_days",
+    "news_evidence_count": 3,
+    "forecast_generated_at": "2026-09-06T17:13:38.103Z",
+    "llm_model": "meta-llama/llama-3.3-70b-instruct",
+    "validation_status": "passed"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 14
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 96
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 48934,
+        "inputTokens": 3568,
+        "outputTokens": 1654,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  },
+  "generatedAt": "2026-09-06T17:13:38.103Z"
+}

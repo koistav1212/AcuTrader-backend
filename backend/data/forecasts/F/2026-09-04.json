@@ -1,0 +1,316 @@
+{
+  "success": true,
+  "symbol": "F",
+  "raw_article_count": 220,
+  "valid_article_count": 100,
+  "deduplicated_count": 0,
+  "relevant_count": 74,
+  "final_article_count": 74,
+  "market_context": {
+    "AVAILABLE": {
+      "open": 14.38,
+      "high": 14.64,
+      "low": 14.3,
+      "previousClose": 14.41,
+      "change": 0.21000004,
+      "changePercent": 1.45732,
+      "volume": 39243000,
+      "averageVolume": 42455610,
+      "revenue": 184992000000,
+      "netIncome": -36000000,
+      "profitMargin": -0.0002,
+      "totalCash": 17649000000
+    },
+    "MISSING": [
+      "currentPrice",
+      "marketCap",
+      "pe",
+      "forwardPE",
+      "trailingPE",
+      "pegRatio",
+      "priceToSales",
+      "priceToBook",
+      "evToEBITDA",
+      "operatingMargin",
+      "returnOnEquity",
+      "totalDebt",
+      "debtToEquity",
+      "sector",
+      "industry"
+    ],
+    "DERIVED": {},
+    "NOT_APPLICABLE": [],
+    "STALE": []
+  },
+  "technical_context": {
+    "currentPrice": 14.62,
+    "sma20": 14.075500000000002,
+    "sma50": 14.113600000000002,
+    "sma200": 13.500549999999997,
+    "ema9": 14.187212391826314,
+    "ema21": 14.14025030032024,
+    "rsi14": 58.823529411764696,
+    "macd": {
+      "macdLine": 0.016105836453103706,
+      "signalLine": 0,
+      "histogram": 0
+    },
+    "bollingerBands": {
+      "upper": 14.549945992711502,
+      "middle": 14.075500000000002,
+      "lower": 13.601054007288502
+    },
+    "atr14": 0.3892857142857145,
+    "volatility": 0.31499256101098544,
+    "momentum": 0.04953338119167262,
+    "volumeRatio": 0.9702992207169256
+  },
+  "numerical_evidence": {
+    "news_volume": 74,
+    "current_price": 14.62,
+    "current_volatility": 0.31499256101098544,
+    "trend_regime": "Bullish",
+    "volume_anomaly": 0.9702992207169256
+  },
+  "models": {
+    "xgboost": null,
+    "newsLstm": null,
+    "llmSynthesis": {
+      "symbol": "F",
+      "asOf": "2026-09-04",
+      "status": "ready",
+      "data_validation": {
+        "issues": []
+      },
+      "news_regime": "neutral",
+      "news_summary": {
+        "weighted_sentiment": 0,
+        "material_events": []
+      },
+      "market_context": {
+        "daily_change": 0.21000004,
+        "daily_change_percent": 1.45732,
+        "volume": 39243000,
+        "volume_vs_average": 0.9243301415289994
+      },
+      "technical_context": {
+        "sma20": 14.075500000000002,
+        "sma50": 14.113600000000002,
+        "sma200": 13.500549999999997,
+        "rsi14": 58.823529411764696,
+        "bollingerBands": {
+          "upper": 14.549945992711502,
+          "middle": 14.075500000000002,
+          "lower": 13.601054007288502
+        },
+        "volatility": 0.31499256101098544
+      },
+      "fundamental_context": {
+        "open": 14.38,
+        "high": 14.64,
+        "low": 14.3,
+        "previousClose": 14.41,
+        "change": 0.21000004,
+        "changePercent": 1.45732,
+        "volume": 39243000,
+        "averageVolume": 42455610,
+        "revenue": 184992000000,
+        "netIncome": -36000000,
+        "profitMargin": -0.0002,
+        "totalCash": 17649000000
+      },
+      "model_context": {
+        "xgboost": {
+          "available": false,
+          "output": null
+        },
+        "downstream_model": {
+          "available": false,
+          "output": null
+        },
+        "model_agreement": "unavailable",
+        "model_disagreements": []
+      },
+      "news_market_interaction": {
+        "sentiment": 0,
+        "impact": 0
+      },
+      "forecast": {
+        "day_1": {
+          "date": "2026-09-07",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.45,
+            "neutral_case": 0.45,
+            "bear_case": 0.1
+          },
+          "expected_price": 14.65,
+          "expected_return_percent": 0.2,
+          "scenarios": {
+            "bull": {
+              "target": 14.8,
+              "drivers": [
+                "increased demand"
+              ],
+              "evidence_ids": []
+            },
+            "base": {
+              "target": 14.65,
+              "drivers": [
+                "stable market conditions"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 14.4,
+              "drivers": [
+                "decreased demand"
+              ],
+              "evidence_ids": []
+            }
+          },
+          "key_drivers": [
+            "market trends",
+            "industry developments"
+          ],
+          "risk_flags": [
+            "economic uncertainty"
+          ],
+          "confidence": 0.6,
+          "evidence_ids": []
+        },
+        "day_2": {
+          "date": "2026-09-08",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.4,
+            "neutral_case": 0.5,
+            "bear_case": 0.1
+          },
+          "expected_price": 14.7,
+          "expected_return_percent": 0.15,
+          "scenarios": {
+            "bull": {
+              "target": 14.85,
+              "drivers": [
+                "increased demand"
+              ],
+              "evidence_ids": []
+            },
+            "base": {
+              "target": 14.7,
+              "drivers": [
+                "stable market conditions"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 14.45,
+              "drivers": [
+                "decreased demand"
+              ],
+              "evidence_ids": []
+            }
+          },
+          "key_drivers": [
+            "market trends",
+            "industry developments"
+          ],
+          "risk_flags": [
+            "economic uncertainty"
+          ],
+          "confidence": 0.55,
+          "evidence_ids": []
+        },
+        "day_3": {
+          "date": "2026-09-09",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.35,
+            "neutral_case": 0.55,
+            "bear_case": 0.1
+          },
+          "expected_price": 14.75,
+          "expected_return_percent": 0.1,
+          "scenarios": {
+            "bull": {
+              "target": 14.9,
+              "drivers": [
+                "increased demand"
+              ],
+              "evidence_ids": []
+            },
+            "base": {
+              "target": 14.75,
+              "drivers": [
+                "stable market conditions"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 14.5,
+              "drivers": [
+                "decreased demand"
+              ],
+              "evidence_ids": []
+            }
+          },
+          "key_drivers": [
+            "market trends",
+            "industry developments"
+          ],
+          "risk_flags": [
+            "economic uncertainty"
+          ],
+          "confidence": 0.5,
+          "evidence_ids": []
+        }
+      },
+      "overall_assessment": {
+        "market_trend": "stable",
+        "industry_developments": "positive"
+      },
+      "evidence": []
+    }
+  },
+  "forecast_metadata": {
+    "reference_price": 14.62,
+    "reference_date": "2026-09-04",
+    "forecast_horizon": "3_trading_days",
+    "news_evidence_count": 0,
+    "forecast_generated_at": "2026-09-06T17:50:55.646Z",
+    "llm_model": "meta-llama/llama-3.3-70b-instruct",
+    "validation_status": "passed"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 12
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 74
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 11423,
+        "inputTokens": 3572,
+        "outputTokens": 1016,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  },
+  "generatedAt": "2026-09-06T17:50:55.646Z"
+}

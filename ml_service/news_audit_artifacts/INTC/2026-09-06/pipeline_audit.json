@@ -1,0 +1,36 @@
+{
+  "testMetadata": {
+    "symbol": "INTC",
+    "executedAt": "2026-09-06T16:56:50.066Z"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 14
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 97
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 327687,
+        "inputTokens": 3518,
+        "outputTokens": 1304,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  }
+}

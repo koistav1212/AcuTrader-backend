@@ -1,0 +1,325 @@
+{
+  "success": true,
+  "symbol": "AMC",
+  "raw_article_count": 212,
+  "valid_article_count": 100,
+  "deduplicated_count": 0,
+  "relevant_count": 89,
+  "final_article_count": 89,
+  "market_context": {
+    "AVAILABLE": {
+      "open": 2.63,
+      "high": 2.8,
+      "low": 2.59,
+      "previousClose": 2.54,
+      "change": 0.11000013,
+      "changePercent": 4.33071,
+      "volume": 57065800,
+      "averageVolume": 23844530,
+      "marketCap": 2270000000,
+      "priceToSales": 0.28,
+      "revenue": 4848900000,
+      "netIncome": -128500000,
+      "profitMargin": -10.59,
+      "totalCash": 778400000,
+      "totalDebt": 4024200000,
+      "debtToEquity": null
+    },
+    "MISSING": [
+      "currentPrice",
+      "pe",
+      "forwardPE",
+      "trailingPE",
+      "pegRatio",
+      "priceToBook",
+      "evToEBITDA",
+      "operatingMargin",
+      "returnOnEquity",
+      "sector",
+      "industry"
+    ],
+    "DERIVED": {},
+    "NOT_APPLICABLE": [],
+    "STALE": []
+  },
+  "technical_context": {
+    "currentPrice": 2.65,
+    "sma20": 2.5555,
+    "sma50": 2.3686000000000007,
+    "sma200": 1.7938000004499994,
+    "ema9": 2.605163471791344,
+    "ema21": 2.5654732502138726,
+    "rsi14": 59.63302752293577,
+    "macd": {
+      "macdLine": 0.05652199851982509,
+      "signalLine": 0,
+      "histogram": 0
+    },
+    "bollingerBands": {
+      "upper": 2.7429539943559487,
+      "middle": 2.5555,
+      "lower": 2.368046005644051
+    },
+    "atr14": 0.16357142857142856,
+    "volatility": 0.5877895588141296,
+    "momentum": 0.11344537815126052,
+    "volumeRatio": 2.9398661172880147
+  },
+  "numerical_evidence": {
+    "news_volume": 89,
+    "current_price": 2.65,
+    "current_volatility": 0.5877895588141296,
+    "trend_regime": "Bullish",
+    "volume_anomaly": 2.9398661172880147
+  },
+  "models": {
+    "xgboost": null,
+    "newsLstm": null,
+    "llmSynthesis": {
+      "symbol": "AMC",
+      "asOf": "2026-09-04",
+      "status": "ready",
+      "data_validation": {
+        "issues": []
+      },
+      "news_regime": "neutral",
+      "news_summary": {
+        "weighted_sentiment": 0,
+        "material_events": []
+      },
+      "market_context": {
+        "daily_change": 0.11000013,
+        "daily_change_percent": 4.33071,
+        "volume": 57065800,
+        "volume_vs_average": 2.3932449077419435
+      },
+      "technical_context": {
+        "sma20": 2.5555,
+        "sma50": 2.3686000000000007,
+        "sma200": 1.7938000004499994,
+        "rsi14": 59.63302752293577,
+        "bollingerBands": {
+          "upper": 2.7429539943559487,
+          "middle": 2.5555,
+          "lower": 2.368046005644051
+        },
+        "volatility": 0.5877895588141296
+      },
+      "fundamental_context": {
+        "marketCap": 2270000000,
+        "priceToSales": 0.28,
+        "revenue": 4848900000,
+        "netIncome": -128500000,
+        "profitMargin": -10.59,
+        "totalCash": 778400000,
+        "totalDebt": 4024200000
+      },
+      "model_context": {
+        "xgboost": {
+          "available": false,
+          "output": null
+        },
+        "downstream_model": {
+          "available": false,
+          "output": null
+        },
+        "model_agreement": "unavailable",
+        "model_disagreements": []
+      },
+      "news_market_interaction": {},
+      "forecast": {
+        "day_1": {
+          "date": "2026-09-07",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.4,
+            "neutral_case": 0.5,
+            "bear_case": 0.1
+          },
+          "expected_price": 2.7,
+          "expected_return_percent": 1.89,
+          "scenarios": {
+            "bull": {
+              "target": 2.85,
+              "drivers": [
+                "increased volume",
+                "positive sentiment"
+              ],
+              "evidence_ids": [
+                "982f5d69474fec4085971bc6f1cc42072f2be8c6e24c20cae2a203a0018c4dc9",
+                "492a2fa0ea2ba1d6603cd6af33f9324a1fa5e5a5f36c4779b6737d6d1120d8fa"
+              ]
+            },
+            "base": {
+              "target": 2.65,
+              "drivers": [
+                "stable market conditions"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 2.45,
+              "drivers": [
+                "decreased demand"
+              ],
+              "evidence_ids": []
+            }
+          },
+          "key_drivers": [
+            "market sentiment",
+            "volume trends"
+          ],
+          "risk_flags": [
+            "high volatility"
+          ],
+          "confidence": 0.6,
+          "evidence_ids": [
+            "982f5d69474fec4085971bc6f1cc42072f2be8c6e24c20cae2a203a0018c4dc9",
+            "492a2fa0ea2ba1d6603cd6af33f9324a1fa5e5a5f36c4779b6737d6d1120d8fa"
+          ]
+        },
+        "day_2": {
+          "date": "2026-09-08",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.3,
+            "neutral_case": 0.6,
+            "bear_case": 0.1
+          },
+          "expected_price": 2.72,
+          "expected_return_percent": 2.64,
+          "scenarios": {
+            "bull": {
+              "target": 2.9,
+              "drivers": [
+                "increased investor confidence"
+              ],
+              "evidence_ids": [
+                "f8de2a8aed1e7669cdc8ed7232a3864f2937736c25054d27d8723535caf0e908"
+              ]
+            },
+            "base": {
+              "target": 2.7,
+              "drivers": [
+                "stable market conditions"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 2.5,
+              "drivers": [
+                "decreased demand"
+              ],
+              "evidence_ids": []
+            }
+          },
+          "key_drivers": [
+            "market trends",
+            "investor sentiment"
+          ],
+          "risk_flags": [
+            "high volatility"
+          ],
+          "confidence": 0.55,
+          "evidence_ids": [
+            "f8de2a8aed1e7669cdc8ed7232a3864f2937736c25054d27d8723535caf0e908"
+          ]
+        },
+        "day_3": {
+          "date": "2026-09-09",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.2,
+            "neutral_case": 0.7,
+            "bear_case": 0.1
+          },
+          "expected_price": 2.75,
+          "expected_return_percent": 3.77,
+          "scenarios": {
+            "bull": {
+              "target": 2.95,
+              "drivers": [
+                "increased market activity"
+              ],
+              "evidence_ids": [
+                "4a36b683de460355ae5d7d80d2514eb01ca5ef2341702a508e55e9d2654bcfed"
+              ]
+            },
+            "base": {
+              "target": 2.75,
+              "drivers": [
+                "stable market conditions"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 2.55,
+              "drivers": [
+                "decreased demand"
+              ],
+              "evidence_ids": []
+            }
+          },
+          "key_drivers": [
+            "market activity",
+            "investor confidence"
+          ],
+          "risk_flags": [
+            "high volatility"
+          ],
+          "confidence": 0.5,
+          "evidence_ids": [
+            "4a36b683de460355ae5d7d80d2514eb01ca5ef2341702a508e55e9d2654bcfed"
+          ]
+        }
+      },
+      "overall_assessment": {},
+      "evidence": [
+        "982f5d69474fec4085971bc6f1cc42072f2be8c6e24c20cae2a203a0018c4dc9",
+        "492a2fa0ea2ba1d6603cd6af33f9324a1fa5e5a5f36c4779b6737d6d1120d8fa",
+        "f8de2a8aed1e7669cdc8ed7232a3864f2937736c25054d27d8723535caf0e908",
+        "4a36b683de460355ae5d7d80d2514eb01ca5ef2341702a508e55e9d2654bcfed"
+      ]
+    }
+  },
+  "forecast_metadata": {
+    "reference_price": 2.65,
+    "reference_date": "2026-09-04",
+    "forecast_horizon": "3_trading_days",
+    "news_evidence_count": 4,
+    "forecast_generated_at": "2026-09-06T17:12:03.363Z",
+    "llm_model": "meta-llama/llama-3.3-70b-instruct",
+    "validation_status": "passed"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 16
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 89
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 11802,
+        "inputTokens": 3855,
+        "outputTokens": 1162,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  },
+  "generatedAt": "2026-09-06T17:12:03.363Z"
+}

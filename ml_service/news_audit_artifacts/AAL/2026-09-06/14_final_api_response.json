@@ -1,0 +1,360 @@
+{
+  "success": true,
+  "symbol": "AAL",
+  "raw_article_count": 208,
+  "valid_article_count": 89,
+  "deduplicated_count": 0,
+  "relevant_count": 87,
+  "final_article_count": 87,
+  "market_context": {
+    "AVAILABLE": {
+      "open": 12.96,
+      "high": 13.21,
+      "low": 12.95,
+      "previousClose": 12.97,
+      "change": 0.15999985,
+      "changePercent": 1.23361,
+      "volume": 74051300,
+      "averageVolume": 63878030,
+      "marketCap": 8590000000,
+      "forwardPE": 5.17,
+      "pegRatio": 0.09,
+      "priceToSales": 0.15,
+      "revenue": 22044000000,
+      "netIncome": -311000000,
+      "profitMargin": -0.56,
+      "totalCash": 1178000000,
+      "totalDebt": 25254000000,
+      "debtToEquity": null
+    },
+    "MISSING": [
+      "currentPrice",
+      "pe",
+      "trailingPE",
+      "priceToBook",
+      "evToEBITDA",
+      "operatingMargin",
+      "returnOnEquity",
+      "sector",
+      "industry"
+    ],
+    "DERIVED": {},
+    "NOT_APPLICABLE": [],
+    "STALE": []
+  },
+  "technical_context": {
+    "currentPrice": 13.13,
+    "sma20": 13.958000000000002,
+    "sma50": 15.26020002,
+    "sma200": 13.927400004999996,
+    "ema9": 13.371586777328233,
+    "ema21": 13.93757668100251,
+    "rsi14": 29.559748427672957,
+    "macd": {
+      "macdLine": -0.588644918243098,
+      "signalLine": 0,
+      "histogram": 0
+    },
+    "bollingerBands": {
+      "upper": 15.38532757277368,
+      "middle": 13.958000000000002,
+      "lower": 12.530672427226325
+    },
+    "atr14": 0.3771428571428575,
+    "volatility": 0.32682374887861504,
+    "momentum": -0.06548042704626333,
+    "volumeRatio": 1.2529396188457085
+  },
+  "numerical_evidence": {
+    "news_volume": 87,
+    "current_price": 13.13,
+    "current_volatility": 0.32682374887861504,
+    "trend_regime": "Bullish",
+    "volume_anomaly": 1.2529396188457085
+  },
+  "models": {
+    "xgboost": null,
+    "newsLstm": null,
+    "llmSynthesis": {
+      "symbol": "AAL",
+      "asOf": "2026-09-04",
+      "status": "ready",
+      "data_validation": {
+        "issues": []
+      },
+      "news_regime": "neutral",
+      "news_summary": {
+        "weighted_sentiment": 0,
+        "material_events": [
+          "American Airlines Shares Drop 0.7% Despite Record Revenue, Hit by Higher Fuel Costs",
+          "American Airlines Upgrades Boeing 777-300ER Cabin Layout (AAL)",
+          "AAL Stock On Track To Hit 4-Month High After Starlink Partnership Announcement"
+        ]
+      },
+      "market_context": {
+        "daily_change": 0.15999985,
+        "daily_change_percent": 1.23361,
+        "volume": 74051300,
+        "volume_vs_average": 1.1592608601110586
+      },
+      "technical_context": {
+        "sma20": 13.958000000000002,
+        "sma50": 15.26020002,
+        "sma200": 13.927400004999996,
+        "rsi14": 29.559748427672957,
+        "bollinger_bands": {
+          "upper": 15.38532757277368,
+          "middle": 13.958000000000002,
+          "lower": 12.530672427226325
+        },
+        "volatility": 0.32682374887861504
+      },
+      "fundamental_context": {
+        "open": 12.96,
+        "high": 13.21,
+        "low": 12.95,
+        "previous_close": 12.97,
+        "change": 0.15999985,
+        "change_percent": 1.23361,
+        "volume": 74051300,
+        "average_volume": 63878030,
+        "market_cap": 8590000000,
+        "forward_pe": 5.17,
+        "peg_ratio": 0.09,
+        "price_to_sales": 0.15,
+        "revenue": 22044000000,
+        "net_income": -311000000,
+        "profit_margin": -0.56,
+        "total_cash": 1178000000,
+        "total_debt": 25254000000
+      },
+      "model_context": {
+        "xgboost": {
+          "available": false,
+          "output": null
+        },
+        "downstream_model": {
+          "available": false,
+          "output": null
+        },
+        "model_agreement": "unavailable",
+        "model_disagreements": []
+      },
+      "news_market_interaction": {
+        "sentiment": 0,
+        "impact": 0
+      },
+      "forecast": {
+        "day_1": {
+          "date": "2026-09-07",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.45,
+            "neutral_case": 0.45,
+            "bear_case": 0.1
+          },
+          "expected_price": 13.23,
+          "expected_return_percent": 0.76,
+          "scenarios": {
+            "bull": {
+              "target": 13.5,
+              "drivers": [
+                "Starlink partnership announcement"
+              ],
+              "evidence_ids": [
+                "97717fd40c7506da6c8a594ec7b7aa699ba8933a09f6bb3e023b640d5574ad51"
+              ]
+            },
+            "base": {
+              "target": 13.23,
+              "drivers": [
+                "Current market trends"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 12.9,
+              "drivers": [
+                "Higher fuel costs"
+              ],
+              "evidence_ids": [
+                "e783e346f57c15b4c7285dc9340792bac300edb8288b1e8eccc3c7f434807b11"
+              ]
+            }
+          },
+          "key_drivers": [
+            "Starlink partnership announcement",
+            "Higher fuel costs"
+          ],
+          "risk_flags": [
+            "Higher fuel costs"
+          ],
+          "confidence": 0.6,
+          "evidence_ids": [
+            "97717fd40c7506da6c8a594ec7b7aa699ba8933a09f6bb3e023b640d5574ad51",
+            "e783e346f57c15b4c7285dc9340792bac300edb8288b1e8eccc3c7f434807b11"
+          ]
+        },
+        "day_2": {
+          "date": "2026-09-08",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.4,
+            "neutral_case": 0.5,
+            "bear_case": 0.1
+          },
+          "expected_price": 13.25,
+          "expected_return_percent": 0.92,
+          "scenarios": {
+            "bull": {
+              "target": 13.6,
+              "drivers": [
+                "Starlink partnership announcement"
+              ],
+              "evidence_ids": [
+                "97717fd40c7506da6c8a594ec7b7aa699ba8933a09f6bb3e023b640d5574ad51"
+              ]
+            },
+            "base": {
+              "target": 13.25,
+              "drivers": [
+                "Current market trends"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 12.95,
+              "drivers": [
+                "Higher fuel costs"
+              ],
+              "evidence_ids": [
+                "e783e346f57c15b4c7285dc9340792bac300edb8288b1e8eccc3c7f434807b11"
+              ]
+            }
+          },
+          "key_drivers": [
+            "Starlink partnership announcement",
+            "Higher fuel costs"
+          ],
+          "risk_flags": [
+            "Higher fuel costs"
+          ],
+          "confidence": 0.55,
+          "evidence_ids": [
+            "97717fd40c7506da6c8a594ec7b7aa699ba8933a09f6bb3e023b640d5574ad51",
+            "e783e346f57c15b4c7285dc9340792bac300edb8288b1e8eccc3c7f434807b11"
+          ]
+        },
+        "day_3": {
+          "date": "2026-09-09",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.35,
+            "neutral_case": 0.55,
+            "bear_case": 0.1
+          },
+          "expected_price": 13.27,
+          "expected_return_percent": 1.07,
+          "scenarios": {
+            "bull": {
+              "target": 13.7,
+              "drivers": [
+                "Starlink partnership announcement"
+              ],
+              "evidence_ids": [
+                "97717fd40c7506da6c8a594ec7b7aa699ba8933a09f6bb3e023b640d5574ad51"
+              ]
+            },
+            "base": {
+              "target": 13.27,
+              "drivers": [
+                "Current market trends"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 13,
+              "drivers": [
+                "Higher fuel costs"
+              ],
+              "evidence_ids": [
+                "e783e346f57c15b4c7285dc9340792bac300edb8288b1e8eccc3c7f434807b11"
+              ]
+            }
+          },
+          "key_drivers": [
+            "Starlink partnership announcement",
+            "Higher fuel costs"
+          ],
+          "risk_flags": [
+            "Higher fuel costs"
+          ],
+          "confidence": 0.5,
+          "evidence_ids": [
+            "97717fd40c7506da6c8a594ec7b7aa699ba8933a09f6bb3e023b640d5574ad51",
+            "e783e346f57c15b4c7285dc9340792bac300edb8288b1e8eccc3c7f434807b11"
+          ]
+        }
+      },
+      "overall_assessment": {
+        "summary": "The forecast is neutral, with a slight bias towards a bullish trend due to the Starlink partnership announcement. However, higher fuel costs pose a risk to the stock's performance."
+      },
+      "evidence": [
+        {
+          "evidence_id": "97717fd40c7506da6c8a594ec7b7aa699ba8933a09f6bb3e023b640d5574ad51",
+          "event_cluster_id": "51576a27412a4628",
+          "date": "2026-09-04",
+          "publisher": "Stocktwits",
+          "title": "AAL Stock On Track To Hit 4-Month High After Starlink Partnership Announcement - Stocktwits"
+        },
+        {
+          "evidence_id": "e783e346f57c15b4c7285dc9340792bac300edb8288b1e8eccc3c7f434807b11",
+          "event_cluster_id": "2ad7b18f5eed06fb",
+          "date": "2026-09-03",
+          "publisher": "TechStock²",
+          "title": "American Airlines Shares Drop 0.7% Despite Record Revenue, Hit by Higher Fuel Costs - TechStock²"
+        }
+      ]
+    }
+  },
+  "forecast_metadata": {
+    "reference_price": 13.13,
+    "reference_date": "2026-09-04",
+    "forecast_horizon": "3_trading_days",
+    "news_evidence_count": 2,
+    "forecast_generated_at": "2026-09-06T17:03:25.086Z",
+    "llm_model": "meta-llama/llama-3.3-70b-instruct",
+    "validation_status": "passed"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 18
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 87
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 48823,
+        "inputTokens": 3595,
+        "outputTokens": 1528,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  },
+  "generatedAt": "2026-09-06T17:03:25.086Z"
+}

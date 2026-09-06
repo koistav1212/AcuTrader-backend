@@ -1,0 +1,382 @@
+{
+  "success": true,
+  "symbol": "NIO",
+  "raw_article_count": 207,
+  "valid_article_count": 100,
+  "deduplicated_count": 1,
+  "relevant_count": 100,
+  "final_article_count": 100,
+  "market_context": {
+    "AVAILABLE": {
+      "open": 3.78,
+      "high": 3.81,
+      "low": 3.72,
+      "previousClose": 3.86,
+      "change": -0.059999943,
+      "changePercent": -1.5544,
+      "volume": 52237700,
+      "averageVolume": 46773850
+    },
+    "MISSING": [
+      "currentPrice",
+      "marketCap",
+      "pe",
+      "forwardPE",
+      "trailingPE",
+      "pegRatio",
+      "priceToSales",
+      "priceToBook",
+      "evToEBITDA",
+      "revenue",
+      "netIncome",
+      "profitMargin",
+      "operatingMargin",
+      "returnOnEquity",
+      "totalCash",
+      "totalDebt",
+      "debtToEquity",
+      "sector",
+      "industry"
+    ],
+    "DERIVED": {},
+    "NOT_APPLICABLE": [],
+    "STALE": []
+  },
+  "technical_context": {
+    "currentPrice": 3.8,
+    "sma20": 4.3795,
+    "sma50": 4.643200000000002,
+    "sma200": 5.212199999999997,
+    "ema9": 4.091630015801805,
+    "ema21": 4.32199245886214,
+    "rsi14": 19.230769230769184,
+    "macd": {
+      "macdLine": -0.22005043566687377,
+      "signalLine": 0,
+      "histogram": 0
+    },
+    "bollingerBands": {
+      "upper": 4.929898946219922,
+      "middle": 4.3795,
+      "lower": 3.8291010537800787
+    },
+    "atr14": 0.152142857142857,
+    "volatility": 0.3697608572927624,
+    "momentum": -0.16114790286975725,
+    "volumeRatio": 1.4018809218255956
+  },
+  "numerical_evidence": {
+    "news_volume": 100,
+    "current_price": 3.8,
+    "current_volatility": 0.3697608572927624,
+    "trend_regime": "Bearish",
+    "volume_anomaly": 1.4018809218255956
+  },
+  "models": {
+    "xgboost": null,
+    "newsLstm": null,
+    "llmSynthesis": {
+      "symbol": "NIO",
+      "asOf": "2026-09-04",
+      "status": "ready",
+      "data_validation": {
+        "issues": []
+      },
+      "news_regime": "neutral",
+      "news_summary": {
+        "weighted_sentiment": 0,
+        "material_events": [
+          "NIO July deliveries surge 71% to 35,934, outpacing peers",
+          "NIO: Q2 2026 Revenue Jumps 69% To $4.74 Billion As Deliveries Reach 107,658",
+          "Goldman Sachs cuts Nio stock price target to $6.10 on weak guidance"
+        ]
+      },
+      "market_context": {
+        "daily_change": -0.059999943,
+        "daily_change_percent": -1.5544,
+        "volume": 52237700,
+        "volume_vs_average": 1.1168142028077654
+      },
+      "technical_context": {
+        "sma20": 4.3795,
+        "sma50": 4.643200000000002,
+        "sma200": 5.212199999999997,
+        "rsi14": 19.230769230769184,
+        "bollingerBands": {
+          "upper": 4.929898946219922,
+          "middle": 4.3795,
+          "lower": 3.8291010537800787
+        },
+        "volatility": 0.3697608572927624
+      },
+      "fundamental_context": {
+        "open": 3.78,
+        "high": 3.81,
+        "low": 3.72,
+        "previousClose": 3.86,
+        "change": -0.059999943,
+        "changePercent": -1.5544,
+        "volume": 52237700,
+        "averageVolume": 46773850
+      },
+      "model_context": {
+        "xgboost": {
+          "available": false,
+          "output": null
+        },
+        "downstream_model": {
+          "available": false,
+          "output": null
+        },
+        "model_agreement": "unavailable",
+        "model_disagreements": []
+      },
+      "news_market_interaction": {
+        "sentiment": 0,
+        "impact": 0
+      },
+      "forecast": {
+        "day_1": {
+          "date": "2026-09-07",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.45,
+            "neutral_case": 0.55,
+            "bear_case": 0
+          },
+          "expected_price": 3.85,
+          "expected_return_percent": 1.3157894736842104,
+          "scenarios": {
+            "bull": {
+              "target": 4.05,
+              "drivers": [
+                "NIO July deliveries surge 71% to 35,934, outpacing peers"
+              ],
+              "evidence_ids": [
+                "441c035d0c745cd0860773dd05f290d7e5ca6b7000714308b8bd47427a924c46"
+              ]
+            },
+            "base": {
+              "target": 3.85,
+              "drivers": [
+                "NIO: Q2 2026 Revenue Jumps 69% To $4.74 Billion As Deliveries Reach 107,658"
+              ],
+              "evidence_ids": [
+                "f7328544fb36d68fa63ee82913d8a638fc051bc20869ab9c306c5cbf9e2f4ea8"
+              ]
+            },
+            "bear": {
+              "target": 3.65,
+              "drivers": [
+                "Goldman Sachs cuts Nio stock price target to $6.10 on weak guidance"
+              ],
+              "evidence_ids": [
+                "914df13b91e231e4997717cbdcd3102d042fef407e0051f4815526fac19edfa9"
+              ]
+            }
+          },
+          "key_drivers": [
+            "NIO July deliveries surge 71% to 35,934, outpacing peers",
+            "NIO: Q2 2026 Revenue Jumps 69% To $4.74 Billion As Deliveries Reach 107,658"
+          ],
+          "risk_flags": [
+            "Goldman Sachs cuts Nio stock price target to $6.10 on weak guidance"
+          ],
+          "confidence": 0.6,
+          "evidence_ids": [
+            "441c035d0c745cd0860773dd05f290d7e5ca6b7000714308b8bd47427a924c46",
+            "f7328544fb36d68fa63ee82913d8a638fc051bc20869ab9c306c5cbf9e2f4ea8",
+            "914df13b91e231e4997717cbdcd3102d042fef407e0051f4815526fac19edfa9"
+          ]
+        },
+        "day_2": {
+          "date": "2026-09-08",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.4,
+            "neutral_case": 0.6,
+            "bear_case": 0
+          },
+          "expected_price": 3.9,
+          "expected_return_percent": 2.631578947368421,
+          "scenarios": {
+            "bull": {
+              "target": 4.1,
+              "drivers": [
+                "NIO July deliveries surge 71% to 35,934, outpacing peers"
+              ],
+              "evidence_ids": [
+                "441c035d0c745cd0860773dd05f290d7e5ca6b7000714308b8bd47427a924c46"
+              ]
+            },
+            "base": {
+              "target": 3.9,
+              "drivers": [
+                "NIO: Q2 2026 Revenue Jumps 69% To $4.74 Billion As Deliveries Reach 107,658"
+              ],
+              "evidence_ids": [
+                "f7328544fb36d68fa63ee82913d8a638fc051bc20869ab9c306c5cbf9e2f4ea8"
+              ]
+            },
+            "bear": {
+              "target": 3.7,
+              "drivers": [
+                "Goldman Sachs cuts Nio stock price target to $6.10 on weak guidance"
+              ],
+              "evidence_ids": [
+                "914df13b91e231e4997717cbdcd3102d042fef407e0051f4815526fac19edfa9"
+              ]
+            }
+          },
+          "key_drivers": [
+            "NIO July deliveries surge 71% to 35,934, outpacing peers",
+            "NIO: Q2 2026 Revenue Jumps 69% To $4.74 Billion As Deliveries Reach 107,658"
+          ],
+          "risk_flags": [
+            "Goldman Sachs cuts Nio stock price target to $6.10 on weak guidance"
+          ],
+          "confidence": 0.55,
+          "evidence_ids": [
+            "441c035d0c745cd0860773dd05f290d7e5ca6b7000714308b8bd47427a924c46",
+            "f7328544fb36d68fa63ee82913d8a638fc051bc20869ab9c306c5cbf9e2f4ea8",
+            "914df13b91e231e4997717cbdcd3102d042fef407e0051f4815526fac19edfa9"
+          ]
+        },
+        "day_3": {
+          "date": "2026-09-09",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.35,
+            "neutral_case": 0.65,
+            "bear_case": 0
+          },
+          "expected_price": 3.95,
+          "expected_return_percent": 3.9473684210526314,
+          "scenarios": {
+            "bull": {
+              "target": 4.15,
+              "drivers": [
+                "NIO July deliveries surge 71% to 35,934, outpacing peers"
+              ],
+              "evidence_ids": [
+                "441c035d0c745cd0860773dd05f290d7e5ca6b7000714308b8bd47427a924c46"
+              ]
+            },
+            "base": {
+              "target": 3.95,
+              "drivers": [
+                "NIO: Q2 2026 Revenue Jumps 69% To $4.74 Billion As Deliveries Reach 107,658"
+              ],
+              "evidence_ids": [
+                "f7328544fb36d68fa63ee82913d8a638fc051bc20869ab9c306c5cbf9e2f4ea8"
+              ]
+            },
+            "bear": {
+              "target": 3.75,
+              "drivers": [
+                "Goldman Sachs cuts Nio stock price target to $6.10 on weak guidance"
+              ],
+              "evidence_ids": [
+                "914df13b91e231e4997717cbdcd3102d042fef407e0051f4815526fac19edfa9"
+              ]
+            }
+          },
+          "key_drivers": [
+            "NIO July deliveries surge 71% to 35,934, outpacing peers",
+            "NIO: Q2 2026 Revenue Jumps 69% To $4.74 Billion As Deliveries Reach 107,658"
+          ],
+          "risk_flags": [
+            "Goldman Sachs cuts Nio stock price target to $6.10 on weak guidance"
+          ],
+          "confidence": 0.5,
+          "evidence_ids": [
+            "441c035d0c745cd0860773dd05f290d7e5ca6b7000714308b8bd47427a924c46",
+            "f7328544fb36d68fa63ee82913d8a638fc051bc20869ab9c306c5cbf9e2f4ea8",
+            "914df13b91e231e4997717cbdcd3102d042fef407e0051f4815526fac19edfa9"
+          ]
+        }
+      },
+      "overall_assessment": {
+        "summary": "NIO's stock price is expected to remain neutral in the next three trading days, with a slight upward trend."
+      },
+      "evidence": [
+        {
+          "evidence_id": "441c035d0c745cd0860773dd05f290d7e5ca6b7000714308b8bd47427a924c46",
+          "event_cluster_id": "3a1fc1456bfd7ecb",
+          "date": "2026-09-04",
+          "publisher": "scanx.trade",
+          "title": "NIO July deliveries surge 71% to 35,934, outpacing peers - scanx.trade",
+          "summary": "",
+          "relevance": 0,
+          "materiality": 0,
+          "sentiment": 0,
+          "impact": 0
+        },
+        {
+          "evidence_id": "f7328544fb36d68fa63ee82913d8a638fc051bc20869ab9c306c5cbf9e2f4ea8",
+          "event_cluster_id": "e3d90834a6c24828",
+          "date": "2026-09-04",
+          "publisher": "Pulse 2.0",
+          "title": "NIO: Q2 2026 Revenue Jumps 69% To $4.74 Billion As Deliveries Reach 107,658 - Pulse 2.0",
+          "summary": "",
+          "relevance": 0,
+          "materiality": 0,
+          "sentiment": 0,
+          "impact": 0
+        },
+        {
+          "evidence_id": "914df13b91e231e4997717cbdcd3102d042fef407e0051f4815526fac19edfa9",
+          "event_cluster_id": "deaca624b552aa1b",
+          "date": "2026-09-04",
+          "publisher": "Investing.com India",
+          "title": "Goldman Sachs cuts Nio stock price target to $6.10 on weak guidance - Investing.com India",
+          "summary": "",
+          "relevance": 0,
+          "materiality": 0,
+          "sentiment": 0,
+          "impact": 0
+        }
+      ]
+    }
+  },
+  "forecast_metadata": {
+    "reference_price": 3.8,
+    "reference_date": "2026-09-04",
+    "forecast_horizon": "3_trading_days",
+    "news_evidence_count": 3,
+    "forecast_generated_at": "2026-09-06T17:15:33.982Z",
+    "llm_model": "meta-llama/llama-3.3-70b-instruct",
+    "validation_status": "passed"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 8
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 100
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 150330,
+        "inputTokens": 3504,
+        "outputTokens": 1891,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  },
+  "generatedAt": "2026-09-06T17:15:33.982Z"
+}

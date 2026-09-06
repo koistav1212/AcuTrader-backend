@@ -1,0 +1,369 @@
+{
+  "success": true,
+  "symbol": "AAPL",
+  "raw_article_count": 207,
+  "valid_article_count": 100,
+  "deduplicated_count": 0,
+  "relevant_count": 90,
+  "final_article_count": 90,
+  "market_context": {
+    "AVAILABLE": {
+      "open": 328.31,
+      "high": 328.92999,
+      "low": 317.85999,
+      "previousClose": 328.20999,
+      "change": -8.23999,
+      "changePercent": -2.51058,
+      "volume": 39551800,
+      "averageVolume": 37060060,
+      "revenue": 265595000000,
+      "netIncome": 101464000000,
+      "profitMargin": 0.382,
+      "totalCash": 39544000000,
+      "totalDebt": 82300000000,
+      "debtToEquity": null
+    },
+    "MISSING": [
+      "currentPrice",
+      "marketCap",
+      "pe",
+      "forwardPE",
+      "trailingPE",
+      "pegRatio",
+      "priceToSales",
+      "priceToBook",
+      "evToEBITDA",
+      "operatingMargin",
+      "returnOnEquity",
+      "sector",
+      "industry"
+    ],
+    "DERIVED": {},
+    "NOT_APPLICABLE": [],
+    "STALE": []
+  },
+  "technical_context": {
+    "currentPrice": 319.97,
+    "sma20": 313.13999945000006,
+    "sma50": 315.15139889999995,
+    "sma200": 283.8700493599999,
+    "ema9": 319.9819378129742,
+    "ema21": 316.76594379071906,
+    "rsi14": 63.6329213625034,
+    "macd": {
+      "macdLine": 2.5924298049556,
+      "signalLine": 0,
+      "histogram": 0
+    },
+    "bollingerBands": {
+      "upper": 327.6781498978479,
+      "middle": 313.13999945000006,
+      "lower": 298.6018490021522
+    },
+    "atr14": 7.431425714285707,
+    "volatility": 0.20957463075140165,
+    "momentum": 0.03206141674051372,
+    "volumeRatio": 0.9974457220667698
+  },
+  "numerical_evidence": {
+    "news_volume": 90,
+    "current_price": 319.97,
+    "current_volatility": 0.20957463075140165,
+    "trend_regime": "Bullish",
+    "volume_anomaly": 0.9974457220667698
+  },
+  "models": {
+    "xgboost": null,
+    "newsLstm": null,
+    "llmSynthesis": {
+      "symbol": "AAPL",
+      "asOf": "2026-09-04",
+      "status": "ready",
+      "data_validation": {
+        "issues": []
+      },
+      "news_regime": "neutral",
+      "news_summary": {
+        "weighted_sentiment": 0,
+        "material_events": []
+      },
+      "market_context": {
+        "daily_change": -8.23999,
+        "daily_change_percent": -2.51058,
+        "volume": 39551800,
+        "volume_vs_average": 1.0672351852641362
+      },
+      "technical_context": {
+        "sma20": 313.13999945000006,
+        "sma50": 315.15139889999995,
+        "sma200": 283.8700493599999,
+        "rsi14": 63.6329213625034,
+        "bollingerBands": {
+          "upper": 327.6781498978479,
+          "middle": 313.13999945000006,
+          "lower": 298.6018490021522
+        },
+        "atr14": 7.431425714285707,
+        "volatility": 0.20957463075140165
+      },
+      "fundamental_context": {
+        "open": 328.31,
+        "high": 328.92999,
+        "low": 317.85999,
+        "previousClose": 328.20999,
+        "change": -8.23999,
+        "changePercent": -2.51058,
+        "volume": 39551800,
+        "averageVolume": 37060060,
+        "revenue": 265595000000,
+        "netIncome": 101464000000,
+        "profitMargin": 0.382,
+        "totalCash": 39544000000,
+        "totalDebt": 82300000000
+      },
+      "model_context": {
+        "xgboost": {
+          "available": false,
+          "output": null
+        },
+        "downstream_model": {
+          "available": false,
+          "output": null
+        },
+        "model_agreement": "unavailable",
+        "model_disagreements": []
+      },
+      "news_market_interaction": {
+        "sentiment": 0,
+        "impact": 0
+      },
+      "forecast": {
+        "day_1": {
+          "date": "2026-09-07",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.45,
+            "neutral_case": 0.55,
+            "bear_case": 0
+          },
+          "expected_price": 320,
+          "expected_return_percent": 0.01,
+          "scenarios": {
+            "bull": {
+              "target": 325,
+              "drivers": [
+                "Technical indicators suggest a potential bounce"
+              ],
+              "evidence_ids": [
+                "b17a03035b21980f175ed4b0bfa4dbadf358ae03cd45b458910b4076764c22fd"
+              ]
+            },
+            "base": {
+              "target": 320,
+              "drivers": [
+                "Neutral news sentiment"
+              ],
+              "evidence_ids": [
+                "55135daf69e03c503b7e8476fb00b85fe8e708b08269126700bb59f886b6dc00"
+              ]
+            },
+            "bear": {
+              "target": 315,
+              "drivers": [
+                "Supply chain issues with foldable iPhone"
+              ],
+              "evidence_ids": [
+                "8e4fbe6fcacdeb9368b0952e17f976ef0456357d0e70dbd130979f367774f02f"
+              ]
+            }
+          },
+          "key_drivers": [
+            "Technical indicators",
+            "News sentiment"
+          ],
+          "risk_flags": [
+            "Supply chain issues"
+          ],
+          "confidence": 0.6,
+          "evidence_ids": [
+            "b17a03035b21980f175ed4b0bfa4dbadf358ae03cd45b458910b4076764c22fd",
+            "55135daf69e03c503b7e8476fb00b85fe8e708b08269126700bb59f886b6dc00",
+            "8e4fbe6fcacdeb9368b0952e17f976ef0456357d0e70dbd130979f367774f02f"
+          ]
+        },
+        "day_2": {
+          "date": "2026-09-08",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.4,
+            "neutral_case": 0.6,
+            "bear_case": 0
+          },
+          "expected_price": 321,
+          "expected_return_percent": 0.03,
+          "scenarios": {
+            "bull": {
+              "target": 326,
+              "drivers": [
+                "Improving technical indicators"
+              ],
+              "evidence_ids": [
+                "b17a03035b21980f175ed4b0bfa4dbadf358ae03cd45b458910b4076764c22fd"
+              ]
+            },
+            "base": {
+              "target": 321,
+              "drivers": [
+                "Stable news sentiment"
+              ],
+              "evidence_ids": [
+                "55135daf69e03c503b7e8476fb00b85fe8e708b08269126700bb59f886b6dc00"
+              ]
+            },
+            "bear": {
+              "target": 316,
+              "drivers": [
+                "Ongoing supply chain issues"
+              ],
+              "evidence_ids": [
+                "8e4fbe6fcacdeb9368b0952e17f976ef0456357d0e70dbd130979f367774f02f"
+              ]
+            }
+          },
+          "key_drivers": [
+            "Technical indicators",
+            "News sentiment"
+          ],
+          "risk_flags": [
+            "Supply chain issues"
+          ],
+          "confidence": 0.55,
+          "evidence_ids": [
+            "b17a03035b21980f175ed4b0bfa4dbadf358ae03cd45b458910b4076764c22fd",
+            "55135daf69e03c503b7e8476fb00b85fe8e708b08269126700bb59f886b6dc00",
+            "8e4fbe6fcacdeb9368b0952e17f976ef0456357d0e70dbd130979f367774f02f"
+          ]
+        },
+        "day_3": {
+          "date": "2026-09-09",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.35,
+            "neutral_case": 0.65,
+            "bear_case": 0
+          },
+          "expected_price": 322,
+          "expected_return_percent": 0.05,
+          "scenarios": {
+            "bull": {
+              "target": 327,
+              "drivers": [
+                "Strong technical indicators"
+              ],
+              "evidence_ids": [
+                "b17a03035b21980f175ed4b0bfa4dbadf358ae03cd45b458910b4076764c22fd"
+              ]
+            },
+            "base": {
+              "target": 322,
+              "drivers": [
+                "Neutral news sentiment"
+              ],
+              "evidence_ids": [
+                "55135daf69e03c503b7e8476fb00b85fe8e708b08269126700bb59f886b6dc00"
+              ]
+            },
+            "bear": {
+              "target": 317,
+              "drivers": [
+                "Persistent supply chain issues"
+              ],
+              "evidence_ids": [
+                "8e4fbe6fcacdeb9368b0952e17f976ef0456357d0e70dbd130979f367774f02f"
+              ]
+            }
+          },
+          "key_drivers": [
+            "Technical indicators",
+            "News sentiment"
+          ],
+          "risk_flags": [
+            "Supply chain issues"
+          ],
+          "confidence": 0.5,
+          "evidence_ids": [
+            "b17a03035b21980f175ed4b0bfa4dbadf358ae03cd45b458910b4076764c22fd",
+            "55135daf69e03c503b7e8476fb00b85fe8e708b08269126700bb59f886b6dc00",
+            "8e4fbe6fcacdeb9368b0952e17f976ef0456357d0e70dbd130979f367774f02f"
+          ]
+        }
+      },
+      "overall_assessment": {
+        "summary": "Neutral outlook due to mixed technical and news sentiment"
+      },
+      "evidence": [
+        {
+          "evidence_id": "b17a03035b21980f175ed4b0bfa4dbadf358ae03cd45b458910b4076764c22fd",
+          "event_cluster_id": "3715712afcbd4f49",
+          "date": "2026-09-04",
+          "publisher": "Yahoo Finance",
+          "title": "Why Apple (AAPL) Dipped More Than Broader Market Today - Yahoo Finance"
+        },
+        {
+          "evidence_id": "55135daf69e03c503b7e8476fb00b85fe8e708b08269126700bb59f886b6dc00",
+          "event_cluster_id": "f3864fa4f583d89b",
+          "date": "2026-09-04",
+          "publisher": "Moomoo",
+          "title": "$AAPL: Apple Is Approaching A Market Decision - Moomoo"
+        },
+        {
+          "evidence_id": "8e4fbe6fcacdeb9368b0952e17f976ef0456357d0e70dbd130979f367774f02f",
+          "event_cluster_id": "647e26243c520bb7",
+          "date": "2026-09-04",
+          "publisher": "TradingView",
+          "title": "AAPL Heads For Third Weekly Gain — But Foldable iPhone Is Reportedly Stuck At ‘A Few Hundred’ Units A Day - TradingView"
+        }
+      ]
+    }
+  },
+  "forecast_metadata": {
+    "reference_price": 319.97,
+    "reference_date": "2026-09-04",
+    "forecast_horizon": "3_trading_days",
+    "news_evidence_count": 3,
+    "forecast_generated_at": "2026-09-06T17:43:44.628Z",
+    "llm_model": "meta-llama/llama-3.3-70b-instruct",
+    "validation_status": "passed"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 14
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 90
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 21964,
+        "inputTokens": 3535,
+        "outputTokens": 1593,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  },
+  "generatedAt": "2026-09-06T17:43:44.628Z"
+}

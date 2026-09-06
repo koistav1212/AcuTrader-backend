@@ -1,0 +1,369 @@
+{
+  "success": true,
+  "symbol": "BMNR",
+  "raw_article_count": 214,
+  "valid_article_count": 100,
+  "deduplicated_count": 0,
+  "relevant_count": 96,
+  "final_article_count": 96,
+  "market_context": {
+    "AVAILABLE": {
+      "open": 25.335,
+      "high": 25.49,
+      "low": 24.525,
+      "previousClose": 26.45,
+      "change": -1.48,
+      "changePercent": -5.59547,
+      "volume": 46429300,
+      "averageVolume": 49493500,
+      "marketCap": 15960000000,
+      "priceToSales": 153.8,
+      "priceToBook": 1.38,
+      "revenue": 4770110,
+      "netIncome": -9022508000,
+      "returnOnEquity": -1.5090999999999999,
+      "totalCash": 340289000,
+      "debtToEquity": 0.01
+    },
+    "MISSING": [
+      "currentPrice",
+      "pe",
+      "forwardPE",
+      "trailingPE",
+      "pegRatio",
+      "evToEBITDA",
+      "profitMargin",
+      "operatingMargin",
+      "totalDebt",
+      "sector",
+      "industry"
+    ],
+    "DERIVED": {},
+    "NOT_APPLICABLE": [],
+    "STALE": []
+  },
+  "technical_context": {
+    "currentPrice": 24.97,
+    "sma20": 21.928499950000003,
+    "sma50": 18.458799980000002,
+    "sma200": 22.317399990000002,
+    "ema9": 24.21359484913829,
+    "ema21": 22.35950638199879,
+    "rsi14": 67.06783183065298,
+    "macd": {
+      "macdLine": 1.9706961989006189,
+      "signalLine": 0,
+      "histogram": 0
+    },
+    "bollingerBands": {
+      "upper": 28.011006879498744,
+      "middle": 21.928499950000003,
+      "lower": 15.845993020501263
+    },
+    "atr14": 1.8735000714285714,
+    "volatility": 0.8930368038975622,
+    "momentum": 0.3659737417943106,
+    "volumeRatio": 1.0715862982135997
+  },
+  "numerical_evidence": {
+    "news_volume": 96,
+    "current_price": 24.97,
+    "current_volatility": 0.8930368038975622,
+    "trend_regime": "Bearish",
+    "volume_anomaly": 1.0715862982135997
+  },
+  "models": {
+    "xgboost": null,
+    "newsLstm": null,
+    "llmSynthesis": {
+      "symbol": "BMNR",
+      "asOf": "2026-09-04",
+      "status": "ready",
+      "data_validation": {
+        "issues": []
+      },
+      "news_regime": "neutral",
+      "news_summary": {
+        "weighted_sentiment": 0,
+        "material_events": [
+          "BMNR Stock Holds Key Levels As Volatility Cools",
+          "BMNR Stock Holds Gains As Volatility Cools On Heavy Cash Position",
+          "Strategy (MSTR), BMNR Stocks Surge as Bitcoin and Ethereum Rally",
+          "BMNR Stock Grinds Higher As Volatile Bitcoin Miner Attracts Active Traders",
+          "A Look at BitMine Immersion Technologies Inc (BMNR) After 14.7% Gain",
+          "BMNR Maintained by B. Riley Securities -- Price Target Raised to $30"
+        ]
+      },
+      "market_context": {
+        "daily_change": -1.48,
+        "daily_change_percent": -5.59547,
+        "volume": 46429300,
+        "volume_vs_average": 0.9380888399486801
+      },
+      "technical_context": {
+        "sma20": 21.928499950000003,
+        "sma50": 18.458799980000002,
+        "sma200": 22.317399990000002,
+        "rsi14": 67.06783183065298,
+        "bollinger_bands": {
+          "upper": 28.011006879498744,
+          "middle": 21.928499950000003,
+          "lower": 15.845993020501263
+        },
+        "volatility": 0.8930368038975622
+      },
+      "fundamental_context": {
+        "market_cap": 15960000000,
+        "price_to_sales": 153.8,
+        "price_to_book": 1.38,
+        "revenue": 4770110,
+        "net_income": -9022508000,
+        "return_on_equity": -1.5090999999999999,
+        "total_cash": 340289000,
+        "debt_to_equity": 0.01
+      },
+      "model_context": {
+        "xgboost": {
+          "available": false,
+          "output": null
+        },
+        "downstream_model": {
+          "available": false,
+          "output": null
+        },
+        "model_agreement": "unavailable",
+        "model_disagreements": []
+      },
+      "news_market_interaction": {
+        "sentiment": 0,
+        "impact": 0
+      },
+      "forecast": {
+        "day_1": {
+          "date": "2026-09-07",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.4,
+            "neutral_case": 0.6,
+            "bear_case": 0
+          },
+          "expected_price": 24.97,
+          "expected_return_percent": 0,
+          "scenarios": {
+            "bull": {
+              "target": 26.45,
+              "drivers": [
+                "Bitcoin and Ethereum rally"
+              ],
+              "evidence_ids": [
+                "9ca1eb4c47ca9233fee7a4cf639ca9cc7398ca6ac1e387d0b3236ae030108495",
+                "af907eb6b97dc4e43ade53d15cd93be5bbba3d7406194e2ca48d1789ed0360d3"
+              ]
+            },
+            "base": {
+              "target": 24.97,
+              "drivers": [
+                "Volatility cools"
+              ],
+              "evidence_ids": [
+                "26f30cb47a6b3a053738f2969308d08ffe793578a86bc772a0aa7a59e9d7657c",
+                "121d296a63b9c13a389f198780fde178c5f5fc19a38ea17fcd75b590e4d70bf6"
+              ]
+            },
+            "bear": {
+              "target": 23.49,
+              "drivers": [
+                "Negative net income"
+              ],
+              "evidence_ids": [
+                "9393a30094f50a35c4d379b4f4a3d920e0101f855b6578a9385c1c68506b0fca"
+              ]
+            }
+          },
+          "key_drivers": [
+            "Volatility",
+            "Bitcoin and Ethereum rally",
+            "Negative net income"
+          ],
+          "risk_flags": [
+            "High volatility"
+          ],
+          "confidence": 0.6,
+          "evidence_ids": [
+            "26f30cb47a6b3a053738f2969308d08ffe793578a86bc772a0aa7a59e9d7657c",
+            "121d296a63b9c13a389f198780fde178c5f5fc19a38ea17fcd75b590e4d70bf6",
+            "9ca1eb4c47ca9233fee7a4cf639ca9cc7398ca6ac1e387d0b3236ae030108495",
+            "af907eb6b97dc4e43ade53d15cd93be5bbba3d7406194e2ca48d1789ed0360d3",
+            "9393a30094f50a35c4d379b4f4a3d920e0101f855b6578a9385c1c68506b0fca"
+          ]
+        },
+        "day_2": {
+          "date": "2026-09-08",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.4,
+            "neutral_case": 0.6,
+            "bear_case": 0
+          },
+          "expected_price": 24.97,
+          "expected_return_percent": 0,
+          "scenarios": {
+            "bull": {
+              "target": 26.45,
+              "drivers": [
+                "Bitcoin and Ethereum rally"
+              ],
+              "evidence_ids": [
+                "9ca1eb4c47ca9233fee7a4cf639ca9cc7398ca6ac1e387d0b3236ae030108495",
+                "af907eb6b97dc4e43ade53d15cd93be5bbba3d7406194e2ca48d1789ed0360d3"
+              ]
+            },
+            "base": {
+              "target": 24.97,
+              "drivers": [
+                "Volatility cools"
+              ],
+              "evidence_ids": [
+                "26f30cb47a6b3a053738f2969308d08ffe793578a86bc772a0aa7a59e9d7657c",
+                "121d296a63b9c13a389f198780fde178c5f5fc19a38ea17fcd75b590e4d70bf6"
+              ]
+            },
+            "bear": {
+              "target": 23.49,
+              "drivers": [
+                "Negative net income"
+              ],
+              "evidence_ids": [
+                "9393a30094f50a35c4d379b4f4a3d920e0101f855b6578a9385c1c68506b0fca"
+              ]
+            }
+          },
+          "key_drivers": [
+            "Volatility",
+            "Bitcoin and Ethereum rally",
+            "Negative net income"
+          ],
+          "risk_flags": [
+            "High volatility"
+          ],
+          "confidence": 0.6,
+          "evidence_ids": [
+            "26f30cb47a6b3a053738f2969308d08ffe793578a86bc772a0aa7a59e9d7657c",
+            "121d296a63b9c13a389f198780fde178c5f5fc19a38ea17fcd75b590e4d70bf6",
+            "9ca1eb4c47ca9233fee7a4cf639ca9cc7398ca6ac1e387d0b3236ae030108495",
+            "af907eb6b97dc4e43ade53d15cd93be5bbba3d7406194e2ca48d1789ed0360d3",
+            "9393a30094f50a35c4d379b4f4a3d920e0101f855b6578a9385c1c68506b0fca"
+          ]
+        },
+        "day_3": {
+          "date": "2026-09-09",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.4,
+            "neutral_case": 0.6,
+            "bear_case": 0
+          },
+          "expected_price": 24.97,
+          "expected_return_percent": 0,
+          "scenarios": {
+            "bull": {
+              "target": 26.45,
+              "drivers": [
+                "Bitcoin and Ethereum rally"
+              ],
+              "evidence_ids": [
+                "9ca1eb4c47ca9233fee7a4cf639ca9cc7398ca6ac1e387d0b3236ae030108495",
+                "af907eb6b97dc4e43ade53d15cd93be5bbba3d7406194e2ca48d1789ed0360d3"
+              ]
+            },
+            "base": {
+              "target": 24.97,
+              "drivers": [
+                "Volatility cools"
+              ],
+              "evidence_ids": [
+                "26f30cb47a6b3a053738f2969308d08ffe793578a86bc772a0aa7a59e9d7657c",
+                "121d296a63b9c13a389f198780fde178c5f5fc19a38ea17fcd75b590e4d70bf6"
+              ]
+            },
+            "bear": {
+              "target": 23.49,
+              "drivers": [
+                "Negative net income"
+              ],
+              "evidence_ids": [
+                "9393a30094f50a35c4d379b4f4a3d920e0101f855b6578a9385c1c68506b0fca"
+              ]
+            }
+          },
+          "key_drivers": [
+            "Volatility",
+            "Bitcoin and Ethereum rally",
+            "Negative net income"
+          ],
+          "risk_flags": [
+            "High volatility"
+          ],
+          "confidence": 0.6,
+          "evidence_ids": [
+            "26f30cb47a6b3a053738f2969308d08ffe793578a86bc772a0aa7a59e9d7657c",
+            "121d296a63b9c13a389f198780fde178c5f5fc19a38ea17fcd75b590e4d70bf6",
+            "9ca1eb4c47ca9233fee7a4cf639ca9cc7398ca6ac1e387d0b3236ae030108495",
+            "af907eb6b97dc4e43ade53d15cd93be5bbba3d7406194e2ca48d1789ed0360d3",
+            "9393a30094f50a35c4d379b4f4a3d920e0101f855b6578a9385c1c68506b0fca"
+          ]
+        }
+      },
+      "overall_assessment": {
+        "summary": "The stock is expected to remain neutral in the next three trading days, with a possible range of $23.49 to $26.45."
+      },
+      "evidence": [
+        "26f30cb47a6b3a053738f2969308d08ffe793578a86bc772a0aa7a59e9d7657c",
+        "121d296a63b9c13a389f198780fde178c5f5fc19a38ea17fcd75b590e4d70bf6",
+        "9ca1eb4c47ca9233fee7a4cf639ca9cc7398ca6ac1e387d0b3236ae030108495",
+        "af907eb6b97dc4e43ade53d15cd93be5bbba3d7406194e2ca48d1789ed0360d3",
+        "9393a30094f50a35c4d379b4f4a3d920e0101f855b6578a9385c1c68506b0fca"
+      ]
+    }
+  },
+  "forecast_metadata": {
+    "reference_price": 24.97,
+    "reference_date": "2026-09-04",
+    "forecast_horizon": "3_trading_days",
+    "news_evidence_count": 5,
+    "forecast_generated_at": "2026-09-06T17:30:59.525Z",
+    "llm_model": "meta-llama/llama-3.3-70b-instruct",
+    "validation_status": "passed"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 16
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 96
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 246331,
+        "inputTokens": 3583,
+        "outputTokens": 1740,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  },
+  "generatedAt": "2026-09-06T17:30:59.525Z"
+}

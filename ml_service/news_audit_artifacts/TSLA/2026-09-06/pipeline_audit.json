@@ -1,0 +1,36 @@
+{
+  "testMetadata": {
+    "symbol": "TSLA",
+    "executedAt": "2026-09-06T17:05:22.013Z"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 14
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 93
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 334758,
+        "inputTokens": 3563,
+        "outputTokens": 1534,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  }
+}

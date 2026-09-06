@@ -1,0 +1,358 @@
+{
+  "success": true,
+  "symbol": "SPCX",
+  "raw_article_count": 213,
+  "valid_article_count": 100,
+  "deduplicated_count": 0,
+  "relevant_count": 99,
+  "final_article_count": 99,
+  "market_context": {
+    "AVAILABLE": {
+      "open": 148.59,
+      "high": 150.85001,
+      "low": 147.32001,
+      "previousClose": 149.74001,
+      "change": -1.79001,
+      "changePercent": -1.19541,
+      "volume": 48925700,
+      "averageVolume": 62214000,
+      "marketCap": 1970000000000,
+      "forwardPE": 200,
+      "priceToSales": 69.12,
+      "priceToBook": 15.51,
+      "revenue": 12508000000,
+      "netIncome": -4817000000,
+      "profitMargin": -35.66,
+      "totalCash": 93522000000,
+      "totalDebt": 38285000000,
+      "debtToEquity": 31.21
+    },
+    "MISSING": [
+      "currentPrice",
+      "pe",
+      "trailingPE",
+      "pegRatio",
+      "evToEBITDA",
+      "operatingMargin",
+      "returnOnEquity",
+      "sector",
+      "industry"
+    ],
+    "DERIVED": {},
+    "NOT_APPLICABLE": [],
+    "STALE": []
+  },
+  "technical_context": {
+    "currentPrice": 147.95,
+    "sma20": 140.94649950000002,
+    "sma50": 135.98279963999997,
+    "sma200": null,
+    "ema9": 143.38036919488758,
+    "ema21": 139.37793809594217,
+    "rsi14": 52.168431669188095,
+    "macd": {
+      "macdLine": 3.619636415732515,
+      "signalLine": 0,
+      "histogram": 0
+    },
+    "bollingerBands": {
+      "upper": 149.58319620800933,
+      "middle": 140.94649950000002,
+      "lower": 132.3098027919907
+    },
+    "atr14": 5.92928303571429,
+    "volatility": 0.5493257622040693,
+    "momentum": 0.03216129482349648,
+    "volumeRatio": 0.555556722608564
+  },
+  "numerical_evidence": {
+    "news_volume": 99,
+    "current_price": 147.95,
+    "current_volatility": 0.5493257622040693,
+    "trend_regime": "Bullish",
+    "volume_anomaly": 0.555556722608564
+  },
+  "models": {
+    "xgboost": null,
+    "newsLstm": null,
+    "llmSynthesis": {
+      "symbol": "SPCX",
+      "asOf": "2026-09-04",
+      "status": "ready",
+      "data_validation": {
+        "issues": []
+      },
+      "news_regime": "neutral",
+      "news_summary": {
+        "weighted_sentiment": 0,
+        "material_events": [
+          "SpaceX (SPCX) Rejigs AI Data Center Leadership As Starship Nears 15 September Launch",
+          "SpaceX Stock Tests $154 as Starlink and AI Growth Support SPCX",
+          "SpaceX (NasdaqGS:SPCX) Stock Sees Modest Fair Value Lift As Analysts Debate AI And Starlink"
+        ]
+      },
+      "market_context": {
+        "daily_change": -1.79001,
+        "daily_change_percent": -1.19541,
+        "volume": 48925700,
+        "volume_vs_average": 0.7864098112964928
+      },
+      "technical_context": {
+        "sma20": 140.94649950000002,
+        "sma50": 135.98279963999997,
+        "ema9": 143.38036919488758,
+        "ema21": 139.37793809594217,
+        "rsi14": 52.168431669188095,
+        "bollingerBands": {
+          "upper": 149.58319620800933,
+          "middle": 140.94649950000002,
+          "lower": 132.3098027919907
+        },
+        "atr14": 5.92928303571429,
+        "volatility": 0.5493257622040693
+      },
+      "fundamental_context": {
+        "open": 148.59,
+        "high": 150.85001,
+        "low": 147.32001,
+        "previousClose": 149.74001,
+        "change": -1.79001,
+        "changePercent": -1.19541,
+        "marketCap": 1970000000000,
+        "forwardPE": 200,
+        "priceToSales": 69.12,
+        "priceToBook": 15.51,
+        "revenue": 12508000000,
+        "netIncome": -4817000000,
+        "profitMargin": -35.66,
+        "totalCash": 93522000000,
+        "totalDebt": 38285000000,
+        "debtToEquity": 31.21
+      },
+      "model_context": {
+        "xgboost": {
+          "available": false,
+          "output": null
+        },
+        "downstream_model": {
+          "available": false,
+          "output": null
+        },
+        "model_agreement": "unavailable",
+        "model_disagreements": []
+      },
+      "news_market_interaction": {
+        "sentiment": 0,
+        "impact": 0
+      },
+      "forecast": {
+        "day_1": {
+          "date": "2026-09-07",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.45,
+            "neutral_case": 0.55,
+            "bear_case": 0
+          },
+          "expected_price": 148.5,
+          "expected_return_percent": 0.37,
+          "scenarios": {
+            "bull": {
+              "target": 152,
+              "drivers": [
+                "AI growth",
+                "Starlink expansion"
+              ],
+              "evidence_ids": [
+                "34d74fa5f915deeb2983f5c934f1b10cb5d2b071bae3c349b348e9695aea70a5",
+                "7a639e59b8ce1229676132b5dffb5a80657c784b5949a5dbf140c0fc8f512e72"
+              ]
+            },
+            "base": {
+              "target": 148.5,
+              "drivers": [
+                "Current market trends"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 145,
+              "drivers": [
+                "Market volatility"
+              ],
+              "evidence_ids": []
+            }
+          },
+          "key_drivers": [
+            "AI growth",
+            "Starlink expansion",
+            "Market trends"
+          ],
+          "risk_flags": [
+            "Market volatility"
+          ],
+          "confidence": 0.6,
+          "evidence_ids": [
+            "34d74fa5f915deeb2983f5c934f1b10cb5d2b071bae3c349b348e9695aea70a5",
+            "7a639e59b8ce1229676132b5dffb5a80657c784b5949a5dbf140c0fc8f512e72"
+          ]
+        },
+        "day_2": {
+          "date": "2026-09-08",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.4,
+            "neutral_case": 0.6,
+            "bear_case": 0
+          },
+          "expected_price": 149,
+          "expected_return_percent": 0.7,
+          "scenarios": {
+            "bull": {
+              "target": 153,
+              "drivers": [
+                "AI growth",
+                "Starlink expansion"
+              ],
+              "evidence_ids": [
+                "34d74fa5f915deeb2983f5c934f1b10cb5d2b071bae3c349b348e9695aea70a5",
+                "7a639e59b8ce1229676132b5dffb5a80657c784b5949a5dbf140c0fc8f512e72"
+              ]
+            },
+            "base": {
+              "target": 149,
+              "drivers": [
+                "Current market trends"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 146,
+              "drivers": [
+                "Market volatility"
+              ],
+              "evidence_ids": []
+            }
+          },
+          "key_drivers": [
+            "AI growth",
+            "Starlink expansion",
+            "Market trends"
+          ],
+          "risk_flags": [
+            "Market volatility"
+          ],
+          "confidence": 0.55,
+          "evidence_ids": [
+            "34d74fa5f915deeb2983f5c934f1b10cb5d2b071bae3c349b348e9695aea70a5",
+            "7a639e59b8ce1229676132b5dffb5a80657c784b5949a5dbf140c0fc8f512e72"
+          ]
+        },
+        "day_3": {
+          "date": "2026-09-09",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.35,
+            "neutral_case": 0.65,
+            "bear_case": 0
+          },
+          "expected_price": 149.5,
+          "expected_return_percent": 0.9,
+          "scenarios": {
+            "bull": {
+              "target": 154,
+              "drivers": [
+                "AI growth",
+                "Starlink expansion"
+              ],
+              "evidence_ids": [
+                "34d74fa5f915deeb2983f5c934f1b10cb5d2b071bae3c349b348e9695aea70a5",
+                "7a639e59b8ce1229676132b5dffb5a80657c784b5949a5dbf140c0fc8f512e72"
+              ]
+            },
+            "base": {
+              "target": 149.5,
+              "drivers": [
+                "Current market trends"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 147,
+              "drivers": [
+                "Market volatility"
+              ],
+              "evidence_ids": []
+            }
+          },
+          "key_drivers": [
+            "AI growth",
+            "Starlink expansion",
+            "Market trends"
+          ],
+          "risk_flags": [
+            "Market volatility"
+          ],
+          "confidence": 0.5,
+          "evidence_ids": [
+            "34d74fa5f915deeb2983f5c934f1b10cb5d2b071bae3c349b348e9695aea70a5",
+            "7a639e59b8ce1229676132b5dffb5a80657c784b5949a5dbf140c0fc8f512e72"
+          ]
+        }
+      },
+      "overall_assessment": {
+        "summary": "The forecast is neutral, with a slight bias towards a bullish trend driven by AI growth and Starlink expansion."
+      },
+      "evidence": [
+        {
+          "evidence_id": "34d74fa5f915deeb2983f5c934f1b10cb5d2b071bae3c349b348e9695aea70a5",
+          "title": "SpaceX Stock Tests $154 as Starlink and AI Growth Support SPCX"
+        },
+        {
+          "evidence_id": "7a639e59b8ce1229676132b5dffb5a80657c784b5949a5dbf140c0fc8f512e72",
+          "title": "SpaceX (NasdaqGS:SPCX) Stock Sees Modest Fair Value Lift As Analysts Debate AI And Starlink"
+        }
+      ]
+    }
+  },
+  "forecast_metadata": {
+    "reference_price": 147.95,
+    "reference_date": "2026-09-04",
+    "forecast_horizon": "3_trading_days",
+    "news_evidence_count": 2,
+    "forecast_generated_at": "2026-09-06T17:19:11.627Z",
+    "llm_model": "meta-llama/llama-3.3-70b-instruct",
+    "validation_status": "passed"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 18
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 60
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 99
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 144874,
+        "inputTokens": 3629,
+        "outputTokens": 1461,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  },
+  "generatedAt": "2026-09-06T17:19:11.627Z"
+}

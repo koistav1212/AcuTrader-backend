@@ -1,0 +1,365 @@
+{
+  "success": true,
+  "symbol": "TSLA",
+  "raw_article_count": 220,
+  "valid_article_count": 100,
+  "deduplicated_count": 2,
+  "relevant_count": 93,
+  "final_article_count": 93,
+  "market_context": {
+    "AVAILABLE": {
+      "open": 362.070007,
+      "high": 364.69,
+      "low": 351.32001,
+      "previousClose": 376.37,
+      "change": -22.29001,
+      "changePercent": -5.92237,
+      "volume": 64829000,
+      "averageVolume": 42099670,
+      "revenue": 50623000000,
+      "netIncome": 1591000000,
+      "profitMargin": 0.0314,
+      "totalCash": 15219000000,
+      "totalDebt": 7721000000,
+      "debtToEquity": null
+    },
+    "MISSING": [
+      "currentPrice",
+      "marketCap",
+      "pe",
+      "forwardPE",
+      "trailingPE",
+      "pegRatio",
+      "priceToSales",
+      "priceToBook",
+      "evToEBITDA",
+      "operatingMargin",
+      "returnOnEquity",
+      "sector",
+      "industry"
+    ],
+    "DERIVED": {},
+    "NOT_APPLICABLE": [],
+    "STALE": []
+  },
+  "technical_context": {
+    "currentPrice": 354.079987,
+    "sma20": 348.4394996500001,
+    "sma50": 357.9477991,
+    "sma200": 399.5584497449998,
+    "ema9": 357.3453229741759,
+    "ema21": 351.66908094322594,
+    "rsi14": 54.969069352494714,
+    "macd": {
+      "macdLine": 3.6592913836836374,
+      "signalLine": 0,
+      "histogram": 0
+    },
+    "bollingerBands": {
+      "upper": 372.60455613805357,
+      "middle": 348.4394996500001,
+      "lower": 324.2744431619466
+    },
+    "atr14": 15.337138499999984,
+    "volatility": 0.49507074470796125,
+    "momentum": 0.05108791818802509,
+    "volumeRatio": 1.708392439317929
+  },
+  "numerical_evidence": {
+    "news_volume": 93,
+    "current_price": 354.079987,
+    "current_volatility": 0.49507074470796125,
+    "trend_regime": "Bearish",
+    "volume_anomaly": 1.708392439317929
+  },
+  "models": {
+    "xgboost": null,
+    "newsLstm": null,
+    "llmSynthesis": {
+      "symbol": "TSLA",
+      "asOf": "2026-09-04",
+      "status": "ready",
+      "data_validation": {
+        "issues": []
+      },
+      "news_regime": "bearish",
+      "news_summary": {
+        "weighted_sentiment": -0.5,
+        "material_events": [
+          "Tesla's stock drops 6% as Cybercab update 'underwhelms' Wall Street",
+          "Tesla shares are falling after Cybercab event. What analysts are saying",
+          "J.P. Morgan Maintains Tesla(TSLA.US) With Hold Rating, Maintains Target Price $445"
+        ]
+      },
+      "market_context": {
+        "daily_change": -22.29001,
+        "daily_change_percent": -5.92237,
+        "volume": 64829000,
+        "volume_vs_average": 1.5398933055769797
+      },
+      "technical_context": {
+        "sma20": 348.4394996500001,
+        "sma50": 357.9477991,
+        "sma200": 399.5584497449998,
+        "rsi14": 54.969069352494714,
+        "bollingerBands": {
+          "upper": 372.60455613805357,
+          "middle": 348.4394996500001,
+          "lower": 324.2744431619466
+        }
+      },
+      "fundamental_context": {
+        "revenue": 50623000000,
+        "netIncome": 1591000000,
+        "profitMargin": 0.0314,
+        "totalCash": 15219000000,
+        "totalDebt": 7721000000
+      },
+      "model_context": {
+        "xgboost": {
+          "available": false,
+          "output": null
+        },
+        "downstream_model": {
+          "available": false,
+          "output": null
+        },
+        "model_agreement": "unavailable",
+        "model_disagreements": []
+      },
+      "news_market_interaction": {
+        "sentiment": -0.5,
+        "impact": 0.5
+      },
+      "forecast": {
+        "day_1": {
+          "date": "2026-09-07",
+          "direction": "bearish",
+          "probabilities": {
+            "bull_case": 0.2,
+            "neutral_case": 0.3,
+            "bear_case": 0.5
+          },
+          "expected_price": 340,
+          "expected_return_percent": -4,
+          "scenarios": {
+            "bull": {
+              "target": 360,
+              "drivers": [
+                "Short covering",
+                "Technical rebound"
+              ],
+              "evidence_ids": [
+                "30fc1b7cf73b010e46a9b0bbeb5ef03585ac43736df9cb3b571d1573d9207a28"
+              ]
+            },
+            "base": {
+              "target": 340,
+              "drivers": [
+                "Continued selling pressure",
+                "Regulatory scrutiny"
+              ],
+              "evidence_ids": [
+                "a6afce134b99b5d7bbd981541425ab7d07e7e2676be4f1adb72ca4d754cf0471"
+              ]
+            },
+            "bear": {
+              "target": 320,
+              "drivers": [
+                "Further decline in investor sentiment",
+                "Increased competition"
+              ],
+              "evidence_ids": [
+                "e0ef7e9637d84809094dbaad4bf1390b35de82a893a2f4e45730096bd842a1e3"
+              ]
+            }
+          },
+          "key_drivers": [
+            "Regulatory scrutiny",
+            "Investor sentiment"
+          ],
+          "risk_flags": [
+            "High volatility",
+            "Regulatory risks"
+          ],
+          "confidence": 0.6,
+          "evidence_ids": [
+            "a6afce134b99b5d7bbd981541425ab7d07e7e2676be4f1adb72ca4d754cf0471",
+            "e0ef7e9637d84809094dbaad4bf1390b35de82a893a2f4e45730096bd842a1e3"
+          ]
+        },
+        "day_2": {
+          "date": "2026-09-08",
+          "direction": "bearish",
+          "probabilities": {
+            "bull_case": 0.2,
+            "neutral_case": 0.3,
+            "bear_case": 0.5
+          },
+          "expected_price": 335,
+          "expected_return_percent": -5.5,
+          "scenarios": {
+            "bull": {
+              "target": 355,
+              "drivers": [
+                "Short covering",
+                "Technical rebound"
+              ],
+              "evidence_ids": [
+                "30fc1b7cf73b010e46a9b0bbeb5ef03585ac43736df9cb3b571d1573d9207a28"
+              ]
+            },
+            "base": {
+              "target": 335,
+              "drivers": [
+                "Continued selling pressure",
+                "Regulatory scrutiny"
+              ],
+              "evidence_ids": [
+                "a6afce134b99b5d7bbd981541425ab7d07e7e2676be4f1adb72ca4d754cf0471"
+              ]
+            },
+            "bear": {
+              "target": 315,
+              "drivers": [
+                "Further decline in investor sentiment",
+                "Increased competition"
+              ],
+              "evidence_ids": [
+                "e0ef7e9637d84809094dbaad4bf1390b35de82a893a2f4e45730096bd842a1e3"
+              ]
+            }
+          },
+          "key_drivers": [
+            "Regulatory scrutiny",
+            "Investor sentiment"
+          ],
+          "risk_flags": [
+            "High volatility",
+            "Regulatory risks"
+          ],
+          "confidence": 0.55,
+          "evidence_ids": [
+            "a6afce134b99b5d7bbd981541425ab7d07e7e2676be4f1adb72ca4d754cf0471",
+            "e0ef7e9637d84809094dbaad4bf1390b35de82a893a2f4e45730096bd842a1e3"
+          ]
+        },
+        "day_3": {
+          "date": "2026-09-09",
+          "direction": "bearish",
+          "probabilities": {
+            "bull_case": 0.2,
+            "neutral_case": 0.3,
+            "bear_case": 0.5
+          },
+          "expected_price": 330,
+          "expected_return_percent": -7,
+          "scenarios": {
+            "bull": {
+              "target": 350,
+              "drivers": [
+                "Short covering",
+                "Technical rebound"
+              ],
+              "evidence_ids": [
+                "30fc1b7cf73b010e46a9b0bbeb5ef03585ac43736df9cb3b571d1573d9207a28"
+              ]
+            },
+            "base": {
+              "target": 330,
+              "drivers": [
+                "Continued selling pressure",
+                "Regulatory scrutiny"
+              ],
+              "evidence_ids": [
+                "a6afce134b99b5d7bbd981541425ab7d07e7e2676be4f1adb72ca4d754cf0471"
+              ]
+            },
+            "bear": {
+              "target": 310,
+              "drivers": [
+                "Further decline in investor sentiment",
+                "Increased competition"
+              ],
+              "evidence_ids": [
+                "e0ef7e9637d84809094dbaad4bf1390b35de82a893a2f4e45730096bd842a1e3"
+              ]
+            }
+          },
+          "key_drivers": [
+            "Regulatory scrutiny",
+            "Investor sentiment"
+          ],
+          "risk_flags": [
+            "High volatility",
+            "Regulatory risks"
+          ],
+          "confidence": 0.5,
+          "evidence_ids": [
+            "a6afce134b99b5d7bbd981541425ab7d07e7e2676be4f1adb72ca4d754cf0471",
+            "e0ef7e9637d84809094dbaad4bf1390b35de82a893a2f4e45730096bd842a1e3"
+          ]
+        }
+      },
+      "overall_assessment": {
+        "summary": "Tesla's stock is expected to decline due to regulatory scrutiny and negative investor sentiment."
+      },
+      "evidence": [
+        {
+          "evidence_id": "a6afce134b99b5d7bbd981541425ab7d07e7e2676be4f1adb72ca4d754cf0471",
+          "event_cluster_id": "2e848d0d8786720d",
+          "date": "2026-09-04",
+          "publisher": "CNBC",
+          "title": "Tesla's stock drops 6% as Cybercab update 'underwhelms' Wall Street - CNBC"
+        },
+        {
+          "evidence_id": "e0ef7e9637d84809094dbaad4bf1390b35de82a893a2f4e45730096bd842a1e3",
+          "event_cluster_id": "f5153abd57c84956",
+          "date": "2026-09-04",
+          "publisher": "moomoo.com",
+          "title": "U.S. Stock Market Moves | Tesla (TSLA.US) Drops 5% as Cybercab's Steering Wheel-Free Design Triggers Regulatory Scrutiny - moomoo.com"
+        }
+      ]
+    }
+  },
+  "forecast_metadata": {
+    "reference_price": 354.079987,
+    "reference_date": "2026-09-04",
+    "forecast_horizon": "3_trading_days",
+    "news_evidence_count": 2,
+    "forecast_generated_at": "2026-09-06T17:05:22.013Z",
+    "llm_model": "meta-llama/llama-3.3-70b-instruct",
+    "validation_status": "passed"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 14
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 93
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 334758,
+        "inputTokens": 3563,
+        "outputTokens": 1534,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  },
+  "generatedAt": "2026-09-06T17:05:22.013Z"
+}

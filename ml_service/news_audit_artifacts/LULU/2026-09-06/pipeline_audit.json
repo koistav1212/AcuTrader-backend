@@ -1,0 +1,38 @@
+{
+  "testMetadata": {
+    "symbol": "LULU",
+    "executedAt": "2026-09-06T17:55:24.405Z"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 20
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 95
+    },
+    "forecast": {
+      "status": "failed"
+    },
+    "llm": {
+      "status": "failed",
+      "error": {
+        "code": "LLM_CALL_FAILED",
+        "message": "The model `llama3-70b-8192` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.",
+        "provider": "OPENROUTER",
+        "ticker": "LULU",
+        "stage": "correction_generation"
+      },
+      "metadata": {}
+    }
+  }
+}

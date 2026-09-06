@@ -1,0 +1,24 @@
+{
+  "market": {
+    "status": "ready",
+    "featureCount": 8
+  },
+  "ohlcv": {
+    "status": "ready",
+    "recordCount": 1300
+  },
+  "technicals": {
+    "status": "ready",
+    "featureCount": 13
+  },
+  "news": {
+    "status": "ready",
+    "recordCount": 100
+  },
+  "forecast": {
+    "status": "pending"
+  },
+  "llm": {
+    "status": "pending"
+  }
+}

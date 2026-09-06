@@ -1,0 +1,36 @@
+{
+  "testMetadata": {
+    "symbol": "SMCI",
+    "executedAt": "2026-09-06T17:13:38.103Z"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 14
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 96
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 48934,
+        "inputTokens": 3568,
+        "outputTokens": 1654,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  }
+}

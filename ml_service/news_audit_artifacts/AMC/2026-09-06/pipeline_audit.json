@@ -1,0 +1,36 @@
+{
+  "testMetadata": {
+    "symbol": "AMC",
+    "executedAt": "2026-09-06T17:12:03.363Z"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 16
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 89
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 11802,
+        "inputTokens": 3855,
+        "outputTokens": 1162,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  }
+}

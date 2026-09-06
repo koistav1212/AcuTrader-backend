@@ -1,0 +1,388 @@
+{
+  "success": true,
+  "symbol": "PCG",
+  "raw_article_count": 214,
+  "valid_article_count": 100,
+  "deduplicated_count": 0,
+  "relevant_count": 93,
+  "final_article_count": 93,
+  "market_context": {
+    "AVAILABLE": {
+      "open": 13.8,
+      "high": 14.32,
+      "low": 13.74,
+      "previousClose": 13.96,
+      "change": 0.34000015,
+      "changePercent": 2.43553,
+      "volume": 46960400,
+      "averageVolume": 72634670,
+      "marketCap": 42930000000,
+      "forwardPE": 7.71,
+      "trailingPE": 10.29,
+      "pegRatio": 0.55,
+      "priceToSales": 1.21,
+      "priceToBook": 0.95,
+      "revenue": 12783000000,
+      "netIncome": -564000000,
+      "profitMargin": 11.83,
+      "returnOnEquity": 9.32,
+      "totalCash": 972000000,
+      "totalDebt": 57387000000,
+      "debtToEquity": 189.45
+    },
+    "MISSING": [
+      "currentPrice",
+      "pe",
+      "evToEBITDA",
+      "operatingMargin",
+      "sector",
+      "industry"
+    ],
+    "DERIVED": {},
+    "NOT_APPLICABLE": [],
+    "STALE": []
+  },
+  "technical_context": {
+    "currentPrice": 14.3,
+    "sma20": 16.685500049999998,
+    "sma50": 17.090999980000007,
+    "sma200": 16.764849995000002,
+    "ema9": 15.115154333151736,
+    "ema21": 16.18112850426995,
+    "rsi14": 33.15789473684211,
+    "macd": {
+      "macdLine": -0.8734681914003382,
+      "signalLine": 0,
+      "histogram": 0
+    },
+    "bollingerBands": {
+      "upper": 20.149344610860112,
+      "middle": 16.685500049999998,
+      "lower": 13.221655489139884
+    },
+    "atr14": 1.0785713571428566,
+    "volatility": 0.8527076149834307,
+    "momentum": -0.19753086419753083,
+    "volumeRatio": 0.9705107569020428
+  },
+  "numerical_evidence": {
+    "news_volume": 93,
+    "current_price": 14.3,
+    "current_volatility": 0.8527076149834307,
+    "trend_regime": "Bullish",
+    "volume_anomaly": 0.9705107569020428
+  },
+  "models": {
+    "xgboost": null,
+    "newsLstm": null,
+    "llmSynthesis": {
+      "symbol": "PCG",
+      "asOf": "2026-09-04",
+      "status": "ready",
+      "data_validation": {
+        "issues": []
+      },
+      "news_regime": "neutral",
+      "news_summary": {
+        "weighted_sentiment": 0,
+        "material_events": [
+          "PG&E Corporation (PCG) Discusses Strategic Review and Response to California Wildfire Liability Framework",
+          "PG&E (PCG) Sub Says California’s Wildfire Bill Leaves Financing Risk Unresolved",
+          "PG&E (PCG) Gets a Buy from UBS",
+          "PG&E (PCG) Stock Sees Fair Value Cut As Analysts Split Over California Risks"
+        ]
+      },
+      "market_context": {
+        "daily_change": 0.34000015,
+        "daily_change_percent": 2.43553,
+        "volume": 46960400,
+        "volume_vs_average": 0.6465287169336627
+      },
+      "technical_context": {
+        "sma20": 16.685500049999998,
+        "sma50": 17.090999980000007,
+        "sma200": 16.764849995000002,
+        "rsi14": 33.15789473684211,
+        "bollingerBands": {
+          "upper": 20.149344610860112,
+          "middle": 16.685500049999998,
+          "lower": 13.221655489139884
+        },
+        "volatility": 0.8527076149834307
+      },
+      "fundamental_context": {
+        "marketCap": 42930000000,
+        "forwardPE": 7.71,
+        "trailingPE": 10.29,
+        "pegRatio": 0.55,
+        "priceToSales": 1.21,
+        "priceToBook": 0.95,
+        "revenue": 12783000000,
+        "netIncome": -564000000,
+        "profitMargin": 11.83,
+        "returnOnEquity": 9.32,
+        "totalCash": 972000000,
+        "totalDebt": 57387000000,
+        "debtToEquity": 189.45
+      },
+      "model_context": {
+        "xgboost": {
+          "available": false,
+          "output": null
+        },
+        "downstream_model": {
+          "available": false,
+          "output": null
+        },
+        "model_agreement": "unavailable",
+        "model_disagreements": []
+      },
+      "news_market_interaction": {
+        "sentiment": 0,
+        "impact": 0
+      },
+      "forecast": {
+        "day_1": {
+          "date": "2026-09-07",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.45,
+            "neutral_case": 0.55,
+            "bear_case": 0
+          },
+          "expected_price": 14.35,
+          "expected_return_percent": 0.35,
+          "scenarios": {
+            "bull": {
+              "target": 14.8,
+              "drivers": [
+                "Improved sentiment",
+                "Increased analyst upgrades"
+              ],
+              "evidence_ids": [
+                "c3f4acd7050f9209e44d962e0d0f7b95921337be34a1a3d4fd0ee6d0d33d4683",
+                "e392cb21142d97d12032bd751af3f411b7b8820179fdd156d7dfe07b2f40b667"
+              ]
+            },
+            "base": {
+              "target": 14.3,
+              "drivers": [
+                "Stable market conditions",
+                "Neutral news sentiment"
+              ],
+              "evidence_ids": [
+                "00a3d91ea52112d3c23f27877e8e0faa416f202d4b38e24167ad4850e66a68b0",
+                "c8286b2ced9bafb851528631a4d53120f35d5a8ad679c46c07dd59a74845ac32"
+              ]
+            },
+            "bear": {
+              "target": 13.8,
+              "drivers": [
+                "Decreased analyst upgrades",
+                "Negative news sentiment"
+              ],
+              "evidence_ids": [
+                "8c8436838e368d5e9fe840b49123167a7f5b48bb50404fa6dc9f0aeb9a794941",
+                "b22b4c143fd9f797e947f559cdc15da9ce77a47dde95e7b8fae49c2aa695f622"
+              ]
+            }
+          },
+          "key_drivers": [
+            "Analyst upgrades",
+            "News sentiment"
+          ],
+          "risk_flags": [
+            "California wildfire liability framework",
+            "Financing risk"
+          ],
+          "confidence": 0.6,
+          "evidence_ids": [
+            "c3f4acd7050f9209e44d962e0d0f7b95921337be34a1a3d4fd0ee6d0d33d4683",
+            "e392cb21142d97d12032bd751af3f411b7b8820179fdd156d7dfe07b2f40b667",
+            "00a3d91ea52112d3c23f27877e8e0faa416f202d4b38e24167ad4850e66a68b0",
+            "c8286b2ced9bafb851528631a4d53120f35d5a8ad679c46c07dd59a74845ac32",
+            "8c8436838e368d5e9fe840b49123167a7f5b48bb50404fa6dc9f0aeb9a794941",
+            "b22b4c143fd9f797e947f559cdc15da9ce77a47dde95e7b8fae49c2aa695f622"
+          ]
+        },
+        "day_2": {
+          "date": "2026-09-08",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.4,
+            "neutral_case": 0.6,
+            "bear_case": 0
+          },
+          "expected_price": 14.4,
+          "expected_return_percent": 0.7,
+          "scenarios": {
+            "bull": {
+              "target": 15,
+              "drivers": [
+                "Improved market conditions",
+                "Increased analyst upgrades"
+              ],
+              "evidence_ids": [
+                "c3f4acd7050f9209e44d962e0d0f7b95921337be34a1a3d4fd0ee6d0d33d4683",
+                "e392cb21142d97d12032bd751af3f411b7b8820179fdd156d7dfe07b2f40b667"
+              ]
+            },
+            "base": {
+              "target": 14.4,
+              "drivers": [
+                "Stable market conditions",
+                "Neutral news sentiment"
+              ],
+              "evidence_ids": [
+                "00a3d91ea52112d3c23f27877e8e0faa416f202d4b38e24167ad4850e66a68b0",
+                "c8286b2ced9bafb851528631a4d53120f35d5a8ad679c46c07dd59a74845ac32"
+              ]
+            },
+            "bear": {
+              "target": 13.9,
+              "drivers": [
+                "Decreased analyst upgrades",
+                "Negative news sentiment"
+              ],
+              "evidence_ids": [
+                "8c8436838e368d5e9fe840b49123167a7f5b48bb50404fa6dc9f0aeb9a794941",
+                "b22b4c143fd9f797e947f559cdc15da9ce77a47dde95e7b8fae49c2aa695f622"
+              ]
+            }
+          },
+          "key_drivers": [
+            "Analyst upgrades",
+            "News sentiment"
+          ],
+          "risk_flags": [
+            "California wildfire liability framework",
+            "Financing risk"
+          ],
+          "confidence": 0.55,
+          "evidence_ids": [
+            "c3f4acd7050f9209e44d962e0d0f7b95921337be34a1a3d4fd0ee6d0d33d4683",
+            "e392cb21142d97d12032bd751af3f411b7b8820179fdd156d7dfe07b2f40b667",
+            "00a3d91ea52112d3c23f27877e8e0faa416f202d4b38e24167ad4850e66a68b0",
+            "c8286b2ced9bafb851528631a4d53120f35d5a8ad679c46c07dd59a74845ac32",
+            "8c8436838e368d5e9fe840b49123167a7f5b48bb50404fa6dc9f0aeb9a794941",
+            "b22b4c143fd9f797e947f559cdc15da9ce77a47dde95e7b8fae49c2aa695f622"
+          ]
+        },
+        "day_3": {
+          "date": "2026-09-09",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.35,
+            "neutral_case": 0.65,
+            "bear_case": 0
+          },
+          "expected_price": 14.5,
+          "expected_return_percent": 1.05,
+          "scenarios": {
+            "bull": {
+              "target": 15.2,
+              "drivers": [
+                "Improved market conditions",
+                "Increased analyst upgrades"
+              ],
+              "evidence_ids": [
+                "c3f4acd7050f9209e44d962e0d0f7b95921337be34a1a3d4fd0ee6d0d33d4683",
+                "e392cb21142d97d12032bd751af3f411b7b8820179fdd156d7dfe07b2f40b667"
+              ]
+            },
+            "base": {
+              "target": 14.5,
+              "drivers": [
+                "Stable market conditions",
+                "Neutral news sentiment"
+              ],
+              "evidence_ids": [
+                "00a3d91ea52112d3c23f27877e8e0faa416f202d4b38e24167ad4850e66a68b0",
+                "c8286b2ced9bafb851528631a4d53120f35d5a8ad679c46c07dd59a74845ac32"
+              ]
+            },
+            "bear": {
+              "target": 14,
+              "drivers": [
+                "Decreased analyst upgrades",
+                "Negative news sentiment"
+              ],
+              "evidence_ids": [
+                "8c8436838e368d5e9fe840b49123167a7f5b48bb50404fa6dc9f0aeb9a794941",
+                "b22b4c143fd9f797e947f559cdc15da9ce77a47dde95e7b8fae49c2aa695f622"
+              ]
+            }
+          },
+          "key_drivers": [
+            "Analyst upgrades",
+            "News sentiment"
+          ],
+          "risk_flags": [
+            "California wildfire liability framework",
+            "Financing risk"
+          ],
+          "confidence": 0.5,
+          "evidence_ids": [
+            "c3f4acd7050f9209e44d962e0d0f7b95921337be34a1a3d4fd0ee6d0d33d4683",
+            "e392cb21142d97d12032bd751af3f411b7b8820179fdd156d7dfe07b2f40b667",
+            "00a3d91ea52112d3c23f27877e8e0faa416f202d4b38e24167ad4850e66a68b0",
+            "c8286b2ced9bafb851528631a4d53120f35d5a8ad679c46c07dd59a74845ac32",
+            "8c8436838e368d5e9fe840b49123167a7f5b48bb50404fa6dc9f0aeb9a794941",
+            "b22b4c143fd9f797e947f559cdc15da9ce77a47dde95e7b8fae49c2aa695f622"
+          ]
+        }
+      },
+      "overall_assessment": {
+        "summary": "The forecast for PCG is neutral, with a slight bias towards a bullish trend. The expected price for the next three days is around $14.35, $14.4, and $14.5, respectively. The key drivers for the forecast are analyst upgrades and news sentiment. The risk flags include the California wildfire liability framework and financing risk."
+      },
+      "evidence": [
+        "c3f4acd7050f9209e44d962e0d0f7b95921337be34a1a3d4fd0ee6d0d33d4683",
+        "e392cb21142d97d12032bd751af3f411b7b8820179fdd156d7dfe07b2f40b667",
+        "00a3d91ea52112d3c23f27877e8e0faa416f202d4b38e24167ad4850e66a68b0",
+        "c8286b2ced9bafb851528631a4d53120f35d5a8ad679c46c07dd59a74845ac32",
+        "8c8436838e368d5e9fe840b49123167a7f5b48bb50404fa6dc9f0aeb9a794941",
+        "b22b4c143fd9f797e947f559cdc15da9ce77a47dde95e7b8fae49c2aa695f622"
+      ]
+    }
+  },
+  "forecast_metadata": {
+    "reference_price": 14.3,
+    "reference_date": "2026-09-04",
+    "forecast_horizon": "3_trading_days",
+    "news_evidence_count": 6,
+    "forecast_generated_at": "2026-09-06T17:27:14.917Z",
+    "llm_model": "meta-llama/llama-3.3-70b-instruct",
+    "validation_status": "passed"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 21
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 93
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 157182,
+        "inputTokens": 3633,
+        "outputTokens": 1992,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  },
+  "generatedAt": "2026-09-06T17:27:14.917Z"
+}

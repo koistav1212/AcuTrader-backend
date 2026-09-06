@@ -1,0 +1,36 @@
+{
+  "testMetadata": {
+    "symbol": "SPCX",
+    "executedAt": "2026-09-06T17:19:11.627Z"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 18
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 60
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 99
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 144874,
+        "inputTokens": 3629,
+        "outputTokens": 1461,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  }
+}

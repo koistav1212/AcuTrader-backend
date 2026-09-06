@@ -1,0 +1,36 @@
+{
+  "testMetadata": {
+    "symbol": "MARA",
+    "executedAt": "2026-09-06T17:52:13.702Z"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 17
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 97
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 123587,
+        "inputTokens": 3619,
+        "outputTokens": 1174,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  }
+}

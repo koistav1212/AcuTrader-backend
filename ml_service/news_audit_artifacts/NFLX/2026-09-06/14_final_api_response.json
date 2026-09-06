@@ -1,0 +1,356 @@
+{
+  "success": true,
+  "symbol": "NFLX",
+  "raw_article_count": 213,
+  "valid_article_count": 100,
+  "deduplicated_count": 0,
+  "relevant_count": 97,
+  "final_article_count": 97,
+  "market_context": {
+    "AVAILABLE": {
+      "open": 82.17,
+      "high": 82.69,
+      "low": 78.23,
+      "previousClose": 82.67,
+      "change": -4.42,
+      "changePercent": -5.34656,
+      "volume": 40066200,
+      "averageVolume": 26774540,
+      "revenue": 24809695000,
+      "netIncome": 8684205000,
+      "profitMargin": 0.35,
+      "totalCash": 9099232000,
+      "totalDebt": 20535734000,
+      "debtToEquity": null
+    },
+    "MISSING": [
+      "currentPrice",
+      "marketCap",
+      "pe",
+      "forwardPE",
+      "trailingPE",
+      "pegRatio",
+      "priceToSales",
+      "priceToBook",
+      "evToEBITDA",
+      "operatingMargin",
+      "returnOnEquity",
+      "sector",
+      "industry"
+    ],
+    "DERIVED": {},
+    "NOT_APPLICABLE": [],
+    "STALE": []
+  },
+  "technical_context": {
+    "currentPrice": 78.25,
+    "sma20": 79.31000010000001,
+    "sma50": 75.44019989999998,
+    "sma200": 86.88349985499997,
+    "ema9": 80.61607515250282,
+    "ema21": 79.1289002118588,
+    "rsi14": 55.85302532498289,
+    "macd": {
+      "macdLine": 1.661642560471165,
+      "signalLine": 0,
+      "histogram": 0
+    },
+    "bollingerBands": {
+      "upper": 84.24830817017995,
+      "middle": 79.31000010000001,
+      "lower": 74.37169202982007
+    },
+    "atr14": 2.3292861428571396,
+    "volatility": 0.384176507755014,
+    "momentum": 0.006172045776006224,
+    "volumeRatio": 1.428942594534659
+  },
+  "numerical_evidence": {
+    "news_volume": 97,
+    "current_price": 78.25,
+    "current_volatility": 0.384176507755014,
+    "trend_regime": "Bearish",
+    "volume_anomaly": 1.428942594534659
+  },
+  "models": {
+    "xgboost": null,
+    "newsLstm": null,
+    "llmSynthesis": {
+      "symbol": "NFLX",
+      "asOf": "2026-09-04",
+      "status": "ready",
+      "data_validation": {
+        "issues": []
+      },
+      "news_regime": "neutral",
+      "news_summary": {
+        "weighted_sentiment": 0,
+        "material_events": [
+          "Netflix hikes UK prices for the second time in 2026",
+          "NFLX Stock Falls 4% As Netflix Hikes UK Subscription Prices",
+          "Netflix Falls 4% as Rate Repricing Pressures Long-Duration Growth"
+        ]
+      },
+      "market_context": {
+        "daily_change": -4.42,
+        "daily_change_percent": -5.34656,
+        "volume": 40066200,
+        "volume_vs_average": 1.4964290703033554
+      },
+      "technical_context": {
+        "sma20": 79.31000010000001,
+        "sma50": 75.44019989999998,
+        "sma200": 86.88349985499997,
+        "rsi14": 55.85302532498289,
+        "bollinger_bands": {
+          "upper": 84.24830817017995,
+          "middle": 79.31000010000001,
+          "lower": 74.37169202982007
+        },
+        "volatility": 0.384176507755014
+      },
+      "fundamental_context": {
+        "revenue": 24809695000,
+        "net_income": 8684205000,
+        "profit_margin": 0.35,
+        "total_cash": 9099232000,
+        "total_debt": 20535734000
+      },
+      "model_context": {
+        "xgboost": {
+          "available": false,
+          "output": null
+        },
+        "downstream_model": {
+          "available": false,
+          "output": null
+        },
+        "model_agreement": "unavailable",
+        "model_disagreements": []
+      },
+      "news_market_interaction": {
+        "price_movement": -4.42,
+        "volume_increase": 1.4964290703033554
+      },
+      "forecast": {
+        "day_1": {
+          "date": "2026-09-07",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.4,
+            "neutral_case": 0.5,
+            "bear_case": 0.1
+          },
+          "expected_price": 78,
+          "expected_return_percent": -0.32,
+          "scenarios": {
+            "bull": {
+              "target": 80.5,
+              "drivers": [
+                "rebound from recent price drop"
+              ],
+              "evidence_ids": [
+                "b04c8b3f05ad014ae6786a16d31a3b505fdc1b36b3b28b22215098798cbcb823"
+              ]
+            },
+            "base": {
+              "target": 78,
+              "drivers": [
+                "stable market conditions"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 75.5,
+              "drivers": [
+                "continued price pressure from UK price hike"
+              ],
+              "evidence_ids": [
+                "038f0cb4c2a0cc787dc37c30614f56e9fb95566f335fb6ec137c7058efef2ff6"
+              ]
+            }
+          },
+          "key_drivers": [
+            "market sentiment",
+            "price movement"
+          ],
+          "risk_flags": [
+            "high volatility"
+          ],
+          "confidence": 0.6,
+          "evidence_ids": [
+            "038f0cb4c2a0cc787dc37c30614f56e9fb95566f335fb6ec137c7058efef2ff6",
+            "b04c8b3f05ad014ae6786a16d31a3b505fdc1b36b3b28b22215098798cbcb823"
+          ]
+        },
+        "day_2": {
+          "date": "2026-09-08",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.3,
+            "neutral_case": 0.6,
+            "bear_case": 0.1
+          },
+          "expected_price": 77.5,
+          "expected_return_percent": -0.64,
+          "scenarios": {
+            "bull": {
+              "target": 80,
+              "drivers": [
+                "positive earnings report"
+              ],
+              "evidence_ids": []
+            },
+            "base": {
+              "target": 77.5,
+              "drivers": [
+                "stable market conditions"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 75,
+              "drivers": [
+                "continued price pressure from UK price hike"
+              ],
+              "evidence_ids": [
+                "038f0cb4c2a0cc787dc37c30614f56e9fb95566f335fb6ec137c7058efef2ff6"
+              ]
+            }
+          },
+          "key_drivers": [
+            "market sentiment",
+            "price movement"
+          ],
+          "risk_flags": [
+            "high volatility"
+          ],
+          "confidence": 0.55,
+          "evidence_ids": [
+            "038f0cb4c2a0cc787dc37c30614f56e9fb95566f335fb6ec137c7058efef2ff6"
+          ]
+        },
+        "day_3": {
+          "date": "2026-09-09",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.2,
+            "neutral_case": 0.7,
+            "bear_case": 0.1
+          },
+          "expected_price": 77,
+          "expected_return_percent": -1.02,
+          "scenarios": {
+            "bull": {
+              "target": 79.5,
+              "drivers": [
+                "rebound from recent price drop"
+              ],
+              "evidence_ids": [
+                "b04c8b3f05ad014ae6786a16d31a3b505fdc1b36b3b28b22215098798cbcb823"
+              ]
+            },
+            "base": {
+              "target": 77,
+              "drivers": [
+                "stable market conditions"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 74.5,
+              "drivers": [
+                "continued price pressure from UK price hike"
+              ],
+              "evidence_ids": [
+                "038f0cb4c2a0cc787dc37c30614f56e9fb95566f335fb6ec137c7058efef2ff6"
+              ]
+            }
+          },
+          "key_drivers": [
+            "market sentiment",
+            "price movement"
+          ],
+          "risk_flags": [
+            "high volatility"
+          ],
+          "confidence": 0.5,
+          "evidence_ids": [
+            "038f0cb4c2a0cc787dc37c30614f56e9fb95566f335fb6ec137c7058efef2ff6",
+            "b04c8b3f05ad014ae6786a16d31a3b505fdc1b36b3b28b22215098798cbcb823"
+          ]
+        }
+      },
+      "overall_assessment": {
+        "market_sentiment": "neutral",
+        "price_movement": "down"
+      },
+      "evidence": [
+        {
+          "evidence_id": "038f0cb4c2a0cc787dc37c30614f56e9fb95566f335fb6ec137c7058efef2ff6",
+          "event_cluster_id": "5748259c9133a997",
+          "date": "2026-09-04",
+          "publisher": "Seeking Alpha",
+          "title": "Netflix hikes UK prices for the second time in 2026 (NFLX:NASDAQ) - Seeking Alpha",
+          "summary": "",
+          "relevance": 0,
+          "materiality": 0,
+          "sentiment": 0,
+          "impact": 0
+        },
+        {
+          "evidence_id": "b04c8b3f05ad014ae6786a16d31a3b505fdc1b36b3b28b22215098798cbcb823",
+          "event_cluster_id": "c50182886143849a",
+          "date": "2026-09-04",
+          "publisher": "TIKR.com",
+          "title": "Netflix Stock Is Down 33% From a Year Ago. The Street Still Sees 13% Upside, Here’s Why. - TIKR.com",
+          "summary": "",
+          "relevance": 0,
+          "materiality": 0,
+          "sentiment": 0,
+          "impact": 0
+        }
+      ]
+    }
+  },
+  "forecast_metadata": {
+    "reference_price": 78.25,
+    "reference_date": "2026-09-04",
+    "forecast_horizon": "3_trading_days",
+    "news_evidence_count": 2,
+    "forecast_generated_at": "2026-09-06T17:42:31.291Z",
+    "llm_model": "meta-llama/llama-3.3-70b-instruct",
+    "validation_status": "passed"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 14
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 97
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 6687,
+        "inputTokens": 3577,
+        "outputTokens": 1433,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  },
+  "generatedAt": "2026-09-06T17:42:31.291Z"
+}

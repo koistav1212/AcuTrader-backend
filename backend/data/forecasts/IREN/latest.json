@@ -1,0 +1,361 @@
+{
+  "success": true,
+  "symbol": "IREN",
+  "raw_article_count": 208,
+  "valid_article_count": 100,
+  "deduplicated_count": 0,
+  "relevant_count": 98,
+  "final_article_count": 98,
+  "market_context": {
+    "AVAILABLE": {
+      "open": 41.049999,
+      "high": 44.745,
+      "low": 41,
+      "previousClose": 41.65,
+      "change": 3.029999,
+      "changePercent": 7.27491,
+      "volume": 36132300,
+      "averageVolume": 44050190,
+      "marketCap": 14510000000,
+      "forwardPE": 136.99,
+      "priceToSales": 16.47,
+      "priceToBook": 3.47,
+      "revenue": 707007000,
+      "netIncome": -702621000,
+      "profitMargin": -99.38,
+      "returnOnEquity": -23.41,
+      "totalCash": 5895591000,
+      "totalDebt": 7592944000,
+      "debtToEquity": 187.3
+    },
+    "MISSING": [
+      "currentPrice",
+      "pe",
+      "trailingPE",
+      "pegRatio",
+      "evToEBITDA",
+      "operatingMargin",
+      "sector",
+      "industry"
+    ],
+    "DERIVED": {},
+    "NOT_APPLICABLE": [],
+    "STALE": []
+  },
+  "technical_context": {
+    "currentPrice": 44.68,
+    "sma20": 41.13225005,
+    "sma50": 40.223700042000004,
+    "sma200": 45.66007504549997,
+    "ema9": 40.60960733288491,
+    "ema21": 40.53708713079856,
+    "rsi14": 49.602169981916816,
+    "macd": {
+      "macdLine": -0.17154735917877417,
+      "signalLine": 0,
+      "histogram": 0
+    },
+    "bollingerBands": {
+      "upper": 46.504231613734206,
+      "middle": 41.13225005,
+      "lower": 35.7602684862658
+    },
+    "atr14": 3.2217857857142866,
+    "volatility": 0.8819589124156002,
+    "momentum": 0.0638095238095238,
+    "volumeRatio": 0.7881023102382216
+  },
+  "numerical_evidence": {
+    "news_volume": 98,
+    "current_price": 44.68,
+    "current_volatility": 0.8819589124156002,
+    "trend_regime": "Bearish",
+    "volume_anomaly": 0.7881023102382216
+  },
+  "models": {
+    "xgboost": null,
+    "newsLstm": null,
+    "llmSynthesis": {
+      "symbol": "IREN",
+      "asOf": "2026-09-04",
+      "status": "ready",
+      "data_validation": {
+        "issues": []
+      },
+      "news_regime": "bullish",
+      "news_summary": {
+        "weighted_sentiment": 0.5,
+        "material_events": [
+          "IREN delivers first AI data center to Microsoft",
+          "IREN stock jumps 14% on AI cloud demand",
+          "IREN's AI Cloud Revenue Just Jumped 687%"
+        ]
+      },
+      "market_context": {
+        "daily_change": 3.029999,
+        "daily_change_percent": 7.27491,
+        "volume": 36132300,
+        "volume_vs_average": 0.8202529886931248
+      },
+      "technical_context": {
+        "sma20": 41.13225005,
+        "sma50": 40.223700042000004,
+        "sma200": 45.66007504549997,
+        "rsi14": 49.602169981916816,
+        "bollingerBands": {
+          "upper": 46.504231613734206,
+          "middle": 41.13225005,
+          "lower": 35.7602684862658
+        },
+        "volatility": 0.8819589124156002
+      },
+      "fundamental_context": {
+        "marketCap": 14510000000,
+        "forwardPE": 136.99,
+        "priceToSales": 16.47,
+        "priceToBook": 3.47,
+        "revenue": 707007000,
+        "netIncome": -702621000,
+        "profitMargin": -99.38,
+        "returnOnEquity": -23.41
+      },
+      "model_context": {
+        "xgboost": {
+          "available": false,
+          "output": null
+        },
+        "downstream_model": {
+          "available": false,
+          "output": null
+        },
+        "model_agreement": "unavailable",
+        "model_disagreements": []
+      },
+      "news_market_interaction": {
+        "sentiment": 0.5,
+        "impact": 0.5
+      },
+      "forecast": {
+        "day_1": {
+          "date": "2026-09-07",
+          "direction": "bullish",
+          "probabilities": {
+            "bull_case": 0.6,
+            "neutral_case": 0.3,
+            "bear_case": 0.1
+          },
+          "expected_price": 46.21,
+          "expected_return_percent": 3.41,
+          "scenarios": {
+            "bull": {
+              "target": 48.12,
+              "drivers": [
+                "AI cloud demand",
+                "Microsoft partnership"
+              ],
+              "evidence_ids": [
+                "e9a39e3322221aaf55d04d498b08ae9ed6e649ca7aad6e2343e6353cefeda076",
+                "cb3a703cbd8f36f8b290412b954f185d8f8d22908cc274cc5321b9600a70bf39"
+              ]
+            },
+            "base": {
+              "target": 45.51,
+              "drivers": [
+                "Current market trend"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 43.89,
+              "drivers": [
+                "High volatility"
+              ],
+              "evidence_ids": []
+            }
+          },
+          "key_drivers": [
+            "AI cloud demand",
+            "Microsoft partnership"
+          ],
+          "risk_flags": [
+            "High volatility"
+          ],
+          "confidence": 0.8,
+          "evidence_ids": [
+            "e9a39e3322221aaf55d04d498b08ae9ed6e649ca7aad6e2343e6353cefeda076",
+            "cb3a703cbd8f36f8b290412b954f185d8f8d22908cc274cc5321b9600a70bf39"
+          ]
+        },
+        "day_2": {
+          "date": "2026-09-08",
+          "direction": "bullish",
+          "probabilities": {
+            "bull_case": 0.55,
+            "neutral_case": 0.35,
+            "bear_case": 0.1
+          },
+          "expected_price": 46.59,
+          "expected_return_percent": 4.21,
+          "scenarios": {
+            "bull": {
+              "target": 49.01,
+              "drivers": [
+                "AI cloud demand",
+                "Microsoft partnership"
+              ],
+              "evidence_ids": [
+                "e9a39e3322221aaf55d04d498b08ae9ed6e649ca7aad6e2343e6353cefeda076",
+                "cb3a703cbd8f36f8b290412b954f185d8f8d22908cc274cc5321b9600a70bf39"
+              ]
+            },
+            "base": {
+              "target": 46.01,
+              "drivers": [
+                "Current market trend"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 44.49,
+              "drivers": [
+                "High volatility"
+              ],
+              "evidence_ids": []
+            }
+          },
+          "key_drivers": [
+            "AI cloud demand",
+            "Microsoft partnership"
+          ],
+          "risk_flags": [
+            "High volatility"
+          ],
+          "confidence": 0.75,
+          "evidence_ids": [
+            "e9a39e3322221aaf55d04d498b08ae9ed6e649ca7aad6e2343e6353cefeda076",
+            "cb3a703cbd8f36f8b290412b954f185d8f8d22908cc274cc5321b9600a70bf39"
+          ]
+        },
+        "day_3": {
+          "date": "2026-09-09",
+          "direction": "bullish",
+          "probabilities": {
+            "bull_case": 0.5,
+            "neutral_case": 0.4,
+            "bear_case": 0.1
+          },
+          "expected_price": 46.98,
+          "expected_return_percent": 4.99,
+          "scenarios": {
+            "bull": {
+              "target": 49.91,
+              "drivers": [
+                "AI cloud demand",
+                "Microsoft partnership"
+              ],
+              "evidence_ids": [
+                "e9a39e3322221aaf55d04d498b08ae9ed6e649ca7aad6e2343e6353cefeda076",
+                "cb3a703cbd8f36f8b290412b954f185d8f8d22908cc274cc5321b9600a70bf39"
+              ]
+            },
+            "base": {
+              "target": 46.41,
+              "drivers": [
+                "Current market trend"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 45.01,
+              "drivers": [
+                "High volatility"
+              ],
+              "evidence_ids": []
+            }
+          },
+          "key_drivers": [
+            "AI cloud demand",
+            "Microsoft partnership"
+          ],
+          "risk_flags": [
+            "High volatility"
+          ],
+          "confidence": 0.7,
+          "evidence_ids": [
+            "e9a39e3322221aaf55d04d498b08ae9ed6e649ca7aad6e2343e6353cefeda076",
+            "cb3a703cbd8f36f8b290412b954f185d8f8d22908cc274cc5321b9600a70bf39"
+          ]
+        }
+      },
+      "overall_assessment": {
+        "summary": "The stock is expected to continue its upward trend driven by AI cloud demand and the partnership with Microsoft."
+      },
+      "evidence": [
+        {
+          "evidence_id": "e9a39e3322221aaf55d04d498b08ae9ed6e649ca7aad6e2343e6353cefeda076",
+          "event_cluster_id": "15f1c820afd2002e",
+          "date": "2026-09-03",
+          "publisher": "Pluang",
+          "title": "IREN stock jumps 14% on AI cloud demand, with a $100 price target signaling 143% upside potential.",
+          "summary": "",
+          "relevance": 0,
+          "materiality": 0,
+          "sentiment": 0,
+          "impact": 0
+        },
+        {
+          "evidence_id": "cb3a703cbd8f36f8b290412b954f185d8f8d22908cc274cc5321b9600a70bf39",
+          "event_cluster_id": "50e90b50774837df",
+          "date": "2026-09-04",
+          "publisher": "scanx.trade",
+          "title": "IREN delivers first AI data center to Microsoft as short interest hits 26%",
+          "summary": "",
+          "relevance": 0,
+          "materiality": 0,
+          "sentiment": 0,
+          "impact": 0
+        }
+      ]
+    }
+  },
+  "forecast_metadata": {
+    "reference_price": 44.68,
+    "reference_date": "2026-09-04",
+    "forecast_horizon": "3_trading_days",
+    "news_evidence_count": 2,
+    "forecast_generated_at": "2026-09-06T18:03:47.796Z",
+    "llm_model": "meta-llama/llama-3.3-70b-instruct",
+    "validation_status": "passed"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 19
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1204
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 98
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 64938,
+        "inputTokens": 3606,
+        "outputTokens": 1470,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  },
+  "generatedAt": "2026-09-06T18:03:47.796Z"
+}

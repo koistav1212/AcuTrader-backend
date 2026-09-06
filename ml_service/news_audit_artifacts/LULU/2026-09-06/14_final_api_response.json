@@ -1,0 +1,122 @@
+{
+  "success": true,
+  "symbol": "LULU",
+  "raw_article_count": 212,
+  "valid_article_count": 100,
+  "deduplicated_count": 0,
+  "relevant_count": 95,
+  "final_article_count": 95,
+  "market_context": {
+    "AVAILABLE": {
+      "open": 98.15,
+      "high": 103.16,
+      "low": 97.99,
+      "previousClose": 121.77,
+      "change": -21.16,
+      "changePercent": -17.37702,
+      "volume": 37312300,
+      "averageVolume": 9239140,
+      "marketCap": 11140000000,
+      "forwardPE": 10.93,
+      "trailingPE": 8.28,
+      "pegRatio": 0.93,
+      "priceToSales": 1.28,
+      "priceToBook": 2.87,
+      "revenue": 649706000,
+      "netIncome": 524271000,
+      "profitMargin": 12.78,
+      "returnOnEquity": 30.9,
+      "totalCash": 881320000,
+      "debtToEquity": 44.69
+    },
+    "MISSING": [
+      "currentPrice",
+      "pe",
+      "evToEBITDA",
+      "operatingMargin",
+      "totalDebt",
+      "sector",
+      "industry"
+    ],
+    "DERIVED": {},
+    "NOT_APPLICABLE": [],
+    "STALE": []
+  },
+  "technical_context": {
+    "currentPrice": 100.61,
+    "sma20": 118.91650009999998,
+    "sma50": 118.40180000000001,
+    "sma200": 152.77014932749987,
+    "ema9": 115.85340891408086,
+    "ema21": 117.90646921101624,
+    "rsi14": 36.464483807478985,
+    "macd": {
+      "macdLine": -1.5214034871202387,
+      "signalLine": 0,
+      "histogram": 0
+    },
+    "bollingerBands": {
+      "upper": 129.32620956159403,
+      "middle": 118.91650009999998,
+      "lower": 108.50679063840593
+    },
+    "atr14": 6.097142928571428,
+    "volatility": 0.7094393312229194,
+    "momentum": -0.15460887060568237,
+    "volumeRatio": 6.1887630534877855
+  },
+  "numerical_evidence": {
+    "news_volume": 95,
+    "current_price": 100.61,
+    "current_volatility": 0.7094393312229194,
+    "trend_regime": "Bearish",
+    "volume_anomaly": 6.1887630534877855
+  },
+  "models": {
+    "xgboost": null,
+    "newsLstm": null,
+    "llmSynthesis": {}
+  },
+  "forecast_metadata": {
+    "reference_price": 100.61,
+    "reference_date": "2026-09-04",
+    "forecast_horizon": "3_trading_days",
+    "news_evidence_count": 0,
+    "forecast_generated_at": "2026-09-06T17:55:24.405Z",
+    "llm_model": "unknown",
+    "validation_status": "failed"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 20
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 95
+    },
+    "forecast": {
+      "status": "failed"
+    },
+    "llm": {
+      "status": "failed",
+      "error": {
+        "code": "LLM_CALL_FAILED",
+        "message": "The model `llama3-70b-8192` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.",
+        "provider": "OPENROUTER",
+        "ticker": "LULU",
+        "stage": "correction_generation"
+      },
+      "metadata": {}
+    }
+  },
+  "generatedAt": "2026-09-06T17:55:24.405Z"
+}

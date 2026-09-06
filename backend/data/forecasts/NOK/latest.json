@@ -1,0 +1,308 @@
+{
+  "success": true,
+  "symbol": "NOK",
+  "raw_article_count": 220,
+  "valid_article_count": 100,
+  "deduplicated_count": 0,
+  "relevant_count": 98,
+  "final_article_count": 98,
+  "market_context": {
+    "AVAILABLE": {
+      "open": 10,
+      "high": 10.11,
+      "low": 9.93,
+      "previousClose": 9.77,
+      "change": 0.25999928,
+      "changePercent": 2.6612,
+      "volume": 45824000,
+      "averageVolume": 53495650
+    },
+    "MISSING": [
+      "currentPrice",
+      "marketCap",
+      "pe",
+      "forwardPE",
+      "trailingPE",
+      "pegRatio",
+      "priceToSales",
+      "priceToBook",
+      "evToEBITDA",
+      "revenue",
+      "netIncome",
+      "profitMargin",
+      "operatingMargin",
+      "returnOnEquity",
+      "totalCash",
+      "totalDebt",
+      "debtToEquity",
+      "sector",
+      "industry"
+    ],
+    "DERIVED": {},
+    "NOT_APPLICABLE": [],
+    "STALE": []
+  },
+  "technical_context": {
+    "currentPrice": 10.03,
+    "sma20": 10.155000000000003,
+    "sma50": 10.530199999999997,
+    "sma200": 9.606050000000002,
+    "ema9": 10.045003982330416,
+    "ema21": 10.124194751904447,
+    "rsi14": 36.05947955390333,
+    "macd": {
+      "macdLine": -0.12716784882961818,
+      "signalLine": 0,
+      "histogram": 0
+    },
+    "bollingerBands": {
+      "upper": 10.956985037266909,
+      "middle": 10.155000000000003,
+      "lower": 9.353014962733097
+    },
+    "atr14": 0.38500000000000006,
+    "volatility": 0.4774057052364299,
+    "momentum": -0.03464870067372485,
+    "volumeRatio": 0.6726805300353824
+  },
+  "numerical_evidence": {
+    "news_volume": 98,
+    "current_price": 10.03,
+    "current_volatility": 0.4774057052364299,
+    "trend_regime": "Bullish",
+    "volume_anomaly": 0.6726805300353824
+  },
+  "models": {
+    "xgboost": null,
+    "newsLstm": null,
+    "llmSynthesis": {
+      "symbol": "NOK",
+      "asOf": "2026-09-04",
+      "status": "ready",
+      "data_validation": {
+        "issues": []
+      },
+      "news_regime": "neutral",
+      "news_summary": {
+        "weighted_sentiment": null,
+        "material_events": []
+      },
+      "market_context": {
+        "daily_change": 0.25999928,
+        "daily_change_percent": 2.6612,
+        "volume": 45824000,
+        "volume_vs_average": 0.856593012702902
+      },
+      "technical_context": {
+        "sma20": 10.155000000000003,
+        "sma50": 10.530199999999997,
+        "sma200": 9.606050000000002,
+        "rsi14": 36.05947955390333,
+        "bollingerBands": {
+          "upper": 10.956985037266909,
+          "middle": 10.155000000000003,
+          "lower": 9.353014962733097
+        },
+        "volatility": 0.4774057052364299
+      },
+      "fundamental_context": {
+        "open": 10,
+        "high": 10.11,
+        "low": 9.93,
+        "previousClose": 9.77,
+        "change": 0.25999928,
+        "changePercent": 2.6612,
+        "volume": 45824000,
+        "averageVolume": 53495650
+      },
+      "model_context": {
+        "xgboost": {
+          "available": false,
+          "output": null
+        },
+        "downstream_model": {
+          "available": false,
+          "output": null
+        },
+        "model_agreement": "unavailable",
+        "model_disagreements": []
+      },
+      "news_market_interaction": {},
+      "forecast": {
+        "day_1": {
+          "date": "2026-09-07",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.45,
+            "neutral_case": 0.45,
+            "bear_case": 0.1
+          },
+          "expected_price": 10.05,
+          "expected_return_percent": 0.2,
+          "scenarios": {
+            "bull": {
+              "target": 10.15,
+              "drivers": [
+                "Technical indicators suggest a potential upside"
+              ],
+              "evidence_ids": []
+            },
+            "base": {
+              "target": 10.05,
+              "drivers": [
+                "Neutral news regime and stable market conditions"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 9.95,
+              "drivers": [
+                "Potential downside due to market volatility"
+              ],
+              "evidence_ids": []
+            }
+          },
+          "key_drivers": [
+            "Technical indicators",
+            "Market conditions"
+          ],
+          "risk_flags": [
+            "Market volatility"
+          ],
+          "confidence": 0.6,
+          "evidence_ids": []
+        },
+        "day_2": {
+          "date": "2026-09-08",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.4,
+            "neutral_case": 0.5,
+            "bear_case": 0.1
+          },
+          "expected_price": 10.06,
+          "expected_return_percent": 0.1,
+          "scenarios": {
+            "bull": {
+              "target": 10.18,
+              "drivers": [
+                "Potential upside due to positive news"
+              ],
+              "evidence_ids": []
+            },
+            "base": {
+              "target": 10.06,
+              "drivers": [
+                "Stable market conditions and neutral news regime"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 9.98,
+              "drivers": [
+                "Potential downside due to market volatility"
+              ],
+              "evidence_ids": []
+            }
+          },
+          "key_drivers": [
+            "Market conditions",
+            "News regime"
+          ],
+          "risk_flags": [
+            "Market volatility"
+          ],
+          "confidence": 0.55,
+          "evidence_ids": []
+        },
+        "day_3": {
+          "date": "2026-09-09",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.35,
+            "neutral_case": 0.55,
+            "bear_case": 0.1
+          },
+          "expected_price": 10.07,
+          "expected_return_percent": 0.05,
+          "scenarios": {
+            "bull": {
+              "target": 10.2,
+              "drivers": [
+                "Potential upside due to positive technical indicators"
+              ],
+              "evidence_ids": []
+            },
+            "base": {
+              "target": 10.07,
+              "drivers": [
+                "Stable market conditions and neutral news regime"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 10,
+              "drivers": [
+                "Potential downside due to market volatility"
+              ],
+              "evidence_ids": []
+            }
+          },
+          "key_drivers": [
+            "Technical indicators",
+            "Market conditions"
+          ],
+          "risk_flags": [
+            "Market volatility"
+          ],
+          "confidence": 0.5,
+          "evidence_ids": []
+        }
+      },
+      "overall_assessment": {
+        "summary": "The forecast suggests a neutral direction for the next three days, with a slight upside potential due to technical indicators and stable market conditions."
+      },
+      "evidence": []
+    }
+  },
+  "forecast_metadata": {
+    "reference_price": 10.03,
+    "reference_date": "2026-09-04",
+    "forecast_horizon": "3_trading_days",
+    "news_evidence_count": 0,
+    "forecast_generated_at": "2026-09-06T17:36:13.735Z",
+    "llm_model": "meta-llama/llama-3.3-70b-instruct",
+    "validation_status": "passed"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 8
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 98
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 81820,
+        "inputTokens": 3493,
+        "outputTokens": 1060,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  },
+  "generatedAt": "2026-09-06T17:36:13.735Z"
+}

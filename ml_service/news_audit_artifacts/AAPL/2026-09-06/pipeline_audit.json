@@ -1,0 +1,36 @@
+{
+  "testMetadata": {
+    "symbol": "AAPL",
+    "executedAt": "2026-09-06T17:43:44.628Z"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 14
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 90
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 21964,
+        "inputTokens": 3535,
+        "outputTokens": 1593,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  }
+}

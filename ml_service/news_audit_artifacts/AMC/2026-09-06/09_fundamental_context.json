@@ -1,0 +1,36 @@
+{
+  "AVAILABLE": {
+    "open": 2.63,
+    "high": 2.8,
+    "low": 2.59,
+    "previousClose": 2.54,
+    "change": 0.11000013,
+    "changePercent": 4.33071,
+    "volume": 57065800,
+    "averageVolume": 23844530,
+    "marketCap": 2270000000,
+    "priceToSales": 0.28,
+    "revenue": 4848900000,
+    "netIncome": -128500000,
+    "profitMargin": -10.59,
+    "totalCash": 778400000,
+    "totalDebt": 4024200000,
+    "debtToEquity": null
+  },
+  "MISSING": [
+    "currentPrice",
+    "pe",
+    "forwardPE",
+    "trailingPE",
+    "pegRatio",
+    "priceToBook",
+    "evToEBITDA",
+    "operatingMargin",
+    "returnOnEquity",
+    "sector",
+    "industry"
+  ],
+  "DERIVED": {},
+  "NOT_APPLICABLE": [],
+  "STALE": []
+}

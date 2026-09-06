@@ -1,0 +1,349 @@
+{
+  "success": true,
+  "symbol": "RIG",
+  "raw_article_count": 214,
+  "valid_article_count": 100,
+  "deduplicated_count": 0,
+  "relevant_count": 93,
+  "final_article_count": 93,
+  "market_context": {
+    "AVAILABLE": {
+      "open": 5.96,
+      "high": 5.96,
+      "low": 5.77,
+      "previousClose": 6.02,
+      "change": -0.17000008,
+      "changePercent": -2.82392,
+      "volume": 40656700,
+      "averageVolume": 37185130,
+      "marketCap": 6720000000,
+      "forwardPE": 16.72,
+      "priceToSales": 1.58,
+      "priceToBook": 0.8,
+      "revenue": 664000000,
+      "netIncome": 241000000,
+      "profitMargin": -40.24,
+      "returnOnEquity": -18.7,
+      "totalCash": 509000000,
+      "totalDebt": 9058000000,
+      "debtToEquity": 61.16
+    },
+    "MISSING": [
+      "currentPrice",
+      "pe",
+      "trailingPE",
+      "pegRatio",
+      "evToEBITDA",
+      "operatingMargin",
+      "sector",
+      "industry"
+    ],
+    "DERIVED": {},
+    "NOT_APPLICABLE": [],
+    "STALE": []
+  },
+  "technical_context": {
+    "currentPrice": 5.85,
+    "sma20": 5.832499999999999,
+    "sma50": 5.421199999999999,
+    "sma200": 5.557649999999998,
+    "ema9": 5.897173605762971,
+    "ema21": 5.7688535763763475,
+    "rsi14": 49.39024390243901,
+    "macd": {
+      "macdLine": 0.13748260747739494,
+      "signalLine": 0,
+      "histogram": 0
+    },
+    "bollingerBands": {
+      "upper": 6.099922886081202,
+      "middle": 5.832499999999999,
+      "lower": 5.565077113918796
+    },
+    "atr14": 0.2285714285714285,
+    "volatility": 0.4491535802881912,
+    "momentum": 0.005154639175257622,
+    "volumeRatio": 0.9752986644808224
+  },
+  "numerical_evidence": {
+    "news_volume": 93,
+    "current_price": 5.85,
+    "current_volatility": 0.4491535802881912,
+    "trend_regime": "Bearish",
+    "volume_anomaly": 0.9752986644808224
+  },
+  "models": {
+    "xgboost": null,
+    "newsLstm": null,
+    "llmSynthesis": {
+      "symbol": "RIG",
+      "asOf": "2026-09-04",
+      "status": "ready",
+      "data_validation": {
+        "issues": []
+      },
+      "news_regime": "neutral",
+      "news_summary": {
+        "weighted_sentiment": 0,
+        "material_events": [
+          "North American rig count falls by seven led by Canada",
+          "U.S. drilling rig count stays flat, Baker Hughes survey says",
+          "Canadian Rig Counts: Down Five Ahead of Long Weekend"
+        ]
+      },
+      "market_context": {
+        "daily_change": -0.17000008,
+        "daily_change_percent": -2.82392,
+        "volume": 40656700,
+        "volume_vs_average": 1.0933590927341117
+      },
+      "technical_context": {
+        "sma20": 5.832499999999999,
+        "sma50": 5.421199999999999,
+        "sma200": 5.557649999999998,
+        "rsi14": 49.39024390243901,
+        "bollinger_bands": {
+          "upper": 6.099922886081202,
+          "middle": 5.832499999999999,
+          "lower": 5.565077113918796
+        }
+      },
+      "fundamental_context": {
+        "market_cap": 6720000000,
+        "forward_pe": 16.72,
+        "price_to_sales": 1.58,
+        "price_to_book": 0.8,
+        "revenue": 664000000,
+        "net_income": 241000000,
+        "profit_margin": -40.24,
+        "return_on_equity": -18.7
+      },
+      "model_context": {
+        "xgboost": {
+          "available": false,
+          "output": null
+        },
+        "downstream_model": {
+          "available": false,
+          "output": null
+        },
+        "model_agreement": "unavailable",
+        "model_disagreements": []
+      },
+      "news_market_interaction": {
+        "rig_count": "stable in US, decline in Canada"
+      },
+      "forecast": {
+        "day_1": {
+          "date": "2026-09-07",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.45,
+            "neutral_case": 0.45,
+            "bear_case": 0.1
+          },
+          "expected_price": 5.85,
+          "expected_return_percent": 0,
+          "scenarios": {
+            "bull": {
+              "target": 6.05,
+              "drivers": [
+                "stable US rig count"
+              ],
+              "evidence_ids": [
+                "0cc757f7d294709abdd8918db666e114200be47f4135f496e7b139768c5ecbb2"
+              ]
+            },
+            "base": {
+              "target": 5.85,
+              "drivers": [
+                "neutral news regime"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 5.65,
+              "drivers": [
+                "decline in Canadian rig count"
+              ],
+              "evidence_ids": [
+                "13cd8e203249538c97ff31ef906c946d945c8ce62ada5b0dff49ce146e98750f"
+              ]
+            }
+          },
+          "key_drivers": [
+            "rig count",
+            "news regime"
+          ],
+          "risk_flags": [
+            "volatility"
+          ],
+          "confidence": 0.6,
+          "evidence_ids": [
+            "0cc757f7d294709abdd8918db666e114200be47f4135f496e7b139768c5ecbb2",
+            "13cd8e203249538c97ff31ef906c946d945c8ce62ada5b0dff49ce146e98750f"
+          ]
+        },
+        "day_2": {
+          "date": "2026-09-08",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.4,
+            "neutral_case": 0.5,
+            "bear_case": 0.1
+          },
+          "expected_price": 5.85,
+          "expected_return_percent": 0,
+          "scenarios": {
+            "bull": {
+              "target": 6.05,
+              "drivers": [
+                "stable US rig count"
+              ],
+              "evidence_ids": [
+                "0cc757f7d294709abdd8918db666e114200be47f4135f496e7b139768c5ecbb2"
+              ]
+            },
+            "base": {
+              "target": 5.85,
+              "drivers": [
+                "neutral news regime"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 5.65,
+              "drivers": [
+                "decline in Canadian rig count"
+              ],
+              "evidence_ids": [
+                "13cd8e203249538c97ff31ef906c946d945c8ce62ada5b0dff49ce146e98750f"
+              ]
+            }
+          },
+          "key_drivers": [
+            "rig count",
+            "news regime"
+          ],
+          "risk_flags": [
+            "volatility"
+          ],
+          "confidence": 0.6,
+          "evidence_ids": [
+            "0cc757f7d294709abdd8918db666e114200be47f4135f496e7b139768c5ecbb2",
+            "13cd8e203249538c97ff31ef906c946d945c8ce62ada5b0dff49ce146e98750f"
+          ]
+        },
+        "day_3": {
+          "date": "2026-09-09",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.4,
+            "neutral_case": 0.5,
+            "bear_case": 0.1
+          },
+          "expected_price": 5.85,
+          "expected_return_percent": 0,
+          "scenarios": {
+            "bull": {
+              "target": 6.05,
+              "drivers": [
+                "stable US rig count"
+              ],
+              "evidence_ids": [
+                "0cc757f7d294709abdd8918db666e114200be47f4135f496e7b139768c5ecbb2"
+              ]
+            },
+            "base": {
+              "target": 5.85,
+              "drivers": [
+                "neutral news regime"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 5.65,
+              "drivers": [
+                "decline in Canadian rig count"
+              ],
+              "evidence_ids": [
+                "13cd8e203249538c97ff31ef906c946d945c8ce62ada5b0dff49ce146e98750f"
+              ]
+            }
+          },
+          "key_drivers": [
+            "rig count",
+            "news regime"
+          ],
+          "risk_flags": [
+            "volatility"
+          ],
+          "confidence": 0.6,
+          "evidence_ids": [
+            "0cc757f7d294709abdd8918db666e114200be47f4135f496e7b139768c5ecbb2",
+            "13cd8e203249538c97ff31ef906c946d945c8ce62ada5b0dff49ce146e98750f"
+          ]
+        }
+      },
+      "overall_assessment": {
+        "summary": "The forecast for RIG is neutral, with a stable US rig count and a decline in Canadian rig count being the key drivers."
+      },
+      "evidence": [
+        {
+          "evidence_id": "0cc757f7d294709abdd8918db666e114200be47f4135f496e7b139768c5ecbb2",
+          "event_cluster_id": "e4354a6690c2a68e",
+          "date": "2026-09-04",
+          "publisher": "UA.NEWS",
+          "title": "US oil rig count rises to 449 - UA.NEWS"
+        },
+        {
+          "evidence_id": "13cd8e203249538c97ff31ef906c946d945c8ce62ada5b0dff49ce146e98750f",
+          "event_cluster_id": "90084426ecef25f2",
+          "date": "2026-09-04",
+          "publisher": "Quantum Commodity Intelligence",
+          "title": "North American rig count falls by seven led by Canada - Quantum Commodity Intelligence"
+        }
+      ]
+    }
+  },
+  "forecast_metadata": {
+    "reference_price": 5.85,
+    "reference_date": "2026-09-04",
+    "forecast_horizon": "3_trading_days",
+    "news_evidence_count": 2,
+    "forecast_generated_at": "2026-09-06T17:45:13.106Z",
+    "llm_model": "meta-llama/llama-3.3-70b-instruct",
+    "validation_status": "passed"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 19
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 93
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 275538,
+        "inputTokens": 3584,
+        "outputTokens": 1389,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  },
+  "generatedAt": "2026-09-06T17:45:13.106Z"
+}

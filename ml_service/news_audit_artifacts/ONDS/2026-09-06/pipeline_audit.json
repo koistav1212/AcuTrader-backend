@@ -1,0 +1,36 @@
+{
+  "testMetadata": {
+    "symbol": "ONDS",
+    "executedAt": "2026-09-06T17:41:01.945Z"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 14
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 96
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 21579,
+        "inputTokens": 3498,
+        "outputTokens": 1372,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  }
+}

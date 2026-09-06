@@ -1,7 +1,7 @@
 {
   "success": true,
   "symbol": "NVDA",
-  "raw_article_count": 213,
+  "raw_article_count": 214,
   "valid_article_count": 100,
   "deduplicated_count": 0,
   "relevant_count": 95,
@@ -16,27 +16,27 @@
       "changePercent": 0.83607078,
       "volume": 134946800,
       "averageVolume": 159261450,
-      "marketCap": 5562502742000,
-      "forwardPE": 25.38,
-      "trailingPE": 29.16,
-      "pegRatio": 0.585,
-      "priceToSales": 18.36,
-      "priceToBook": 24.09,
       "revenue": 177837000000,
       "netIncome": 118010000000,
-      "profitMargin": 0.637,
-      "operatingMargin": 0.662,
-      "returnOnEquity": 1.172,
+      "profitMargin": 0.6636,
       "totalCash": 22443000000,
       "totalDebt": 33366000000,
-      "debtToEquity": null,
-      "sector": "TECHNOLOGY",
-      "industry": "SEMICONDUCTORS"
+      "debtToEquity": null
     },
     "MISSING": [
       "currentPrice",
+      "marketCap",
       "pe",
-      "evToEBITDA"
+      "forwardPE",
+      "trailingPE",
+      "pegRatio",
+      "priceToSales",
+      "priceToBook",
+      "evToEBITDA",
+      "operatingMargin",
+      "returnOnEquity",
+      "sector",
+      "industry"
     ],
     "DERIVED": {},
     "NOT_APPLICABLE": [],
@@ -84,8 +84,12 @@
       },
       "news_regime": "neutral",
       "news_summary": {
-        "weighted_sentiment": null,
-        "material_events": []
+        "weighted_sentiment": 0,
+        "material_events": [
+          "AWS Plans 2 Million More NVIDIA GPUs",
+          "Nvidia stock moves closer to all-time high",
+          "Nvidia Buys Hugging Face for $13B in Open-Source Power Grab"
+        ]
       },
       "market_context": {
         "daily_change": 1.91,
@@ -98,7 +102,7 @@
         "sma50": 210.56639939000007,
         "sma200": 196.6794500025,
         "rsi14": 53.67799083130764,
-        "bollinger_bands": {
+        "bollingerBands": {
           "upper": 232.04391791310394,
           "middle": 220.08200067499996,
           "lower": 208.12008343689598
@@ -106,17 +110,19 @@
         "volatility": 0.4438388610966118
       },
       "fundamental_context": {
-        "market_cap": 5562502742000,
-        "forward_pe": 25.38,
-        "trailing_pe": 29.16,
-        "peg_ratio": 0.585,
-        "price_to_sales": 18.36,
-        "price_to_book": 24.09,
+        "open": 231.089996,
+        "high": 234.75999,
+        "low": 229.63,
+        "previousClose": 228.45,
+        "change": 1.91,
+        "changePercent": 0.83607078,
+        "volume": 134946800,
+        "averageVolume": 159261450,
         "revenue": 177837000000,
-        "net_income": 118010000000,
-        "profit_margin": 0.637,
-        "operating_margin": 0.662,
-        "return_on_equity": 1.172
+        "netIncome": 118010000000,
+        "profitMargin": 0.6636,
+        "totalCash": 22443000000,
+        "totalDebt": 33366000000
       },
       "model_context": {
         "xgboost": {
@@ -137,148 +143,20 @@
       "forecast": {
         "day_1": {
           "date": "2026-09-07",
-          "direction": "neutral",
+          "direction": "bullish",
           "probabilities": {
-            "bull_case": 0.45,
-            "neutral_case": 0.45,
-            "bear_case": 0.1
+            "bull_case": 0.55,
+            "neutral_case": 0.3,
+            "bear_case": 0.15
           },
-          "expected_price": 232.15,
-          "expected_return_percent": 0.85,
+          "expected_price": 233.19,
+          "expected_return_percent": 1.23,
           "scenarios": {
             "bull": {
-              "target": 235.5,
+              "target": 236.5,
               "drivers": [
-                "Nvidia's strong earnings growth",
-                "Increasing demand for AI-related products"
-              ],
-              "evidence_ids": [
-                "6ec248ef47e9329bc5170aebe40090775cef19da519f22388f11e660218922ee",
-                "e24eba40ba747513e569ea307d2fa6d984ac8b15bc69ccbfbec982cf0b760f07"
-              ]
-            },
-            "base": {
-              "target": 230.5,
-              "drivers": [
-                "Stable market conditions",
-                "Nvidia's solid financials"
-              ],
-              "evidence_ids": [
-                "4de81909384a6f0c2d11d7d0a39d8e8745fe1c71c0c81e4010e48fc1f88be728",
-                "f636605ceff30934c3808d219e04bf3631ab64243e9d0ae795ae4106c0189156"
-              ]
-            },
-            "bear": {
-              "target": 225,
-              "drivers": [
-                "Potential market downturn",
-                "Increased competition in the semiconductor industry"
-              ],
-              "evidence_ids": [
-                "637367121ead04feb58095f160ef67374b0d60adc8475e63607ac3b894b9d403",
-                "f8ca7cc40efcaedbe1b24135ea4877e57b13c68275a1af9170d78155d0579238"
-              ]
-            }
-          },
-          "key_drivers": [
-            "Nvidia's earnings growth",
-            "Market sentiment",
-            "Competition in the semiconductor industry"
-          ],
-          "risk_flags": [
-            "Market volatility",
-            "Competition"
-          ],
-          "confidence": 0.6,
-          "evidence_ids": [
-            "6ec248ef47e9329bc5170aebe40090775cef19da519f22388f11e660218922ee",
-            "e24eba40ba747513e569ea307d2fa6d984ac8b15bc69ccbfbec982cf0b760f07",
-            "4de81909384a6f0c2d11d7d0a39d8e8745fe1c71c0c81e4010e48fc1f88be728",
-            "f636605ceff30934c3808d219e04bf3631ab64243e9d0ae795ae4106c0189156",
-            "637367121ead04feb58095f160ef67374b0d60adc8475e63607ac3b894b9d403",
-            "f8ca7cc40efcaedbe1b24135ea4877e57b13c68275a1af9170d78155d0579238"
-          ]
-        },
-        "day_2": {
-          "date": "2026-09-08",
-          "direction": "neutral",
-          "probabilities": {
-            "bull_case": 0.4,
-            "neutral_case": 0.5,
-            "bear_case": 0.1
-          },
-          "expected_price": 232.5,
-          "expected_return_percent": 1.05,
-          "scenarios": {
-            "bull": {
-              "target": 236,
-              "drivers": [
-                "Nvidia's strong earnings growth",
-                "Increasing demand for AI-related products"
-              ],
-              "evidence_ids": [
-                "6ec248ef47e9329bc5170aebe40090775cef19da519f22388f11e660218922ee",
-                "e24eba40ba747513e569ea307d2fa6d984ac8b15bc69ccbfbec982cf0b760f07"
-              ]
-            },
-            "base": {
-              "target": 231,
-              "drivers": [
-                "Stable market conditions",
-                "Nvidia's solid financials"
-              ],
-              "evidence_ids": [
-                "4de81909384a6f0c2d11d7d0a39d8e8745fe1c71c0c81e4010e48fc1f88be728",
-                "f636605ceff30934c3808d219e04bf3631ab64243e9d0ae795ae4106c0189156"
-              ]
-            },
-            "bear": {
-              "target": 226,
-              "drivers": [
-                "Potential market downturn",
-                "Increased competition in the semiconductor industry"
-              ],
-              "evidence_ids": [
-                "637367121ead04feb58095f160ef67374b0d60adc8475e63607ac3b894b9d403",
-                "f8ca7cc40efcaedbe1b24135ea4877e57b13c68275a1af9170d78155d0579238"
-              ]
-            }
-          },
-          "key_drivers": [
-            "Nvidia's earnings growth",
-            "Market sentiment",
-            "Competition in the semiconductor industry"
-          ],
-          "risk_flags": [
-            "Market volatility",
-            "Competition"
-          ],
-          "confidence": 0.55,
-          "evidence_ids": [
-            "6ec248ef47e9329bc5170aebe40090775cef19da519f22388f11e660218922ee",
-            "e24eba40ba747513e569ea307d2fa6d984ac8b15bc69ccbfbec982cf0b760f07",
-            "4de81909384a6f0c2d11d7d0a39d8e8745fe1c71c0c81e4010e48fc1f88be728",
-            "f636605ceff30934c3808d219e04bf3631ab64243e9d0ae795ae4106c0189156",
-            "637367121ead04feb58095f160ef67374b0d60adc8475e63607ac3b894b9d403",
-            "f8ca7cc40efcaedbe1b24135ea4877e57b13c68275a1af9170d78155d0579238"
-          ]
-        },
-        "day_3": {
-          "date": "2026-09-09",
-          "direction": "neutral",
-          "probabilities": {
-            "bull_case": 0.35,
-            "neutral_case": 0.55,
-            "bear_case": 0.1
-          },
-          "expected_price": 233,
-          "expected_return_percent": 1.25,
-          "scenarios": {
-            "bull": {
-              "target": 237,
-              "drivers": [
-                "Nvidia's strong earnings growth",
-                "Increasing demand for AI-related products"
+                "AWS Plans 2 Million More NVIDIA GPUs",
+                "Nvidia Buys Hugging Face for $13B in Open-Source Power Grab"
               ],
               "evidence_ids": [
                 "6ec248ef47e9329bc5170aebe40090775cef19da519f22388f11e660218922ee",
@@ -288,48 +166,146 @@
             "base": {
               "target": 231.5,
               "drivers": [
-                "Stable market conditions",
-                "Nvidia's solid financials"
+                "Nvidia stock moves closer to all-time high"
               ],
               "evidence_ids": [
-                "4de81909384a6f0c2d11d7d0a39d8e8745fe1c71c0c81e4010e48fc1f88be728",
-                "f636605ceff30934c3808d219e04bf3631ab64243e9d0ae795ae4106c0189156"
+                "d63bb0afe59b0ce866f55a375abdf153acfc28d8f7e6ebc899bfd8917e55961c"
               ]
             },
             "bear": {
-              "target": 227,
+              "target": 228.5,
               "drivers": [
-                "Potential market downturn",
-                "Increased competition in the semiconductor industry"
+                "No significant bearish news"
               ],
-              "evidence_ids": [
-                "637367121ead04feb58095f160ef67374b0d60adc8475e63607ac3b894b9d403",
-                "f8ca7cc40efcaedbe1b24135ea4877e57b13c68275a1af9170d78155d0579238"
-              ]
+              "evidence_ids": []
             }
           },
           "key_drivers": [
-            "Nvidia's earnings growth",
-            "Market sentiment",
-            "Competition in the semiconductor industry"
+            "AWS Plans 2 Million More NVIDIA GPUs",
+            "Nvidia Buys Hugging Face for $13B in Open-Source Power Grab",
+            "Nvidia stock moves closer to all-time high"
           ],
           "risk_flags": [
-            "Market volatility",
-            "Competition"
+            "High volatility"
           ],
-          "confidence": 0.5,
+          "confidence": 0.8,
           "evidence_ids": [
             "6ec248ef47e9329bc5170aebe40090775cef19da519f22388f11e660218922ee",
             "e24eba40ba747513e569ea307d2fa6d984ac8b15bc69ccbfbec982cf0b760f07",
-            "4de81909384a6f0c2d11d7d0a39d8e8745fe1c71c0c81e4010e48fc1f88be728",
-            "f636605ceff30934c3808d219e04bf3631ab64243e9d0ae795ae4106c0189156",
-            "637367121ead04feb58095f160ef67374b0d60adc8475e63607ac3b894b9d403",
-            "f8ca7cc40efcaedbe1b24135ea4877e57b13c68275a1af9170d78155d0579238"
+            "d63bb0afe59b0ce866f55a375abdf153acfc28d8f7e6ebc899bfd8917e55961c"
+          ]
+        },
+        "day_2": {
+          "date": "2026-09-08",
+          "direction": "bullish",
+          "probabilities": {
+            "bull_case": 0.6,
+            "neutral_case": 0.25,
+            "bear_case": 0.15
+          },
+          "expected_price": 235.19,
+          "expected_return_percent": 2.13,
+          "scenarios": {
+            "bull": {
+              "target": 238.5,
+              "drivers": [
+                "AWS Plans 2 Million More NVIDIA GPUs",
+                "Nvidia Buys Hugging Face for $13B in Open-Source Power Grab"
+              ],
+              "evidence_ids": [
+                "6ec248ef47e9329bc5170aebe40090775cef19da519f22388f11e660218922ee",
+                "e24eba40ba747513e569ea307d2fa6d984ac8b15bc69ccbfbec982cf0b760f07"
+              ]
+            },
+            "base": {
+              "target": 232.5,
+              "drivers": [
+                "Nvidia stock moves closer to all-time high"
+              ],
+              "evidence_ids": [
+                "d63bb0afe59b0ce866f55a375abdf153acfc28d8f7e6ebc899bfd8917e55961c"
+              ]
+            },
+            "bear": {
+              "target": 229.5,
+              "drivers": [
+                "No significant bearish news"
+              ],
+              "evidence_ids": []
+            }
+          },
+          "key_drivers": [
+            "AWS Plans 2 Million More NVIDIA GPUs",
+            "Nvidia Buys Hugging Face for $13B in Open-Source Power Grab",
+            "Nvidia stock moves closer to all-time high"
+          ],
+          "risk_flags": [
+            "High volatility"
+          ],
+          "confidence": 0.8,
+          "evidence_ids": [
+            "6ec248ef47e9329bc5170aebe40090775cef19da519f22388f11e660218922ee",
+            "e24eba40ba747513e569ea307d2fa6d984ac8b15bc69ccbfbec982cf0b760f07",
+            "d63bb0afe59b0ce866f55a375abdf153acfc28d8f7e6ebc899bfd8917e55961c"
+          ]
+        },
+        "day_3": {
+          "date": "2026-09-09",
+          "direction": "bullish",
+          "probabilities": {
+            "bull_case": 0.65,
+            "neutral_case": 0.2,
+            "bear_case": 0.15
+          },
+          "expected_price": 237.19,
+          "expected_return_percent": 2.93,
+          "scenarios": {
+            "bull": {
+              "target": 240.5,
+              "drivers": [
+                "AWS Plans 2 Million More NVIDIA GPUs",
+                "Nvidia Buys Hugging Face for $13B in Open-Source Power Grab"
+              ],
+              "evidence_ids": [
+                "6ec248ef47e9329bc5170aebe40090775cef19da519f22388f11e660218922ee",
+                "e24eba40ba747513e569ea307d2fa6d984ac8b15bc69ccbfbec982cf0b760f07"
+              ]
+            },
+            "base": {
+              "target": 234.5,
+              "drivers": [
+                "Nvidia stock moves closer to all-time high"
+              ],
+              "evidence_ids": [
+                "d63bb0afe59b0ce866f55a375abdf153acfc28d8f7e6ebc899bfd8917e55961c"
+              ]
+            },
+            "bear": {
+              "target": 230.5,
+              "drivers": [
+                "No significant bearish news"
+              ],
+              "evidence_ids": []
+            }
+          },
+          "key_drivers": [
+            "AWS Plans 2 Million More NVIDIA GPUs",
+            "Nvidia Buys Hugging Face for $13B in Open-Source Power Grab",
+            "Nvidia stock moves closer to all-time high"
+          ],
+          "risk_flags": [
+            "High volatility"
+          ],
+          "confidence": 0.8,
+          "evidence_ids": [
+            "6ec248ef47e9329bc5170aebe40090775cef19da519f22388f11e660218922ee",
+            "e24eba40ba747513e569ea307d2fa6d984ac8b15bc69ccbfbec982cf0b760f07",
+            "d63bb0afe59b0ce866f55a375abdf153acfc28d8f7e6ebc899bfd8917e55961c"
           ]
         }
       },
       "overall_assessment": {
-        "summary": "Nvidia's stock is expected to remain neutral in the short term, with a slight upward trend driven by strong earnings growth and increasing demand for AI-related products."
+        "summary": "The forecast is bullish for the next three days, driven by positive news and technical indicators."
       },
       "evidence": [
         {
@@ -347,32 +323,11 @@
           "title": "NVDA: Nvidia Buys Hugging Face for $13B in Open-Source Power Grab. It’s a Slam Dunk for Durant - TradingView"
         },
         {
-          "evidence_id": "4de81909384a6f0c2d11d7d0a39d8e8745fe1c71c0c81e4010e48fc1f88be728",
-          "event_cluster_id": "a8bbaa14f2a78232",
+          "evidence_id": "d63bb0afe59b0ce866f55a375abdf153acfc28d8f7e6ebc899bfd8917e55961c",
+          "event_cluster_id": "457c1250543f4731",
           "date": "2026-09-04",
-          "publisher": "TradingView",
-          "title": "Nasdaq Futures Edge Higher As Jobs Report Takes Center Stage: TSLA, LULU, ORCL, PL, NVDA, PLTR, RKLB In Focus - TradingView"
-        },
-        {
-          "evidence_id": "f636605ceff30934c3808d219e04bf3631ab64243e9d0ae795ae4106c0189156",
-          "event_cluster_id": "65055ad33810fd8e",
-          "date": "2026-09-04",
-          "publisher": "global.morningstar.com",
-          "title": "After Earnings, Is Nvidia Stock a Buy, a Sell, or Fairly Valued? - global.morningstar.com"
-        },
-        {
-          "evidence_id": "637367121ead04feb58095f160ef67374b0d60adc8475e63607ac3b894b9d403",
-          "event_cluster_id": "f25420dce0042705",
-          "date": "2026-09-04",
-          "publisher": "moomoo.com",
-          "title": "$NVIDIA (NVDA.US)$ first 1 minute candle sell signal appeared. - moomoo.com"
-        },
-        {
-          "evidence_id": "f8ca7cc40efcaedbe1b24135ea4877e57b13c68275a1af9170d78155d0579238",
-          "event_cluster_id": "cfa3841b697662ed",
-          "date": "2026-09-04",
-          "publisher": "moomoo.com",
-          "title": "huang donate to Nepal, nepal push NVDA to ATH.... - moomoo.com"
+          "publisher": "Yahoo Finance",
+          "title": "Nvidia stock moves closer to all-time high - Yahoo Finance"
         }
       ]
     }
@@ -381,15 +336,15 @@
     "reference_price": 230.36,
     "reference_date": "2026-09-04",
     "forecast_horizon": "3_trading_days",
-    "news_evidence_count": 6,
-    "forecast_generated_at": "2026-09-06T15:34:30.603Z",
+    "news_evidence_count": 3,
+    "forecast_generated_at": "2026-09-06T16:51:13.776Z",
     "llm_model": "meta-llama/llama-3.3-70b-instruct",
     "validation_status": "passed"
   },
   "pipelineStatus": {
     "market": {
       "status": "ready",
-      "featureCount": 24
+      "featureCount": 14
     },
     "ohlcv": {
       "status": "ready",
@@ -409,12 +364,12 @@
     "llm": {
       "status": "ready",
       "metadata": {
-        "durationMs": 124244,
-        "inputTokens": 3669,
-        "outputTokens": 2308,
+        "durationMs": 153906,
+        "inputTokens": 3598,
+        "outputTokens": 1790,
         "model": "meta-llama/llama-3.3-70b-instruct"
       }
     }
   },
-  "generatedAt": "2026-09-06T15:34:30.603Z"
+  "generatedAt": "2026-09-06T16:51:13.776Z"
 }

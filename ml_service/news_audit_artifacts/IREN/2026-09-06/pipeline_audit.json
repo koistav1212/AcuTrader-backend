@@ -1,0 +1,36 @@
+{
+  "testMetadata": {
+    "symbol": "IREN",
+    "executedAt": "2026-09-06T18:03:47.796Z"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 19
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1204
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 98
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 64938,
+        "inputTokens": 3606,
+        "outputTokens": 1470,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  }
+}

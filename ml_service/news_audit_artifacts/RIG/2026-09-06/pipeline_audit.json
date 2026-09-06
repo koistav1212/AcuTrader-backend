@@ -1,0 +1,36 @@
+{
+  "testMetadata": {
+    "symbol": "RIG",
+    "executedAt": "2026-09-06T17:45:13.106Z"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 19
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 93
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 275538,
+        "inputTokens": 3584,
+        "outputTokens": 1389,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  }
+}

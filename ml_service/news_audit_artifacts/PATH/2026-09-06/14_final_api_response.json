@@ -1,0 +1,348 @@
+{
+  "success": true,
+  "symbol": "PATH",
+  "raw_article_count": 219,
+  "valid_article_count": 100,
+  "deduplicated_count": 0,
+  "relevant_count": 86,
+  "final_article_count": 86,
+  "market_context": {
+    "AVAILABLE": {
+      "open": 16.24,
+      "high": 16.71,
+      "low": 14.77,
+      "previousClose": 18.22,
+      "change": -3.03,
+      "changePercent": -16.63008,
+      "volume": 104480900,
+      "averageVolume": 66349510,
+      "revenue": 418382000,
+      "netIncome": 22525000,
+      "profitMargin": 0.0538,
+      "totalCash": 632195000
+    },
+    "MISSING": [
+      "currentPrice",
+      "marketCap",
+      "pe",
+      "forwardPE",
+      "trailingPE",
+      "pegRatio",
+      "priceToSales",
+      "priceToBook",
+      "evToEBITDA",
+      "operatingMargin",
+      "returnOnEquity",
+      "totalDebt",
+      "debtToEquity",
+      "sector",
+      "industry"
+    ],
+    "DERIVED": {},
+    "NOT_APPLICABLE": [],
+    "STALE": []
+  },
+  "technical_context": {
+    "currentPrice": 15.19,
+    "sma20": 16.68,
+    "sma50": 13.8946,
+    "sma200": 12.891900010000004,
+    "ema9": 17.186714537387246,
+    "ema21": 16.377149196962847,
+    "rsi14": 44.87179487179487,
+    "macd": {
+      "macdLine": 1.0472213244792368,
+      "signalLine": 0,
+      "histogram": 0
+    },
+    "bollingerBands": {
+      "upper": 18.91761480152416,
+      "middle": 16.68,
+      "lower": 14.442385198475842
+    },
+    "atr14": 0.9588571428571422,
+    "volatility": 0.8153665124676104,
+    "momentum": -0.025032092426187456,
+    "volumeRatio": 1.5289885194409845
+  },
+  "numerical_evidence": {
+    "news_volume": 86,
+    "current_price": 15.19,
+    "current_volatility": 0.8153665124676104,
+    "trend_regime": "Bullish",
+    "volume_anomaly": 1.5289885194409845
+  },
+  "models": {
+    "xgboost": null,
+    "newsLstm": null,
+    "llmSynthesis": {
+      "symbol": "PATH",
+      "asOf": "2026-09-04",
+      "status": "ready",
+      "data_validation": {
+        "issues": []
+      },
+      "news_regime": "neutral",
+      "news_summary": {
+        "weighted_sentiment": 0,
+        "material_events": [
+          "UiPath (PATH) Grew ARR 12% as Net Retention Rate Reached 109%. Can Agentic Automation Reaccelerate Expansion?",
+          "PATH Q2 Deep Dive: AI Adoption, Platform Consolidation, and Execution Challenges Shape Outlook",
+          "UiPath Reports Second Quarter Fiscal 2027 Financial Results"
+        ]
+      },
+      "market_context": {
+        "daily_change": -3.03,
+        "daily_change_percent": -16.63008,
+        "volume": 104480900,
+        "volume_vs_average": 1.5747049224628789
+      },
+      "technical_context": {
+        "sma20": 16.68,
+        "sma50": 13.8946,
+        "sma200": 12.891900010000004,
+        "rsi14": 44.87179487179487,
+        "bollingerBands": {
+          "upper": 18.91761480152416,
+          "middle": 16.68,
+          "lower": 14.442385198475842
+        },
+        "volatility": 0.8153665124676104
+      },
+      "fundamental_context": {
+        "open": 16.24,
+        "high": 16.71,
+        "low": 14.77,
+        "previousClose": 18.22,
+        "change": -3.03,
+        "changePercent": -16.63008,
+        "volume": 104480900,
+        "averageVolume": 66349510,
+        "revenue": 418382000,
+        "netIncome": 22525000,
+        "profitMargin": 0.0538,
+        "totalCash": 632195000
+      },
+      "model_context": {
+        "xgboost": {
+          "available": false,
+          "output": null
+        },
+        "downstream_model": {
+          "available": false,
+          "output": null
+        },
+        "model_agreement": "unavailable",
+        "model_disagreements": []
+      },
+      "news_market_interaction": {
+        "sentiment": 0,
+        "impact": 0
+      },
+      "forecast": {
+        "day_1": {
+          "date": "2026-09-07",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.4,
+            "neutral_case": 0.6,
+            "bear_case": 0
+          },
+          "expected_price": 15.19,
+          "expected_return_percent": 0,
+          "scenarios": {
+            "bull": {
+              "target": 16,
+              "drivers": [
+                "ARR growth",
+                "Net Retention Rate"
+              ],
+              "evidence_ids": [
+                "32b32cf5ddf4f48a177f6f6b6490421a9e57fda019c2c7e674e975f2ce3603c5"
+              ]
+            },
+            "base": {
+              "target": 15.19,
+              "drivers": [
+                "Current market conditions"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 14,
+              "drivers": [
+                "Execution challenges"
+              ],
+              "evidence_ids": [
+                "b85ba1a6d85833fab8a6d7dcd00c88b924607b0e715fcaf1f8034cc71ed01146"
+              ]
+            }
+          },
+          "key_drivers": [
+            "ARR growth",
+            "Net Retention Rate",
+            "Execution challenges"
+          ],
+          "risk_flags": [
+            "High volatility"
+          ],
+          "confidence": 0.8,
+          "evidence_ids": [
+            "32b32cf5ddf4f48a177f6f6b6490421a9e57fda019c2c7e674e975f2ce3603c5",
+            "b85ba1a6d85833fab8a6d7dcd00c88b924607b0e715fcaf1f8034cc71ed01146"
+          ]
+        },
+        "day_2": {
+          "date": "2026-09-08",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.4,
+            "neutral_case": 0.6,
+            "bear_case": 0
+          },
+          "expected_price": 15.19,
+          "expected_return_percent": 0,
+          "scenarios": {
+            "bull": {
+              "target": 16.2,
+              "drivers": [
+                "AI-led platform expansion"
+              ],
+              "evidence_ids": [
+                "f0caa28b47536e3b658882ebb0cb60726e39f3bfb8e7a2076232d4ef021a5870"
+              ]
+            },
+            "base": {
+              "target": 15.19,
+              "drivers": [
+                "Current market conditions"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 13.8,
+              "drivers": [
+                "Execution challenges"
+              ],
+              "evidence_ids": [
+                "b85ba1a6d85833fab8a6d7dcd00c88b924607b0e715fcaf1f8034cc71ed01146"
+              ]
+            }
+          },
+          "key_drivers": [
+            "AI-led platform expansion",
+            "Execution challenges"
+          ],
+          "risk_flags": [
+            "High volatility"
+          ],
+          "confidence": 0.8,
+          "evidence_ids": [
+            "f0caa28b47536e3b658882ebb0cb60726e39f3bfb8e7a2076232d4ef021a5870",
+            "b85ba1a6d85833fab8a6d7dcd00c88b924607b0e715fcaf1f8034cc71ed01146"
+          ]
+        },
+        "day_3": {
+          "date": "2026-09-09",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.4,
+            "neutral_case": 0.6,
+            "bear_case": 0
+          },
+          "expected_price": 15.19,
+          "expected_return_percent": 0,
+          "scenarios": {
+            "bull": {
+              "target": 16.4,
+              "drivers": [
+                "ARR growth",
+                "Net Retention Rate"
+              ],
+              "evidence_ids": [
+                "32b32cf5ddf4f48a177f6f6b6490421a9e57fda019c2c7e674e975f2ce3603c5"
+              ]
+            },
+            "base": {
+              "target": 15.19,
+              "drivers": [
+                "Current market conditions"
+              ],
+              "evidence_ids": []
+            },
+            "bear": {
+              "target": 13.6,
+              "drivers": [
+                "Execution challenges"
+              ],
+              "evidence_ids": [
+                "b85ba1a6d85833fab8a6d7dcd00c88b924607b0e715fcaf1f8034cc71ed01146"
+              ]
+            }
+          },
+          "key_drivers": [
+            "ARR growth",
+            "Net Retention Rate",
+            "Execution challenges"
+          ],
+          "risk_flags": [
+            "High volatility"
+          ],
+          "confidence": 0.8,
+          "evidence_ids": [
+            "32b32cf5ddf4f48a177f6f6b6490421a9e57fda019c2c7e674e975f2ce3603c5",
+            "b85ba1a6d85833fab8a6d7dcd00c88b924607b0e715fcaf1f8034cc71ed01146"
+          ]
+        }
+      },
+      "overall_assessment": {
+        "summary": "The stock is expected to remain neutral in the short term, with a potential upside driven by ARR growth and Net Retention Rate, but also facing execution challenges."
+      },
+      "evidence": [
+        "32b32cf5ddf4f48a177f6f6b6490421a9e57fda019c2c7e674e975f2ce3603c5",
+        "b85ba1a6d85833fab8a6d7dcd00c88b924607b0e715fcaf1f8034cc71ed01146",
+        "f0caa28b47536e3b658882ebb0cb60726e39f3bfb8e7a2076232d4ef021a5870"
+      ]
+    }
+  },
+  "forecast_metadata": {
+    "reference_price": 15.19,
+    "reference_date": "2026-09-04",
+    "forecast_horizon": "3_trading_days",
+    "news_evidence_count": 3,
+    "forecast_generated_at": "2026-09-06T16:54:58.290Z",
+    "llm_model": "meta-llama/llama-3.3-70b-instruct",
+    "validation_status": "passed"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 12
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 86
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 44096,
+        "inputTokens": 3543,
+        "outputTokens": 1381,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  },
+  "generatedAt": "2026-09-06T16:54:58.290Z"
+}
