@@ -13,7 +13,7 @@ async function runTest() {
     }
   }
 
-  const symbol = 'AAPL';
+  const symbol = 'NVDA';
   console.log(`Testing pipeline for ${symbol}...`);
 
   const startTime = Date.now();

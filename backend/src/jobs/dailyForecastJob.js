@@ -10,25 +10,17 @@ const MAX_CONCURRENT_TICKERS = 1;
 /**
  * Runs an array of tasks with a concurrency limit
  */
-async function runWithConcurrency(items, limit, asyncFn) {
-  const results = [];
-  const executing = [];
-  for (const item of items) {
-    const p = Promise.resolve().then(() => asyncFn(item));
-    results.push(p);
-    
-    if (limit <= items.length) {
-      const e = p.then(() => executing.splice(executing.indexOf(e), 1));
-      executing.push(e);
-      if (executing.length >= limit) {
-        await Promise.race(executing);
-      }
-    }
-  }
-  return Promise.all(results);
-}
+// Concurrency removed. We use strict sequential processing.
+
+let isBatchRunning = false;
 
 export async function runDailyResearchBatch() {
+  if (isBatchRunning) {
+    console.warn(`[ResearchCron] Batch is already running. Skipping this cron execution.`);
+    return;
+  }
+  
+  isBatchRunning = true;
   const analysisDateStr = new Date().toISOString().split('T')[0];
   const analysisDate = new Date(analysisDateStr);
   const pipelineVersion = 'v1.0';
@@ -66,7 +58,8 @@ export async function runDailyResearchBatch() {
     const batchDir = path.join(ML_AUDIT_BASE, `${analysisDateStr}_batch`);
     await fs.mkdir(batchDir, { recursive: true });
 
-    const results = await runWithConcurrency(symbols, MAX_CONCURRENT_TICKERS, async (symbol) => {
+    const results = [];
+    for (const symbol of symbols) {
       console.log(`[ResearchPipeline] ${symbol} started`);
       const startTime = Date.now();
       let status = "FAILED";
@@ -89,7 +82,8 @@ export async function runDailyResearchBatch() {
           });
         } else if (run.status === "SUCCESS") {
           console.log(`[ResearchPipeline] ${symbol} already succeeded today. Skipping.`);
-          return { symbol, status: "SUCCESS", durationMs: 0 };
+          results.push({ symbol, status: "SUCCESS", durationMs: 0 });
+          continue;
         } else {
           // Retry
           run = await AnalysisRun.findByIdAndUpdate(run._id, {
@@ -119,8 +113,8 @@ export async function runDailyResearchBatch() {
       
       const durationMs = Date.now() - startTime;
       console.log(`[ResearchPipeline] ${symbol} completed with status: ${status} in ${durationMs}ms`);
-      return { symbol, status, durationMs };
-    });
+      results.push({ symbol, status, durationMs });
+    }
     
     const summary = {
       analysisDate: analysisDateStr,
@@ -145,6 +139,8 @@ export async function runDailyResearchBatch() {
     
   } catch (error) {
     console.error('[ResearchCron] Fatal error during batch execution:', error);
+  } finally {
+    isBatchRunning = false;
   }
 }
 

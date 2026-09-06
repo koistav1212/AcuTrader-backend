@@ -100,6 +100,8 @@ class LLMProvider {
       } catch (error) {
         clearTimeout(timeout);
         const classifiedError = error instanceof LLMError ? error : this._classifyError(error, providerName);
+        const statusStr = error.statusCode || error.status || "N/A";
+        console.warn(`[LLMProvider][${providerName}] HTTP Status: ${statusStr} | Error: ${error.message || error}`);
         
         // Don't retry auth errors or context too large
         if (classifiedError.type === LLM_ERRORS.PROVIDER_AUTH_ERROR || 

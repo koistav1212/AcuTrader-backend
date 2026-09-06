@@ -1,6 +1,5 @@
 import marketDataService from "../market/MarketDataService.js";
 import newsService from "../news/news.service.js";
-import forecastService from "../forecast/forecast.service.js";
 import llmService from "../llm/llm.service.js";
 import { computeTechnicals, computeWeeklyContext } from "./technical.util.js";
 import fs from 'fs/promises';
@@ -194,16 +193,7 @@ class ResearchService {
       audit
     };
     
-    // Attempt downstream forecast, but don't block LLM if it fails
-    const forecastRes = await forecastService.getForecastForSymbol(
-      symbol,
-      history,
-      validNewsArticles,
-      technicals,
-      fundamentals.AVAILABLE,
-      forecastPayload
-    );
-
+    // Deprecated python downstream model calls removed
     const researchContext = {
       symbol,
       canonicalAsOf,
@@ -218,8 +208,8 @@ class ResearchService {
         metadata: news?.metadata || {}
       },
       models: {
-        xgboost: forecastRes?.success ? forecastRes.forecast : null,
-        downstream: forecastRes?.success ? forecastRes.downstream : null
+        xgboost: null,
+        downstream: null
       }
     };
 
@@ -270,8 +260,8 @@ class ResearchService {
       },
       
       models: {
-        xgboost: forecastRes?.forecast || null,
-        newsLstm: forecastRes?.news_context || null,
+        xgboost: null,
+        newsLstm: null,
         llmSynthesis: llmSynthesis || null
       },
 
@@ -294,8 +284,7 @@ class ResearchService {
         symbol,
         executedAt: generatedAt,
       },
-      pipelineStatus,
-      forecastRes
+      pipelineStatus
     };
 
     try {
@@ -327,8 +316,8 @@ class ResearchService {
                 technical_context: technicals,
                 fundamental_context: fundamentals,
                 news_context: news,
-                model_outputs: forecastRes?.forecast || null,
-                forecast: forecastRes,
+                model_outputs: null,
+                forecast: null,
                 llm_context: llmSynthesis ? { llmSynthesis } : null,
                 llm_output: llmSynthesis || null,
                 data_quality: pipelineStatus

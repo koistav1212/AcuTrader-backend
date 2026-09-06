@@ -1,23 +1,26 @@
+import fs from 'fs/promises';
+import path from 'path';
 import AnalysisResult from "../../models/analysisResult.model.js";
+
+const FORECAST_DIR = path.join(process.cwd(), 'data', 'forecasts');
 
 export async function getResearch(req, res, next) {
   try {
     const { symbol } = req.params;
+    if (!symbol) return res.status(400).json({ success: false, message: "Symbol is required" });
     
-    // Fetch latest analysis result for the symbol
-    const result = await AnalysisResult.findOne({ symbol: symbol.toUpperCase() })
-      .sort({ analysis_date: -1 })
-      .lean();
-
-    if (!result) {
+    const latestFilePath = path.join(FORECAST_DIR, symbol.toUpperCase(), 'latest.json');
+    try {
+      const dataStr = await fs.readFile(latestFilePath, 'utf-8');
+      const data = JSON.parse(dataStr);
+      return res.json(data);
+    } catch (err) {
       return res.status(200).json({ 
         success: false, 
         status: "not_ready",
         message: "No daily forecast available for this symbol. The nightly pipeline has not processed it yet." 
       });
     }
-
-    res.json({ success: true, data: result });
   } catch (error) {
     next(error);
   }
@@ -31,18 +34,18 @@ export async function getResearchBatch(req, res, next) {
     }
     
     const uppercaseSymbols = symbols.map(s => s.toUpperCase());
-    
-    // Fetch latest for each symbol.
-    // A simple approach is to use aggregation to get the latest per symbol.
-    const results = await AnalysisResult.aggregate([
-      { $match: { symbol: { $in: uppercaseSymbols } } },
-      { $sort: { analysis_date: -1 } },
-      { $group: {
-          _id: "$symbol",
-          latestResult: { $first: "$$ROOT" }
-      }},
-      { $replaceRoot: { newRoot: "$latestResult" } }
-    ]);
+    const results = [];
+
+    for (const symbol of uppercaseSymbols) {
+      const latestFilePath = path.join(FORECAST_DIR, symbol, 'latest.json');
+      try {
+        const dataStr = await fs.readFile(latestFilePath, 'utf-8');
+        const data = JSON.parse(dataStr);
+        results.push(data);
+      } catch (err) {
+        // Skip missing forecasts
+      }
+    }
 
     res.json({ success: true, data: results });
   } catch (error) {

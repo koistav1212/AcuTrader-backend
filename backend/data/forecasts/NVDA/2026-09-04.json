@@ -1,0 +1,420 @@
+{
+  "success": true,
+  "symbol": "NVDA",
+  "raw_article_count": 213,
+  "valid_article_count": 100,
+  "deduplicated_count": 0,
+  "relevant_count": 95,
+  "final_article_count": 95,
+  "market_context": {
+    "AVAILABLE": {
+      "open": 231.089996,
+      "high": 234.75999,
+      "low": 229.63,
+      "previousClose": 228.45,
+      "change": 1.91,
+      "changePercent": 0.83607078,
+      "volume": 134946800,
+      "averageVolume": 159261450,
+      "marketCap": 5562502742000,
+      "forwardPE": 25.38,
+      "trailingPE": 29.16,
+      "pegRatio": 0.585,
+      "priceToSales": 18.36,
+      "priceToBook": 24.09,
+      "revenue": 177837000000,
+      "netIncome": 118010000000,
+      "profitMargin": 0.637,
+      "operatingMargin": 0.662,
+      "returnOnEquity": 1.172,
+      "totalCash": 22443000000,
+      "totalDebt": 33366000000,
+      "debtToEquity": null,
+      "sector": "TECHNOLOGY",
+      "industry": "SEMICONDUCTORS"
+    },
+    "MISSING": [
+      "currentPrice",
+      "pe",
+      "evToEBITDA"
+    ],
+    "DERIVED": {},
+    "NOT_APPLICABLE": [],
+    "STALE": []
+  },
+  "technical_context": {
+    "currentPrice": 230.36,
+    "sma20": 220.08200067499996,
+    "sma50": 210.56639939000007,
+    "sma200": 196.6794500025,
+    "ema9": 222.88834447573302,
+    "ema21": 219.0416011952059,
+    "rsi14": 53.67799083130764,
+    "macd": {
+      "macdLine": 3.83123305903581,
+      "signalLine": 0,
+      "histogram": 0
+    },
+    "bollingerBands": {
+      "upper": 232.04391791310394,
+      "middle": 220.08200067499996,
+      "lower": 208.12008343689598
+    },
+    "atr14": 7.619283892857147,
+    "volatility": 0.4438388610966118,
+    "momentum": 0.0483297966537819,
+    "volumeRatio": 1.0469122454942141
+  },
+  "numerical_evidence": {
+    "news_volume": 95,
+    "current_price": 230.36,
+    "current_volatility": 0.4438388610966118,
+    "trend_regime": "Bullish",
+    "volume_anomaly": 1.0469122454942141
+  },
+  "models": {
+    "xgboost": null,
+    "newsLstm": null,
+    "llmSynthesis": {
+      "symbol": "NVDA",
+      "asOf": "2026-09-04",
+      "status": "ready",
+      "data_validation": {
+        "issues": []
+      },
+      "news_regime": "neutral",
+      "news_summary": {
+        "weighted_sentiment": null,
+        "material_events": []
+      },
+      "market_context": {
+        "daily_change": 1.91,
+        "daily_change_percent": 0.83607078,
+        "volume": 134946800,
+        "volume_vs_average": 0.847328716396843
+      },
+      "technical_context": {
+        "sma20": 220.08200067499996,
+        "sma50": 210.56639939000007,
+        "sma200": 196.6794500025,
+        "rsi14": 53.67799083130764,
+        "bollinger_bands": {
+          "upper": 232.04391791310394,
+          "middle": 220.08200067499996,
+          "lower": 208.12008343689598
+        },
+        "volatility": 0.4438388610966118
+      },
+      "fundamental_context": {
+        "market_cap": 5562502742000,
+        "forward_pe": 25.38,
+        "trailing_pe": 29.16,
+        "peg_ratio": 0.585,
+        "price_to_sales": 18.36,
+        "price_to_book": 24.09,
+        "revenue": 177837000000,
+        "net_income": 118010000000,
+        "profit_margin": 0.637,
+        "operating_margin": 0.662,
+        "return_on_equity": 1.172
+      },
+      "model_context": {
+        "xgboost": {
+          "available": false,
+          "output": null
+        },
+        "downstream_model": {
+          "available": false,
+          "output": null
+        },
+        "model_agreement": "unavailable",
+        "model_disagreements": []
+      },
+      "news_market_interaction": {
+        "sentiment": 0,
+        "impact": 0
+      },
+      "forecast": {
+        "day_1": {
+          "date": "2026-09-07",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.45,
+            "neutral_case": 0.45,
+            "bear_case": 0.1
+          },
+          "expected_price": 232.15,
+          "expected_return_percent": 0.85,
+          "scenarios": {
+            "bull": {
+              "target": 235.5,
+              "drivers": [
+                "Nvidia's strong earnings growth",
+                "Increasing demand for AI-related products"
+              ],
+              "evidence_ids": [
+                "6ec248ef47e9329bc5170aebe40090775cef19da519f22388f11e660218922ee",
+                "e24eba40ba747513e569ea307d2fa6d984ac8b15bc69ccbfbec982cf0b760f07"
+              ]
+            },
+            "base": {
+              "target": 230.5,
+              "drivers": [
+                "Stable market conditions",
+                "Nvidia's solid financials"
+              ],
+              "evidence_ids": [
+                "4de81909384a6f0c2d11d7d0a39d8e8745fe1c71c0c81e4010e48fc1f88be728",
+                "f636605ceff30934c3808d219e04bf3631ab64243e9d0ae795ae4106c0189156"
+              ]
+            },
+            "bear": {
+              "target": 225,
+              "drivers": [
+                "Potential market downturn",
+                "Increased competition in the semiconductor industry"
+              ],
+              "evidence_ids": [
+                "637367121ead04feb58095f160ef67374b0d60adc8475e63607ac3b894b9d403",
+                "f8ca7cc40efcaedbe1b24135ea4877e57b13c68275a1af9170d78155d0579238"
+              ]
+            }
+          },
+          "key_drivers": [
+            "Nvidia's earnings growth",
+            "Market sentiment",
+            "Competition in the semiconductor industry"
+          ],
+          "risk_flags": [
+            "Market volatility",
+            "Competition"
+          ],
+          "confidence": 0.6,
+          "evidence_ids": [
+            "6ec248ef47e9329bc5170aebe40090775cef19da519f22388f11e660218922ee",
+            "e24eba40ba747513e569ea307d2fa6d984ac8b15bc69ccbfbec982cf0b760f07",
+            "4de81909384a6f0c2d11d7d0a39d8e8745fe1c71c0c81e4010e48fc1f88be728",
+            "f636605ceff30934c3808d219e04bf3631ab64243e9d0ae795ae4106c0189156",
+            "637367121ead04feb58095f160ef67374b0d60adc8475e63607ac3b894b9d403",
+            "f8ca7cc40efcaedbe1b24135ea4877e57b13c68275a1af9170d78155d0579238"
+          ]
+        },
+        "day_2": {
+          "date": "2026-09-08",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.4,
+            "neutral_case": 0.5,
+            "bear_case": 0.1
+          },
+          "expected_price": 232.5,
+          "expected_return_percent": 1.05,
+          "scenarios": {
+            "bull": {
+              "target": 236,
+              "drivers": [
+                "Nvidia's strong earnings growth",
+                "Increasing demand for AI-related products"
+              ],
+              "evidence_ids": [
+                "6ec248ef47e9329bc5170aebe40090775cef19da519f22388f11e660218922ee",
+                "e24eba40ba747513e569ea307d2fa6d984ac8b15bc69ccbfbec982cf0b760f07"
+              ]
+            },
+            "base": {
+              "target": 231,
+              "drivers": [
+                "Stable market conditions",
+                "Nvidia's solid financials"
+              ],
+              "evidence_ids": [
+                "4de81909384a6f0c2d11d7d0a39d8e8745fe1c71c0c81e4010e48fc1f88be728",
+                "f636605ceff30934c3808d219e04bf3631ab64243e9d0ae795ae4106c0189156"
+              ]
+            },
+            "bear": {
+              "target": 226,
+              "drivers": [
+                "Potential market downturn",
+                "Increased competition in the semiconductor industry"
+              ],
+              "evidence_ids": [
+                "637367121ead04feb58095f160ef67374b0d60adc8475e63607ac3b894b9d403",
+                "f8ca7cc40efcaedbe1b24135ea4877e57b13c68275a1af9170d78155d0579238"
+              ]
+            }
+          },
+          "key_drivers": [
+            "Nvidia's earnings growth",
+            "Market sentiment",
+            "Competition in the semiconductor industry"
+          ],
+          "risk_flags": [
+            "Market volatility",
+            "Competition"
+          ],
+          "confidence": 0.55,
+          "evidence_ids": [
+            "6ec248ef47e9329bc5170aebe40090775cef19da519f22388f11e660218922ee",
+            "e24eba40ba747513e569ea307d2fa6d984ac8b15bc69ccbfbec982cf0b760f07",
+            "4de81909384a6f0c2d11d7d0a39d8e8745fe1c71c0c81e4010e48fc1f88be728",
+            "f636605ceff30934c3808d219e04bf3631ab64243e9d0ae795ae4106c0189156",
+            "637367121ead04feb58095f160ef67374b0d60adc8475e63607ac3b894b9d403",
+            "f8ca7cc40efcaedbe1b24135ea4877e57b13c68275a1af9170d78155d0579238"
+          ]
+        },
+        "day_3": {
+          "date": "2026-09-09",
+          "direction": "neutral",
+          "probabilities": {
+            "bull_case": 0.35,
+            "neutral_case": 0.55,
+            "bear_case": 0.1
+          },
+          "expected_price": 233,
+          "expected_return_percent": 1.25,
+          "scenarios": {
+            "bull": {
+              "target": 237,
+              "drivers": [
+                "Nvidia's strong earnings growth",
+                "Increasing demand for AI-related products"
+              ],
+              "evidence_ids": [
+                "6ec248ef47e9329bc5170aebe40090775cef19da519f22388f11e660218922ee",
+                "e24eba40ba747513e569ea307d2fa6d984ac8b15bc69ccbfbec982cf0b760f07"
+              ]
+            },
+            "base": {
+              "target": 231.5,
+              "drivers": [
+                "Stable market conditions",
+                "Nvidia's solid financials"
+              ],
+              "evidence_ids": [
+                "4de81909384a6f0c2d11d7d0a39d8e8745fe1c71c0c81e4010e48fc1f88be728",
+                "f636605ceff30934c3808d219e04bf3631ab64243e9d0ae795ae4106c0189156"
+              ]
+            },
+            "bear": {
+              "target": 227,
+              "drivers": [
+                "Potential market downturn",
+                "Increased competition in the semiconductor industry"
+              ],
+              "evidence_ids": [
+                "637367121ead04feb58095f160ef67374b0d60adc8475e63607ac3b894b9d403",
+                "f8ca7cc40efcaedbe1b24135ea4877e57b13c68275a1af9170d78155d0579238"
+              ]
+            }
+          },
+          "key_drivers": [
+            "Nvidia's earnings growth",
+            "Market sentiment",
+            "Competition in the semiconductor industry"
+          ],
+          "risk_flags": [
+            "Market volatility",
+            "Competition"
+          ],
+          "confidence": 0.5,
+          "evidence_ids": [
+            "6ec248ef47e9329bc5170aebe40090775cef19da519f22388f11e660218922ee",
+            "e24eba40ba747513e569ea307d2fa6d984ac8b15bc69ccbfbec982cf0b760f07",
+            "4de81909384a6f0c2d11d7d0a39d8e8745fe1c71c0c81e4010e48fc1f88be728",
+            "f636605ceff30934c3808d219e04bf3631ab64243e9d0ae795ae4106c0189156",
+            "637367121ead04feb58095f160ef67374b0d60adc8475e63607ac3b894b9d403",
+            "f8ca7cc40efcaedbe1b24135ea4877e57b13c68275a1af9170d78155d0579238"
+          ]
+        }
+      },
+      "overall_assessment": {
+        "summary": "Nvidia's stock is expected to remain neutral in the short term, with a slight upward trend driven by strong earnings growth and increasing demand for AI-related products."
+      },
+      "evidence": [
+        {
+          "evidence_id": "6ec248ef47e9329bc5170aebe40090775cef19da519f22388f11e660218922ee",
+          "event_cluster_id": "5d58b6a9ed319e9e",
+          "date": "2026-09-04",
+          "publisher": "Yahoo Finance",
+          "title": "AWS Plans 2 Million More NVIDIA GPUs. Is This Better News for AMZN’s Cloud Growth or NVDA’s Backlog? - Yahoo Finance"
+        },
+        {
+          "evidence_id": "e24eba40ba747513e569ea307d2fa6d984ac8b15bc69ccbfbec982cf0b760f07",
+          "event_cluster_id": "4e82d3ae2b86fcd7",
+          "date": "2026-09-04",
+          "publisher": "TradingView",
+          "title": "NVDA: Nvidia Buys Hugging Face for $13B in Open-Source Power Grab. It’s a Slam Dunk for Durant - TradingView"
+        },
+        {
+          "evidence_id": "4de81909384a6f0c2d11d7d0a39d8e8745fe1c71c0c81e4010e48fc1f88be728",
+          "event_cluster_id": "a8bbaa14f2a78232",
+          "date": "2026-09-04",
+          "publisher": "TradingView",
+          "title": "Nasdaq Futures Edge Higher As Jobs Report Takes Center Stage: TSLA, LULU, ORCL, PL, NVDA, PLTR, RKLB In Focus - TradingView"
+        },
+        {
+          "evidence_id": "f636605ceff30934c3808d219e04bf3631ab64243e9d0ae795ae4106c0189156",
+          "event_cluster_id": "65055ad33810fd8e",
+          "date": "2026-09-04",
+          "publisher": "global.morningstar.com",
+          "title": "After Earnings, Is Nvidia Stock a Buy, a Sell, or Fairly Valued? - global.morningstar.com"
+        },
+        {
+          "evidence_id": "637367121ead04feb58095f160ef67374b0d60adc8475e63607ac3b894b9d403",
+          "event_cluster_id": "f25420dce0042705",
+          "date": "2026-09-04",
+          "publisher": "moomoo.com",
+          "title": "$NVIDIA (NVDA.US)$ first 1 minute candle sell signal appeared. - moomoo.com"
+        },
+        {
+          "evidence_id": "f8ca7cc40efcaedbe1b24135ea4877e57b13c68275a1af9170d78155d0579238",
+          "event_cluster_id": "cfa3841b697662ed",
+          "date": "2026-09-04",
+          "publisher": "moomoo.com",
+          "title": "huang donate to Nepal, nepal push NVDA to ATH.... - moomoo.com"
+        }
+      ]
+    }
+  },
+  "forecast_metadata": {
+    "reference_price": 230.36,
+    "reference_date": "2026-09-04",
+    "forecast_horizon": "3_trading_days",
+    "news_evidence_count": 6,
+    "forecast_generated_at": "2026-09-06T15:34:30.603Z",
+    "llm_model": "meta-llama/llama-3.3-70b-instruct",
+    "validation_status": "passed"
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 24
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 95
+    },
+    "forecast": {
+      "status": "ready"
+    },
+    "llm": {
+      "status": "ready",
+      "metadata": {
+        "durationMs": 124244,
+        "inputTokens": 3669,
+        "outputTokens": 2308,
+        "model": "meta-llama/llama-3.3-70b-instruct"
+      }
+    }
+  },
+  "generatedAt": "2026-09-06T15:34:30.603Z"
+}
