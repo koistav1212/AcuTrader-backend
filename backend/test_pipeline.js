@@ -1,38 +1,56 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import './src/config/env.js';
+import mongoose from 'mongoose';
+import { config } from './src/config/env.js';
+import researchService from './src/modules/research/research.service.js';
 
-import marketDataService from './src/modules/market/MarketDataService.js';
-import newsService from './src/modules/news/news.service.js';
-import forecastService from './src/modules/forecast/forecast.service.js';
+async function runTest() {
+  if (config.mongoUri) {
+    try {
+      await mongoose.connect(config.mongoUri);
+      console.log('Connected to MongoDB');
+    } catch (err) {
+      console.error('Failed to connect to MongoDB:', err.message);
+    }
+  }
 
-async function testPipeline() {
-  const symbol = "NVDA";
-  console.log(`Testing pipeline for ${symbol}`);
-  
-  console.log("\n--- 1. Market Data ---");
-  const market = await marketDataService.getQuote(symbol);
-  console.log(JSON.stringify(market.data, null, 2).slice(0, 500) + '...');
-  
-  console.log("\n--- 2. Historical Data ---");
-  const history = await marketDataService.getHistoricalData(symbol, "1M", "1d");
-  console.log(JSON.stringify(history.data, null, 2).slice(0, 200) + '...');
-  
-  console.log("\n--- 3. News Ingestion (30 days) ---");
-  const news = await newsService.getNewsForSymbol(symbol, 30);
-  console.log(`Fetched ${news.articles.length} articles`);
-  console.log(JSON.stringify(news.articles.slice(0, 5), null, 2));
-  
-  console.log("\n--- 4. Python ML Forecast ---");
-  const forecast = await forecastService.getForecastForSymbol(
-    symbol,
-    history.data || [],
-    news.articles || [],
-    {}, // technicals
-    {} // fundamentals
-  );
-  console.log(JSON.stringify(forecast, null, 2));
-  
-  console.log("\n--- DONE ---");
+  const symbol = 'AAPL';
+  console.log(`Testing pipeline for ${symbol}...`);
+
+  const startTime = Date.now();
+  try {
+    const result = await researchService.getResearchForSymbol(symbol, { forceML: true, audit: true });
+    
+    console.log('\n--- FINAL RESULT ---');
+    console.log('Success:', result.success);
+    console.log('Pipeline Status:', JSON.stringify(result.pipelineStatus, null, 2));
+    
+    const llmOutput = result.models?.llmSynthesis;
+    if (llmOutput) {
+      console.log('\n--- LLM Forecast ---');
+      console.log('Day 1 populated:', !!llmOutput.forecast?.day_1);
+      console.log('Day 2 populated:', !!llmOutput.forecast?.day_2);
+      console.log('Day 3 populated:', !!llmOutput.forecast?.day_3);
+      
+      const p1 = llmOutput.forecast?.day_1?.probabilities;
+      if (p1) {
+        const sum = (p1.bull_case || 0) + (p1.neutral_case || 0) + (p1.bear_case || 0);
+        console.log('Day 1 Probabilities sum to 1:', Math.abs(sum - 1.0) < 0.05, `(Sum: ${sum})`);
+      }
+      
+      console.log('Day 1 Date:', llmOutput.forecast?.day_1?.date);
+      console.log('Day 2 Date:', llmOutput.forecast?.day_2?.date);
+      console.log('Day 3 Date:', llmOutput.forecast?.day_3?.date);
+    }
+    
+    console.log(`\nTime taken: ${Date.now() - startTime}ms`);
+  } catch (err) {
+    console.error('Pipeline failed:', err);
+  } finally {
+    if (mongoose.connection.readyState !== 0) {
+      await mongoose.disconnect();
+    }
+    process.exit(0);
+  }
 }
 
-testPipeline().catch(console.error);
+runTest();

@@ -3,63 +3,78 @@ import pandas as pd
 
 def extract_event_impact(articles):
     """
-    Dummy implementation replaced.
-    This module computes an impact score and aggregates articles by date.
-    
-    Articles is a list of dicts. Expects fields: 'title', 'summary', 'publishedAt', 'sentiment'
+    Computes an impact score based on real FinBERT sentiment magnitude, 
+    semantic relevance, source quality, event materiality, and recency.
+    Modifies the list in place by adding fields.
     """
     if not articles:
-        return {"impact": 0.0, "news_count": 0, "daily_sentiment": {}}
+        return articles
         
-    df = pd.DataFrame(articles)
+    current_time = datetime.datetime.utcnow()
     
-    # Calculate a simple impact score per article
-    # In a real scenario, this would use source authority, length, relevance matching.
-    # For now, we will assign impact based on sentiment strength.
-    def calculate_impact(row):
-        base_impact = 0.5
-        # If sentiment is available, stronger sentiment = higher impact
-        if 'sentiment' in row and isinstance(row['sentiment'], dict):
-            # The absolute value of the composite score
-            score = row['sentiment'].get('score', 0)
-            base_impact += abs(score) * 0.5
-        return min(base_impact, 1.0)
-        
-    df['impact'] = df.apply(calculate_impact, axis=1)
+    # Simple source quality proxy for demonstration (in a real system this would map from a DB of tiers)
+    tier1_sources = ["bloomberg", "reuters", "wsj", "cnbc", "financial times"]
+    tier2_sources = ["yahoo finance", "marketwatch", "seeking alpha", "fool", "barrons"]
     
-    # Ensure date is parsed
-    if 'publishedAt' in df.columns:
-        df['date'] = pd.to_datetime(df['publishedAt']).dt.date
-    else:
-        df['date'] = datetime.date.today()
+    for a in articles:
+        # 1. Sentiment Magnitude
+        sentiment_magnitude = abs(a.get("finbert_sentiment_score", 0.0))
         
-    # Aggregate daily
-    daily_stats = {}
-    for date, group in df.groupby('date'):
-        daily_impact = group['impact'].mean()
-        if 'sentiment' in df.columns and len(group) > 0 and isinstance(group.iloc[0].get('sentiment'), dict):
-            pos = group.apply(lambda r: r['sentiment'].get('positive', 0) * r['impact'], axis=1).sum() / group['impact'].sum()
-            neg = group.apply(lambda r: r['sentiment'].get('negative', 0) * r['impact'], axis=1).sum() / group['impact'].sum()
-            neu = group.apply(lambda r: r['sentiment'].get('neutral', 0) * r['impact'], axis=1).sum() / group['impact'].sum()
-            score = group.apply(lambda r: r['sentiment'].get('score', 0) * r['impact'], axis=1).sum() / group['impact'].sum()
+        # 2. Semantic Relevance
+        relevance = a.get("semantic_relevance_score", 0.5)
+        
+        # 3. Source Quality
+        source = (a.get("source") or "").lower()
+        if any(t in source for t in tier1_sources):
+            source_quality = 1.0
+        elif any(t in source for t in tier2_sources):
+            source_quality = 0.8
         else:
-            pos, neg, neu, score = 0, 0, 1, 0
+            source_quality = 0.5
             
-        daily_stats[date.isoformat()] = {
-            "impact": daily_impact,
-            "count": len(group),
-            "sentiment": {
-                "positive": pos,
-                "negative": neg,
-                "neutral": neu,
-                "score": score
-            }
-        }
+        # 4. Event Materiality
+        # A simple proxy based on event category
+        cat = a.get("event_category", "other")
+        high_materiality = ["earnings", "guidance", "regulation", "legal", "management", "capital_allocation"]
+        medium_materiality = ["analyst", "product", "partnership", "customer_demand", "macro", "supply_chain", "competition"]
+        if cat in high_materiality:
+            event_materiality = 1.0
+        elif cat in medium_materiality:
+            event_materiality = 0.7
+        else:
+            event_materiality = 0.3
+            
+        # 5. Recency Weight
+        # Decay over 30 days
+        try:
+            pub_date = pd.to_datetime(a.get("published_at"))
+            # ensure naive or utc
+            if pub_date.tzinfo is not None:
+                pub_date = pub_date.tz_convert(None)
+            days_old = (current_time - pub_date).days
+            recency = max(0.1, 1.0 - (days_old / 30.0))
+        except:
+            recency = 0.5
+            
+        # Transparent Weighted Combination
+        w_sent = 0.3
+        w_mat = 0.3
+        w_rel = 0.2
+        w_src = 0.1
+        w_rec = 0.1
         
-    overall_impact = df['impact'].mean()
-    
-    return {
-        "impact": overall_impact,
-        "news_count": len(articles),
-        "daily_stats": daily_stats
-    }
+        impact_score = (
+            (sentiment_magnitude * w_sent) +
+            (event_materiality * w_mat) +
+            (relevance * w_rel) +
+            (source_quality * w_src) +
+            (recency * w_rec)
+        )
+        
+        a["sentiment_magnitude"] = sentiment_magnitude
+        a["source_quality_score"] = source_quality
+        a["event_materiality_score"] = event_materiality
+        a["recency_weight"] = recency
+        a["impact_score"] = min(1.0, impact_score)
+        
+    return articles

@@ -70,8 +70,9 @@ export default class YahooProvider extends BaseProvider {
   }
 
   _getPeriod1(range) {
+    const r = (range || '').toUpperCase();
     const now = new Date();
-    switch (range) {
+    switch (r) {
       case '1D': now.setDate(now.getDate() - 1); break;
       case '5D': now.setDate(now.getDate() - 5); break;
       case '1M': now.setMonth(now.getMonth() - 1); break;

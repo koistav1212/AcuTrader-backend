@@ -104,3 +104,51 @@ model symbol_catalog {
   @@index([exchange])
   @@map("symbol_catalog")
 }
+
+/// =========================
+/// ANALYSIS RUN
+/// =========================
+model analysis_run {
+  id               BigInt    @id @default(autoincrement())
+  symbol           String    @db.Text
+  analysis_date    DateTime  @db.Date
+  pipeline_version String    @db.Text
+  status           String    @db.Text // QUEUED, RUNNING, SUCCESS, PARTIAL, INSUFFICIENT_DATA, FAILED
+  started_at       DateTime? @db.Timestamptz(6)
+  completed_at     DateTime? @db.Timestamptz(6)
+  error            String?   @db.Text
+  metadata         Json?
+
+  // Relations
+  results          analysis_result[]
+
+  // Unique constraint for idempotency
+  @@unique([symbol, analysis_date, pipeline_version])
+  @@map("analysis_run")
+}
+
+/// =========================
+/// ANALYSIS RESULT
+/// =========================
+model analysis_result {
+  id                  BigInt    @id @default(autoincrement())
+  analysis_run_id     BigInt
+  symbol              String    @db.Text
+  analysis_date       DateTime  @db.Date
+  
+  market_context      Json?
+  technical_context   Json?
+  fundamental_context Json?
+  news_context        Json?
+  model_outputs       Json?
+  forecast            Json?
+  llm_context         Json?
+  llm_output          Json?
+  data_quality        Json?
+
+  // Relations
+  run analysis_run @relation(fields: [analysis_run_id], references: [id])
+
+  @@unique([symbol, analysis_date])
+  @@map("analysis_result")
+}

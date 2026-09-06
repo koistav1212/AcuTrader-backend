@@ -44,6 +44,108 @@ export function computeTechnicals(history = []) {
   };
 }
 
+export function computeWeeklyContext(dailyHistory = []) {
+  if (!dailyHistory || dailyHistory.length === 0) return [];
+
+  // Group by week ending date (Friday)
+  const weeks = {};
+  for (const day of dailyHistory) {
+    const d = new Date(day.date || day.datetime);
+    if (isNaN(d.getTime())) continue;
+
+    // Get Friday of this week
+    const dayOfWeek = d.getDay();
+    // JS getDay: 0=Sun, 1=Mon, ..., 5=Fri, 6=Sat
+    // Offset to next Friday:
+    const daysToFriday = dayOfWeek <= 5 ? 5 - dayOfWeek : 6; 
+    const friday = new Date(d);
+    friday.setDate(d.getDate() + daysToFriday);
+    friday.setHours(0, 0, 0, 0);
+    const key = friday.toISOString().split('T')[0];
+
+    if (!weeks[key]) {
+      weeks[key] = {
+        weekEnding: key,
+        open: day.open || day.close,
+        high: day.high || day.close,
+        low: day.low || day.close,
+        close: day.close,
+        volume: day.volume || 0,
+        days: 1,
+        date: key // used for indicators
+      };
+    } else {
+      const w = weeks[key];
+      // Keep earliest open (assuming chronological order in loop)
+      // Highest high
+      if (day.high > w.high) w.high = day.high;
+      // Lowest low
+      if (day.low < w.low) w.low = day.low;
+      // Latest close (assuming chronological order)
+      w.close = day.close;
+      w.volume += (day.volume || 0);
+      w.days += 1;
+    }
+  }
+
+  // Convert to array and sort chronologically
+  const weeklyBars = Object.values(weeks).sort((a, b) => a.weekEnding.localeCompare(b.weekEnding));
+  
+  if (weeklyBars.length === 0) return [];
+
+  // Compute indicators on weekly bars
+  const closes = weeklyBars.map(w => w.close);
+  const highs = weeklyBars.map(w => w.high);
+  const lows = weeklyBars.map(w => w.low);
+  const volumes = weeklyBars.map(w => w.volume);
+
+  const returns = calculateReturns(closes);
+  
+  // Need to compute them iteratively to assign back to each bar
+  for (let i = 0; i < weeklyBars.length; i++) {
+    const w = weeklyBars[i];
+    
+    // Returns (1-week return)
+    w.returnPct = i > 0 ? (w.close - closes[i - 1]) / closes[i - 1] : null;
+    
+    // SMA 50
+    w.sma50 = i >= 49 ? calculateSMA(closes.slice(0, i + 1), 50) : null;
+    
+    // EMA 20
+    w.ema20 = i >= 19 ? calculateEMA(closes.slice(0, i + 1), 20) : null;
+    
+    // RSI 14
+    w.rsi = i >= 14 ? calculateRSI(closes.slice(0, i + 1), 14) : null;
+    
+    // MACD
+    if (i >= 26) {
+       const m = calculateMACD(closes.slice(0, i + 1), 12, 26, 9);
+       w.macd = m ? m.macdLine : null;
+    } else {
+       w.macd = null;
+    }
+    
+    // ATR 14
+    w.atr = i >= 14 ? calculateATR(highs.slice(0, i + 1), lows.slice(0, i + 1), closes.slice(0, i + 1), 14) : null;
+    
+    // Volatility (10-week)
+    w.volatility = i >= 10 ? calculateVolatility(returns.slice(0, i), 10) : null;
+    
+    // Drawdown from 52-week high
+    const lookback52 = Math.max(0, i - 52);
+    const slice52Highs = highs.slice(lookback52, i + 1);
+    const highest52 = Math.max(...slice52Highs);
+    w.drawdown = highest52 > 0 ? (w.close - highest52) / highest52 : 0;
+    
+    // Volume vs Average 20-week
+    const avgVol = i >= 20 ? calculateSMA(volumes.slice(0, i + 1), 20) : null;
+    w.volumeVsAverage = avgVol ? w.volume / avgVol : null;
+  }
+
+  // Return last 26 weeks (~6 months)
+  return weeklyBars.slice(-26);
+}
+
 function calculateSMA(data, period) {
   if (data.length < period) return null;
   const slice = data.slice(-period);

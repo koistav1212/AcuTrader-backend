@@ -1,0 +1,108 @@
+{
+  "success": true,
+  "symbol": "NVDA",
+  "raw_article_count": 210,
+  "valid_article_count": 100,
+  "deduplicated_count": 0,
+  "relevant_count": 100,
+  "final_article_count": 100,
+  "market_context": {
+    "AVAILABLE": {
+      "open": 231.089996,
+      "high": 234.75999,
+      "low": 229.63,
+      "previousClose": 228.45,
+      "change": 1.91,
+      "changePercent": 0.83607078,
+      "volume": 134946800,
+      "averageVolume": 159261450,
+      "revenue": 177837000000,
+      "netIncome": 118010000000,
+      "profitMargin": 0.6636,
+      "totalCash": 22443000000,
+      "totalDebt": 33366000000,
+      "debtToEquity": null
+    },
+    "MISSING": [
+      "currentPrice",
+      "marketCap",
+      "pe",
+      "forwardPE",
+      "trailingPE",
+      "pegRatio",
+      "priceToSales",
+      "priceToBook",
+      "evToEBITDA",
+      "operatingMargin",
+      "returnOnEquity",
+      "sector",
+      "industry"
+    ],
+    "DERIVED": {},
+    "NOT_APPLICABLE": [],
+    "STALE": []
+  },
+  "technical_context": {
+    "currentPrice": 230.36,
+    "sma20": 220.08200067499996,
+    "sma50": 210.56639939000007,
+    "sma200": 196.6794500025,
+    "ema9": 222.88834447573302,
+    "ema21": 219.0416011952059,
+    "rsi14": 53.67799083130764,
+    "macd": {
+      "macdLine": 3.83123305903581,
+      "signalLine": 0,
+      "histogram": 0
+    },
+    "bollingerBands": {
+      "upper": 232.04391791310394,
+      "middle": 220.08200067499996,
+      "lower": 208.12008343689598
+    },
+    "atr14": 7.619283892857147,
+    "volatility": 0.4438388610966118,
+    "momentum": 0.0483297966537819,
+    "volumeRatio": 1.0469122454942141
+  },
+  "numerical_evidence": {
+    "news_volume": 100,
+    "current_price": null,
+    "current_volatility": 0.4438388610966118,
+    "trend_regime": "Bullish",
+    "volume_anomaly": 1.0469122454942141
+  },
+  "models": {
+    "xgboost": null,
+    "newsLstm": null,
+    "llmSynthesis": {}
+  },
+  "pipelineStatus": {
+    "market": {
+      "status": "ready",
+      "featureCount": 14
+    },
+    "ohlcv": {
+      "status": "ready",
+      "recordCount": 1300,
+      "requiredForXGBoost": 65,
+      "requiredForIndicators": 200,
+      "requiredForWeekly6MContext": 130
+    },
+    "technicals": {
+      "status": "ready",
+      "featureCount": 13
+    },
+    "news": {
+      "status": "ready",
+      "recordCount": 100
+    },
+    "forecast": {
+      "status": "failed"
+    },
+    "llm": {
+      "status": "pending"
+    }
+  },
+  "generatedAt": "2026-09-06T06:52:29.032Z"
+}

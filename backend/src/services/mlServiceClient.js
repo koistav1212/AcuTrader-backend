@@ -18,7 +18,7 @@ class MLServiceClient {
 
   async getPrediction(payload) {
     try {
-      const response = await axios.post(`${this.baseUrl}/predict`, payload, { timeout: 15000 });
+      const response = await axios.post(`${this.baseUrl}/predict`, payload, { maxBodyLength: Infinity, timeout: 120000 });
       return response.data;
     } catch (error) {
       console.error("[MLServiceClient] Predict request failed:", error.message);

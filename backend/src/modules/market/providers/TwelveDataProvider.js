@@ -35,10 +35,11 @@ export default class TwelveDataProvider extends BaseProvider {
       if (interval === '1mo') tdInterval = '1month';
 
       // Calculate output size based on range
+      const r = (range || '').toUpperCase();
       let outputsize = 100;
-      if (range === '1Y') outputsize = 260;
-      if (range === '5Y') outputsize = 1300;
-      if (range === '10Y' || range === 'max') outputsize = 2600;
+      if (r === '1Y') outputsize = 260;
+      if (r === '5Y') outputsize = 1300;
+      if (r === '10Y' || r === 'MAX') outputsize = 2600;
 
       const response = await axios.get(`${this.baseUrl}/time_series`, {
         params: { symbol, interval: tdInterval, apikey: this.apiKey, outputsize }

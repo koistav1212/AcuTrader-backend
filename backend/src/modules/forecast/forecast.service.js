@@ -1,7 +1,7 @@
 import mlServiceClient from "../../services/mlServiceClient.js";
 
 class ForecastService {
-  async getForecastForSymbol(symbol, ohlcv = [], news_features = [], technical_features = {}, fundamental_features = {}) {
+  async getForecastForSymbol(symbol, ohlcv = [], news_features = [], technical_features = {}, fundamental_features = {}, forecastPayload = {}) {
     try {
       console.log(`[Node] ML request → ${symbol}`);
       
@@ -12,7 +12,11 @@ class ForecastService {
         news_features,
         technical_features,
         fundamental_features,
-        prediction_timestamp: new Date().toISOString()
+        prediction_timestamp: new Date().toISOString(),
+        analysis_cutoff: forecastPayload.analysis_cutoff,
+        window_start: forecastPayload.window_start,
+        window_end: forecastPayload.window_end,
+        audit: forecastPayload.audit || false
       };
 
       const response = await mlServiceClient.getPrediction(payload);

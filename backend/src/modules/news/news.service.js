@@ -1,12 +1,25 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
-import { config } from "../../config/env.js";
-import { analyzeNewsSentiment, aggregateSentiment } from "./sentiment.util.js";
+import crypto from "crypto";
 
 class NewsService {
-  async getNewsForSymbol(symbol, days = 30) {
+  /**
+   * Generates a deterministic hash for deduplication
+   */
+  _generateId(text) {
+    return crypto.createHash("sha256").update(text || "").digest("hex");
+  }
+
+  async getNewsForSymbol(symbol, days = 30, options = {}) {
+    const { audit = false } = options;
+    const analysis_cutoff = new Date().toISOString();
+    const window_end_date = new Date(analysis_cutoff);
+    const window_start_date = new Date(window_end_date.getTime() - days * 24 * 60 * 60 * 1000);
+    const window_start = window_start_date.toISOString();
+    const window_end = analysis_cutoff;
+
     const [finnhubNews, googleNews, tavilyNews] = await Promise.allSettled([
-      this.fetchFinnhub(symbol, days),
+      this.fetchFinnhub(symbol, days, window_start_date, window_end_date),
       this.fetchGoogleNews(symbol, days),
       this.fetchTavily(symbol, days)
     ]);
@@ -16,59 +29,163 @@ class NewsService {
     if (googleNews.status === "fulfilled") combined.push(...googleNews.value);
     if (tavilyNews.status === "fulfilled") combined.push(...tavilyNews.value);
 
-    // Filter noisy/generic URLs
-    const noisyDomains = ['finance.yahoo.com/quote', 'sec.gov', 'kaggle.com', 'stocktwits.com'];
-    combined = combined.filter(article => {
-      if (!article.url) return false;
-      const url = article.url.toLowerCase();
-      return !noisyDomains.some(domain => url.includes(domain));
-    });
+    let raw_articles = combined.length;
+    let date_valid_articles = 0;
+    let within_window = 0;
+    let duplicates_removed = 0;
+    let irrelevant_removed = 0;
 
-    // Enforce strict 30-day window
-    const cutoffDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
-    combined = combined.filter(article => {
-      if (!article.publishedAt) return false;
-      const pubDate = new Date(article.publishedAt);
-      return pubDate >= cutoffDate;
-    });
+    const noisyDomains = [
+      'finance.yahoo.com/quote', 'sec.gov', 'kaggle.com', 'stocktwits.com',
+      'zacks.com', 'investopedia.com', 'macrotrends.net', 'seekingalpha.com/symbol'
+    ];
 
-    // Deduplicate
-    const deduped = this.deduplicateNews(combined);
+    const seenSignatures = new Set();
+    const finalArticles = [];
+    
+    // Dump Raw News if audit
+    if (audit) {
+      const fs = await import('fs/promises');
+      const path = await import('path');
+      const auditDir = path.resolve(process.cwd(), '..', 'ml_service', 'news_audit_artifacts', symbol.toUpperCase(), analysis_cutoff.split('T')[0]);
+      await fs.mkdir(auditDir, { recursive: true }).catch(() => {});
+      
+      const rawDump = {
+        symbol,
+        analysisCutoff: analysis_cutoff,
+        windowStart: window_start,
+        windowEnd: window_end,
+        providerCounts: {
+          finnhub: finnhubNews.status === "fulfilled" ? finnhubNews.value.length : 0,
+          google: googleNews.status === "fulfilled" ? googleNews.value.length : 0,
+          tavily: tavilyNews.status === "fulfilled" ? tavilyNews.value.length : 0,
+        },
+        articles: combined
+      };
+      await fs.writeFile(path.join(auditDir, '01_raw_news.json'), JSON.stringify(rawDump, null, 2)).catch(() => {});
+    }
 
-    // Apply Sentiment & Intent Analysis
-    const enriched = deduped.map(article => {
-      const sentiment = analyzeNewsSentiment(article);
-      return { ...article, ...sentiment };
-    });
+    for (const article of combined) {
+      // 1. Date Validation
+      if (!article.published_at) {
+        continue;
+      }
+      const pubDate = new Date(article.published_at);
+      if (isNaN(pubDate.getTime())) {
+        continue;
+      }
+      date_valid_articles++;
+
+      // 2. Window Filtering (No future dates, no older than 30 days)
+      if (pubDate > window_end_date || pubDate < window_start_date) {
+        continue;
+      }
+      within_window++;
+
+      // 3. Relevance Filtering
+      const url = (article.url || "").toLowerCase();
+      const isNoisy = noisyDomains.some(domain => url.includes(domain));
+      
+      const titleLower = (article.title || "").toLowerCase();
+      const summaryLower = (article.summary || "").toLowerCase();
+      const symbolLower = symbol.toLowerCase();
+      const hasEntity = titleLower.includes(symbolLower) || summaryLower.includes(symbolLower);
+      
+      article.isRelevant = !isNoisy && hasEntity;
+      
+      if (!article.isRelevant) {
+        irrelevant_removed++;
+      }
+
+      // 4. Deduplication
+      // Use headline + source + YYYY-MM-DD to deduplicate
+      const dateStr = pubDate.toISOString().split("T")[0];
+      const headlineSig = (article.title || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+      const sig = `${headlineSig}_${dateStr}`;
+      
+      article.eventClusterId = crypto.createHash("sha256").update(sig).digest("hex").substring(0, 16);
+      article.articleId = article.article_id;
+      
+      if (!headlineSig || seenSignatures.has(sig)) {
+        duplicates_removed++;
+        article.isDuplicate = true;
+        article.duplicateOf = article.eventClusterId;
+      } else {
+        seenSignatures.add(sig);
+        article.isDuplicate = false;
+        article.duplicateOf = null;
+      }
+
+      finalArticles.push(article);
+    }
 
     // Sort by date descending
-    enriched.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+    finalArticles.sort((a, b) => new Date(b.published_at) - new Date(a.published_at));
 
-    const aggregate = aggregateSentiment(enriched);
+    const metadata = {
+      symbol,
+      analysis_cutoff,
+      window_start,
+      window_end,
+      calendar_days: days,
+      raw_articles,
+      date_valid_articles,
+      within_window,
+      duplicates_removed,
+      irrelevant_removed,
+      final_articles: finalArticles.length
+    };
+    
+    // Dump Validated News if audit
+    if (audit) {
+      const fs = await import('fs/promises');
+      const path = await import('path');
+      const auditDir = path.resolve(process.cwd(), '..', 'ml_service', 'news_audit_artifacts', symbol.toUpperCase(), analysis_cutoff.split('T')[0]);
+      
+      const validDump = {
+        rawCount: raw_articles,
+        dateValidCount: date_valid_articles,
+        withinWindowCount: within_window,
+        irrelevantCount: irrelevant_removed,
+        duplicateCount: duplicates_removed,
+        validCount: finalArticles.length,
+        articles: finalArticles
+      };
+      await fs.writeFile(path.join(auditDir, '02_validated_news.json'), JSON.stringify(validDump, null, 2)).catch(() => {});
+    }
 
     return {
-      window: `${days}d`,
-      articles: enriched,
-      aggregate
+      metadata,
+      articles: finalArticles
     };
   }
 
-  async fetchFinnhub(symbol, days) {
+  async fetchFinnhub(symbol, days, window_start_date, window_end_date) {
     if (!process.env.FINNHUB_API_KEY) return [];
     try {
-      const toDate = new Date().toISOString().split("T")[0];
-      const fromDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
+      const toDate = window_end_date.toISOString().split("T")[0];
+      const fromDate = window_start_date.toISOString().split("T")[0];
       const url = `https://finnhub.io/api/v1/company-news?symbol=${symbol}&from=${fromDate}&to=${toDate}&token=${process.env.FINNHUB_API_KEY}`;
       const response = await axios.get(url);
       
-      return response.data.map(item => ({
-        symbol,
-        headline: item.headline,
-        summary: item.summary,
-        source: item.source,
-        url: item.url,
-        publishedAt: new Date(item.datetime * 1000).toISOString()
-      }));
+      return response.data.map(item => {
+        const pubDate = new Date(item.datetime * 1000);
+        return {
+          article_id: this._generateId(item.url || item.headline),
+          symbol,
+          title: item.headline,
+          summary: item.summary,
+          clean_text: item.summary,
+          source: item.source,
+          publisher: item.source,
+          url: item.url,
+          canonical_url: item.url,
+          published_at: isNaN(pubDate.getTime()) ? null : pubDate.toISOString(),
+          ingested_at: new Date().toISOString(),
+          date: isNaN(pubDate.getTime()) ? null : pubDate.toISOString().split("T")[0],
+          retrieval_source: "Finnhub"
+        };
+      });
     } catch (err) {
       console.warn(`Finnhub fetch failed for ${symbol}`);
       return [];
@@ -83,18 +200,26 @@ class NewsService {
       
       const articles = [];
       $('item').each((i, el) => {
-        if (i >= 10) return;
+        // Removed artificial limit of 10
         const headline = $(el).find('title').text();
         const url = $(el).find('link').text();
-        const pubDate = $(el).find('pubDate').text();
+        const pubDateRaw = $(el).find('pubDate').text();
+        const pubDate = new Date(pubDateRaw);
         
         articles.push({
+          article_id: this._generateId(url || headline),
           symbol,
-          headline,
+          title: headline,
           summary: "",
+          clean_text: "",
           source: "Google News",
+          publisher: $(el).find('source').text() || "Google News",
           url,
-          publishedAt: new Date(pubDate).toISOString()
+          canonical_url: url,
+          published_at: isNaN(pubDate.getTime()) ? null : pubDate.toISOString(),
+          ingested_at: new Date().toISOString(),
+          date: isNaN(pubDate.getTime()) ? null : pubDate.toISOString().split("T")[0],
+          retrieval_source: "GoogleNews"
         });
       });
       return articles;
@@ -118,19 +243,31 @@ class NewsService {
             api_key: process.env.TAVILY_API_KEY,
             query: `${symbol} ${cat} last ${days} days`,
             search_depth: "basic",
-            max_results: 3
+            max_results: 15 // Increased from 3
           });
           
           if (!response.data || !response.data.results) return [];
           
-          return response.data.results.map(item => ({
-            symbol,
-            headline: item.title,
-            summary: item.content,
-            source: "Tavily",
-            url: item.url,
-            publishedAt: new Date().toISOString()
-          }));
+          return response.data.results.map(item => {
+            // NEVER fabricate publishedAt. If Tavily doesn't provide a valid date, it's null.
+            const pubDate = item.published_date ? new Date(item.published_date) : new Date(NaN);
+            
+            return {
+              article_id: this._generateId(item.url || item.title),
+              symbol,
+              title: item.title,
+              summary: item.content,
+              clean_text: item.content,
+              source: "Tavily",
+              publisher: "Tavily",
+              url: item.url,
+              canonical_url: item.url,
+              published_at: isNaN(pubDate.getTime()) ? null : pubDate.toISOString(),
+              ingested_at: new Date().toISOString(),
+              date: isNaN(pubDate.getTime()) ? null : pubDate.toISOString().split("T")[0],
+              retrieval_source: "Tavily"
+            };
+          });
         } catch (innerErr) {
           console.warn(`Tavily fetch failed for ${symbol} category: ${cat}`);
           return [];
@@ -143,16 +280,6 @@ class NewsService {
       console.warn(`Tavily fetch failed for ${symbol}`);
       return [];
     }
-  }
-
-  deduplicateNews(articles) {
-    const seen = new Set();
-    return articles.filter(article => {
-      const sig = (article.headline || "").toLowerCase().replace(/[^a-z0-9]/g, "");
-      if (!sig || seen.has(sig)) return false;
-      seen.add(sig);
-      return true;
-    });
   }
 }
 
